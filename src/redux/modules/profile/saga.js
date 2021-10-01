@@ -1,5 +1,5 @@
 import { put, takeLatest } from "redux-saga/effects";
-import { apiGetProfile } from "src/apiFunctions/authencation";
+import { apiGetProfile } from "src/apiFunctions/authencation";
 import * as type from "../../type";
 function* getProfile() {
   const response = yield apiGetProfile()
