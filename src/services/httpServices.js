@@ -11,6 +11,7 @@ class Services {
     this.axios.defaults.headers = {
       //      "Access-Control-Allow-Headers": "*",
       //    "Access-Control-Allow-Methods": "*",
+      // "Access-Control-Allow-Credentials": true,
     };
   }
 

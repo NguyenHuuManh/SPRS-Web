@@ -5,7 +5,7 @@ import {
   CCardGroup,
   CCol,
   CContainer,
-  CRow
+  CRow,
 } from "@coreui/react";
 import { Field, Formik } from "formik";
 import React from "react";
@@ -17,7 +17,6 @@ import InputField from "src/views/InputField";
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer.auth);
-  console.log("auth", auth);
   if (auth.isLogin) {
     return <Redirect to="/" />;
   }
@@ -34,8 +33,7 @@ const Login = () => {
                   <Formik
                     initialValues={{
                       username: "duongpt",
-                      password: "password"
-
+                      password: "password",
                     }}
                     onSubmit={(values) => {
                       dispatch(loginRequest(values));

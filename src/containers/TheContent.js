@@ -18,7 +18,6 @@ const loading = (
 
 const TheContent = () => {
   const user = JSON.parse(window.localStorage.getItem("userSPRS"));
-  console.log("user", user);
   const distpatch = useDispatch();
 
   useEffect(() => {
