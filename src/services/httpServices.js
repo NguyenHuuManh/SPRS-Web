@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 class Services {
   axios;
   interceptors;
@@ -6,33 +6,34 @@ class Services {
   constructor() {
     this.axios = axios;
     this.interceptors = null;
-    this.axios.defaults.withCredentials = false;
-    this.axios.defaults.adapter = require("axios/lib/adapters/http");
-    this.axios.defaults.headers={
-      "Access-Control-Allow-Origin":"*",
-      "Access-Control-Allow-Headers":"*",
-      "Access-Control-Allow-Methods":"*"
-    }
+    // this.axios.defaults.withCredentials = false;
+    // this.axios.defaults.adapter = require("axios/lib/adapters/http");
+    this.axios.defaults.headers = {
+      //      "Access-Control-Allow-Headers": "*",
+      //    "Access-Control-Allow-Methods": "*",
+    };
   }
 
   attachTokenToHeader(token) {
-    // this.interceptors = this.axios.interceptors.request.use(
-    //   function (config) {
-    //     // Do something before request is sent
-    //     config.headers.Authorization= `Bearer ${token}`;
-    //     return config;
-    //   },
-    //   function (error) {
-    //     return Promise.reject(error);
-    //   }
-    // );
-    this.axios.defaults.headers={
-      "Access-Control-Allow-Origin":"*",
-      "Access-Control-Allow-Headers":"*",
-      "Access-Control-Allow-Methods":"*",
-      "Authorization":`Bearer ${token}`
-    }
+    this.interceptors = this.axios.interceptors.request.use(
+      function (config) {
+        // Do something before request is sent
+        config.headers.Authorization = `Bearer ${token}`;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+    // this.axios.defaults.headers = {
+    //   "Access-Control-Allow-Origin": "*",
+    //   "Access-Control-Allow-Headers": "*",
+    //   "Access-Control-Allow-Methods": "*",
+    //   Authorization: `Bearer ${token}`,
+    // };
   }
+
+  backToDefaultHeader() {}
 
   saveLocalStorage(data) {
     // const { token, res } = data;

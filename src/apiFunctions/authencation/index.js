@@ -1,4 +1,4 @@
-import { signin, Profile } from "src/constrants/action";
+import { signin, Profile, GET_TODOS_URL, User } from "src/constrants/action";
 import httpServices from "src/services/httpServices";
 
 export const apiSignin = async (body) => {
@@ -6,20 +6,20 @@ export const apiSignin = async (body) => {
 };
 const user = JSON.parse(window.localStorage.getItem("userSPRS"));
 export const apiGetProfile = async () => {
-  // return await httpServices.get(Profile);
-  return fetch(Profile, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "*",
-      Authorization: `Bearer ${user}`,
-    },
-  }).then((e) => {
-    console.log("FK Response", e);
-  });
+  return await httpServices.get(Profile);
+  // return fetch(Profile, {
+  //   method: "GET",
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     "Access-Control-Allow-Origin": "*",
+  //     "Access-Control-Allow-Headers": "*",
+  //     "Access-Control-Allow-Methods": "*",
+  //     Authorization: `Bearer ${user}`,
+  //   },
+  // }).then((e) => {
+  //   console.log("FK Response", e);
+  // });
 };
 
 export const apiAdd = async () => {

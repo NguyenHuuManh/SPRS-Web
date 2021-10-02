@@ -5,7 +5,6 @@ import * as type from "../../type";
 function* login({ payload }) {
   const response = yield apiSignin(payload)
     .then((e) => {
-      console.log("e", e);
       return e;
     })
     .finally(() => {});
