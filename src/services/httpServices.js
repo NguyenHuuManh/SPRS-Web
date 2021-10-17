@@ -26,15 +26,9 @@ class Services {
         return Promise.reject(error);
       }
     );
-    // this.axios.defaults.headers = {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Access-Control-Allow-Headers": "*",
-    //   "Access-Control-Allow-Methods": "*",
-    //   Authorization: `Bearer ${token}`,
-    // };
   }
 
-  backToDefaultHeader() {}
+  backToDefaultHeader() { }
 
   saveLocalStorage(data) {
     // const { token, res } = data;

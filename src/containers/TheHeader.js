@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { sidebarShow } from "src/redux/modules/sidebar";
 import {
   CHeader,
   CToggler,
@@ -25,20 +26,20 @@ import {
 
 const TheHeader = () => {
   const dispatch = useDispatch();
-  const sidebarShow = useSelector((state) => state.sidebarShow);
-
+  const sideBarReducer = useSelector((state) => state.sideBarReducer);
+  console.log("sideBar", sideBarReducer);
   const toggleSidebar = () => {
-    const val = [true, "responsive"].includes(sidebarShow)
+    const val = [true, "responsive"].includes(sideBarReducer?.status)
       ? false
       : "responsive";
-    dispatch({ type: "set", sidebarShow: val });
+    dispatch(sidebarShow(val));
   };
 
   const toggleSidebarMobile = () => {
-    const val = [false, "responsive"].includes(sidebarShow)
+    const val = [false, "responsive"].includes(sideBarReducer?.status)
       ? true
       : "responsive";
-    dispatch({ type: "set", sidebarShow: val });
+    dispatch(sidebarShow(val));
   };
 
   return (
@@ -63,6 +64,9 @@ const TheHeader = () => {
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
           <CHeaderNavLink to="/users">Users</CHeaderNavLink>
+        </CHeaderNavItem>
+        <CHeaderNavItem className="px-3">
+          <CHeaderNavLink to="/quan-ly-user">Quan lý user</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
           <CHeaderNavLink>Settings</CHeaderNavLink>

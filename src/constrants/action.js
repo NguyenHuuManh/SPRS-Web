@@ -5,3 +5,7 @@ export const signin = `${URL}/authenticate`;
 export const signup = `${URL}/auth/signup`;
 export const Profile = `${URL}/sprs/api/user`;
 export const User = `${URL}/user`;
+export const RequestORG = `${URL}/sprs/api/request-manage/request-organizationalAdmin`;
+export const RequestSysAdmin = `${URL}/sprs/api/request-manage/request-systemAdmin`;
+export const organizationManage = `${URL}/sprs/api/organization-manage/origanization`;
+
