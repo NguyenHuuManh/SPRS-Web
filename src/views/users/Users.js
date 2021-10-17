@@ -12,6 +12,7 @@ import {
 } from "@coreui/react";
 
 import usersData from "./UsersData";
+import { apiGetRequestAdminORG } from "src/apiFunctions/authencation";
 
 const getBadge = (status) => {
   switch (status) {
@@ -43,6 +44,10 @@ const Users = ({ history }) => {
     console.log(pageSize, "pageSize");
     callAPI();
   }, [pageSize]);
+
+  useEffect(() => {
+    apiGetRequestAdminORG();
+  }, [])
 
   return (
     <CRow>

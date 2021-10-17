@@ -48,7 +48,7 @@ const TheContent = () => {
                 )
               );
             })}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/" to="/users" />
           </Switch>
         </Suspense>
       </CContainer>

@@ -32,7 +32,7 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      username: "Manh",
+                      username: "admin",
                       password: "password",
                     }}
                     onSubmit={(values) => {
