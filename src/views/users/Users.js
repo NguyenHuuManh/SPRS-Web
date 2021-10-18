@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import {
   CBadge,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
-  CDataTable,
-  CRow,
-  CPagination,
+  CDataTable, CPagination, CRow
 } from "@coreui/react";
-
+import React, { useEffect, useState } from "react";
 import usersData from "./UsersData";
-import { apiGetRequestAdminORG } from "src/apiFunctions/authencation";
+
 
 const getBadge = (status) => {
   switch (status) {
@@ -45,9 +41,7 @@ const Users = ({ history }) => {
     callAPI();
   }, [pageSize]);
 
-  useEffect(() => {
-    apiGetRequestAdminORG();
-  }, [])
+
 
   return (
     <CRow>

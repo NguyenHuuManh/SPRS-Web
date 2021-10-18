@@ -1,4 +1,4 @@
-import { signin, Profile, RequestORG, } from "src/constrants/action";
+import { signin, Profile, RequestORG, GET_REQUEST_REGISTER_ORG, ACCEPT_REQUEST_REGISTER_ORG } from "src/constrants/action";
 import httpServices from "src/services/httpServices";
 
 export const apiSignin = async (body) => {
@@ -9,5 +9,9 @@ export const apiGetProfile = async () => {
 };
 
 export const apiGetRequestAdminORG = async () => {
-  return await httpServices.get(RequestORG);
+  return await httpServices.get(GET_REQUEST_REGISTER_ORG);
+};
+
+export const apiAcceptRequestAdminORG = async (body) => {
+  return await httpServices.put(ACCEPT_REQUEST_REGISTER_ORG, body);
 };

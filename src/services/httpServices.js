@@ -47,9 +47,10 @@ class Services {
     if (isSuccess) {
       return response;
     } else {
+      console.log(error.response, "err");
       if (error.response && error.response.status === 401) {
-        if ((url || "").includes("sprs/api/authenticate")) {
-          return;
+        if ((url || "").includes("/authenticate")) {
+          return error.response;
         }
         // clear token
         localStorage.removeItem("userSPRS");

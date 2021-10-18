@@ -63,10 +63,10 @@ const TheHeader = () => {
           <CHeaderNavLink to="/users">Users</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/quan-ly-user">Quan lý user</CHeaderNavLink>
+          <CHeaderNavLink to="/quan-ly-user">Quan Lý Người Dùng</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          <CHeaderNavLink to="/quan-ly-org">Quan Lý Tổ Chức</CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 

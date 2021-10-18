@@ -7,4 +7,6 @@ export const User = `${URL}/user`;
 export const RequestORG = `${URL}/sprs/api/request-manage/request-organizationalAdmin`;
 export const RequestSysAdmin = `${URL}/sprs/api/request-manage/request-systemAdmin`;
 export const organizationManage = `${URL}/sprs/api/organization-manage/origanization`;
+export const GET_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/request-systemAdmin`
+export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/request-systemAdmin`
 

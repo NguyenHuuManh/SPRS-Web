@@ -5,7 +5,6 @@ const initialState = {
   auth: {
     data: {},
     isLogin: false,
-    error: null,
   },
 };
 
@@ -23,11 +22,10 @@ export const authReducer = (state = initialState, action) => {
 
       case type.REQUEST_LOGIN_FAILED:
         draftState.auth.isLogin = false;
-        draftState.auth.error = action.error;
+        draftState.auth.data = action.payload;
         break;
       case type.REQUEST_LOGOUT:
         draftState.auth.isLogin = false;
-        draftState.auth.error = null;
         draftState.auth.data = {};
         break;
       default:
