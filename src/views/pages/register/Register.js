@@ -1,19 +1,13 @@
-import React from 'react'
 import {
   CButton,
   CCard,
-  CCardBody,
-  CCardFooter,
-  CCol,
+  CCardBody, CCol,
   CContainer,
-  CForm,
-  CInput,
-  CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
-  CRow
+  CForm, CRow
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import { Field, Formik } from 'formik'
+import React from 'react'
+import InputField from 'src/views/components/InputField'
 
 const Register = () => {
   return (
@@ -25,50 +19,99 @@ const Register = () => {
               <CCardBody className="p-4">
                 <CForm>
                   <h1>Register</h1>
-                  <p className="text-muted">Create your account</p>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-user" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Username" autoComplete="username" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>@</CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Email" autoComplete="email" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Password" autoComplete="new-password" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-4">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Repeat password" autoComplete="new-password" />
-                  </CInputGroup>
-                  <CButton color="success" block>Create Account</CButton>
+                  <Formik
+                    initialValues={{
+                      username: "Duongpt35",
+                      phone: "0966048002",
+                      password: "password",
+                      rePassWord: "password",
+                      full_name: "Phạm Tùng Dương",
+                      dob: "09/09/1999",
+                      city: "",
+                      province: "",
+                      district: "",
+                      subDistrict: "",
+                      addressLine: "",
+                      groupsId: "1",
+                      adresslineORG: "",
+                    }}
+                    onSubmit={(values) => {
+                      // dispatch(loginRequest(values));
+                    }}
+                  >
+                    {({ submitForm }) => (
+                      <>
+                        <Field
+                          component={InputField}
+                          name="username"
+                          // iconName="cil-user"
+                          title="Tên tài khoản"
+                        />
+                        <Field
+                          component={InputField}
+                          name="full_name"
+                          title="Họ và tên"
+                        // iconName="cil-lock-locked"
+                        />
+                        <Field
+                          component={InputField}
+                          name="phone"
+                          // iconName="cil-user"
+                          title="Số điện thoại"
+                        />
+                        <Field
+                          component={InputField}
+                          name="dob"
+                          // iconName="cil-lock-locked"
+                          title="Ngày sinh"
+                        />
+                        <Field
+                          component={InputField}
+                          name="city"
+                          // iconName="cil-lock-locked"
+                          title="Tỉnh/Thành phố"
+                        />
+                        <Field
+                          component={InputField}
+                          name="district"
+                          // iconName="cil-lock-locked"
+                          title="Quận/Huyện"
+                        />
+                        <Field
+                          component={InputField}
+                          name="subDistrict"
+                          // iconName="cil-lock-locked"
+                          title="Xã/Phường"
+                        />
+                        <Field
+                          component={InputField}
+                          name="password"
+                          // iconName="cil-lock-locked"
+                          title="Mật khẩu"
+                        />
+                        <Field
+                          component={InputField}
+                          name="rePassword"
+                          // iconName="cil-lock-locked"
+                          title="Nhập lại mật khẩu"
+                        />
+                        <CRow>
+                          <CCol>
+                            <CButton color="success" block>Đăng ký</CButton>
+                          </CCol>
+                        </CRow>
+                        <CRow className="d-flex justify-content-center align-items-center">
+                          <div style={{ paddingTop: 10 }}>
+                            <a href="/login">Đăng nhập</a>
+                          </div>
+                        </CRow>
+                      </>
+                    )}
+                  </Formik>
+
                 </CForm>
               </CCardBody>
-              <CCardFooter className="p-4">
-                <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton>
-                  </CCol>
-                </CRow>
-              </CCardFooter>
+
             </CCard>
           </CCol>
         </CRow>

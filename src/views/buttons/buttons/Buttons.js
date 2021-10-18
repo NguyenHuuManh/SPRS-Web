@@ -16,7 +16,7 @@ const Buttons = () => {
       <CCard>
         <CCardHeader>
           Standard Buttons
-          <DocsLink name="-Button"/>
+          <DocsLink name="-Button" />
         </CCardHeader>
         <CCardBody>
           <CRow className="align-items-center">
@@ -583,7 +583,7 @@ const Buttons = () => {
             <CCol col="2" className="mb-3 mb-xl-0 text-center">
               <CButton color="primary" size="lg">Standard Button</CButton>
             </CCol>
-            <CCol col="2"className="mb-3 mb-xl-0 text-center">
+            <CCol col="2" className="mb-3 mb-xl-0 text-center">
               <CButton variant="outline" color="secondary" size="lg">Outline Button</CButton>
             </CCol>
             <CCol col="2" className="mb-3 mb-xl-0 text-center">

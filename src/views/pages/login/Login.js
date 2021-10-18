@@ -8,12 +8,11 @@ import {
   CRow
 } from "@coreui/react";
 import { Field, Formik } from "formik";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { loginRequest } from "src/redux/modules/auth";
-import InputField from "src/views/InputField";
-import { appToast } from "../../components/AppToastContainer"
+import InputField from "src/views/components/InputField";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,8 +21,6 @@ const Login = () => {
   if (auth.isLogin) {
     return <Redirect to="/" />;
   }
-
-
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
