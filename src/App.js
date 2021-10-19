@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import "./scss/style.scss";
 import AppToastContainer from "./views/components/AppToastContainer";
+import ForgotPassword from "./views/pages/forgotPassword";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -37,6 +38,14 @@ class App extends Component {
                 name="Register Page"
                 render={(props) => <Register {...props} />}
               />
+
+              <Route
+                exact
+                path="/forgot"
+                name="Forgot Password"
+                render={(props) => <ForgotPassword {...props} />}
+              />
+
               <Route
                 exact
                 path="/404"
