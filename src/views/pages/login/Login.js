@@ -8,10 +8,11 @@ import {
   CRow
 } from "@coreui/react";
 import { Field, Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { loginRequest } from "src/redux/modules/auth";
+import AppLoading from "src/views/components/AppLoading";
 import InputField from "src/views/components/InputField";
 
 const Login = () => {
@@ -24,6 +25,7 @@ const Login = () => {
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
+      <AppLoading isOpen={auth.isLoading} />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="8">

@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { loginRequest } from "src/redux/modules/auth";
+import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
 
 const ForgotPassword = () => {
@@ -95,6 +96,10 @@ const ForgotPassword = () => {
                                                 rePassword: "",
                                             }}
                                             onSubmit={(values) => {
+                                                appToast({
+                                                    toastOptions: { type: "success" },
+                                                    description: "Đổi mật khẩu thành công",
+                                                });
                                                 history.push("/login");
                                             }}
                                         >
