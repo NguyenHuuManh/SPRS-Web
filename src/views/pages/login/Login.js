@@ -8,7 +8,7 @@ import {
   CRow
 } from "@coreui/react";
 import { Field, Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { loginRequest } from "src/redux/modules/auth";

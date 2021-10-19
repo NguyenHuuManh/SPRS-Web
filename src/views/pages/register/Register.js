@@ -184,7 +184,7 @@ const Register = () => {
                         </CRow>
                         <CRow className="d-flex justify-content-center align-items-center">
                           <div style={{ paddingTop: 10 }}>
-                            <a href="/login">Đăng nhập</a>
+                            <a href="/">Đăng nhập</a>
                           </div>
                         </CRow>
                       </>

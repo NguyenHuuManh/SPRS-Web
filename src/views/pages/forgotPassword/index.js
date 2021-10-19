@@ -100,7 +100,7 @@ const ForgotPassword = () => {
                                                     toastOptions: { type: "success" },
                                                     description: "Đổi mật khẩu thành công",
                                                 });
-                                                history.push("/login");
+                                                history.replace("/Login");
                                             }}
                                         >
                                             {({ submitForm }) => (
