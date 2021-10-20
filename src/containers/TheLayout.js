@@ -2,9 +2,6 @@ import React from "react";
 import { TheContent, TheFooter, TheHeader, TheSidebar } from "./index";
 
 const TheLayout = () => {
-  // useEffect(() => {
-  //   <Redirect to="/login" />;
-  // }, []);
 
   return (
     <div className="c-app c-default-layout">
