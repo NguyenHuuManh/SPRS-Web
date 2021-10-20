@@ -1,29 +1,14 @@
-import { isNull } from "lodash";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router";
-import usersData from "src/views/users/UsersData";
-import { TheContent, TheSidebar, TheFooter, TheHeader } from "./index";
+import React from "react";
+import { TheContent, TheFooter, TheHeader, TheSidebar } from "./index";
 
 const TheLayout = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    // window.localStorage.removeItem("userData");
-    // const userData = window.localStorage.getItem("userData");
-    // console.log(!isNull(userData), "useData");
-    // if (!isNull(userData)) {
-    //   dispatch({ type: "set", user: userData });
-    // } else {
-    //   <Redirect to="/login" />;
-    // }
-    <Redirect to="/login" />;
-  }, []);
+  // useEffect(() => {
+  //   <Redirect to="/login" />;
+  // }, []);
 
   return (
     <div className="c-app c-default-layout">
-      {/* <TheSidebar/> */}
+      <TheSidebar />
       <div className="c-wrapper">
         <TheHeader />
         <div className="c-body">

@@ -5,24 +5,27 @@ import {
   CCardGroup,
   CCol,
   CContainer,
-  CRow,
+  CRow
 } from "@coreui/react";
 import { Field, Formik } from "formik";
-import React, { useContext } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { loginRequest } from "src/redux/modules/auth";
-import InputField from "src/views/InputField";
+import AppLoading from "src/views/components/AppLoading";
+import InputField from "src/views/components/InputField";
 
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer.auth);
-  console.log("auth", auth);
+
   if (auth.isLogin) {
     return <Redirect to="/" />;
   }
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
+      <AppLoading isOpen={auth.isLoading} />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="8">
@@ -33,10 +36,10 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      userName: "",
+                      username: "admin",
+                      password: "password",
                     }}
                     onSubmit={(values) => {
-                      console.log("values", values);
                       dispatch(loginRequest(values));
                     }}
                   >
@@ -44,7 +47,7 @@ const Login = () => {
                       <>
                         <Field
                           component={InputField}
-                          name="userName"
+                          name="username"
                           iconName="cil-user"
                         />
                         <Field
@@ -65,9 +68,12 @@ const Login = () => {
                             </CButton>
                           </CCol>
                           <CCol xs="6" className="text-right">
-                            <CButton color="link" className="px-0">
-                              Forgot password?
-                            </CButton>
+
+                            <Link to="/forgot">
+                              <CButton color="link" className="px-0">
+                                Forgot password?
+                              </CButton>
+                            </Link>
                           </CCol>
                         </CRow>
                       </>
@@ -76,16 +82,13 @@ const Login = () => {
                 </CCardBody>
               </CCard>
               <CCard
-                className="text-white bg-primary py-5 d-md-down-none"
-                style={{ width: "44%" }}
+                className="text-white bg-primary py-5 "
               >
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
+                      Quản lý tổ chức dễ dàng hơn với SPRS site
                     </p>
                     <Link to="/register">
                       <CButton

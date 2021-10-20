@@ -1,10 +1,14 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { CContainer, CFade } from "@coreui/react";
 
 // routes config
 import routes from "../routes";
 import PrivateRoute from "src/views/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { isEmpty, isNull, isUndefined } from "lodash";
+import { getProfileRequest } from "src/redux/modules/profile";
+import httpServices from "src/services/httpServices";
 
 const loading = (
   <div className="pt-3 text-center">
@@ -13,6 +17,15 @@ const loading = (
 );
 
 const TheContent = () => {
+  const user = JSON.parse(window.localStorage.getItem("userSPRS"));
+  const distpatch = useDispatch();
+
+  useEffect(() => {
+    if (!isEmpty(user) && !isUndefined(user) && !isNull(user)) {
+      httpServices.attachTokenToHeader(user);
+      distpatch(getProfileRequest());
+    }
+  }, []);
   return (
     <main className="c-main">
       <CContainer fluid>
@@ -35,7 +48,7 @@ const TheContent = () => {
                 )
               );
             })}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/" to="/users" />
           </Switch>
         </Suspense>
       </CContainer>

@@ -1,33 +1,32 @@
-import { takeLatest, put } from "redux-saga/effects";
-import { apiSignin } from "src/apiFunctions/login";
+import { put, takeLatest } from "redux-saga/effects";
+import { apiSignin } from "src/apiFunctions/authencation";
 import httpServices from "src/services/httpServices";
+import { appToast } from "src/views/components/AppToastContainer";
 import * as type from "../../type";
 function* login({ payload }) {
-  const { userName, password } = payload;
-  // const response = {
-  //   code: 200,
-  //   data: "hello",
-  //   err: null,
-  // };
-  const response = yield apiSignin({ username: userName, passWord: password })
+  const response = yield apiSignin(payload)
     .then((e) => {
-      const response = {
-        code: 200,
-        data: payload,
-        err: null,
-      };
-      return response;
+      return e;
     })
-    .finally(() => {});
-  httpServices.saveLocalStorage(response.data);
+    .finally(() => { });
   try {
-    if (response.code == 200) {
+    if (response?.status === 200) {
+      httpServices.attachTokenToHeader(response.data.token);
+      httpServices.saveLocalStorage(response.data.token);
       yield put({ type: type.REQUEST_LOGIN_SUCCESS, payload: response.data });
     } else {
-      yield put({ type: type.REQUEST_LOGIN_FAILED, error: response.err });
+      yield put({ type: type.REQUEST_LOGIN_FAILED, payload: response.data });
+      appToast({
+        toastOptions: { type: "error" },
+        description: response.data.message,
+      });
     }
   } catch (error) {
-    yield put({ type: type.REQUEST_LOGIN_FAILED, error: response.err });
+    appToast({
+      toastOptions: { type: "error" },
+      description: "Hệ thống đang được bảo trì",
+    });
+    yield put({ type: type.REQUEST_LOGIN_FAILED, payload: error });
   }
 }
 

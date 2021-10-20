@@ -18,11 +18,11 @@ import { DocsLink } from 'src/reusable'
 const Charts = () => {
 
   return (
-    <CCardGroup columns className = "cols-2" >
+    <CCardGroup columns className="cols-2" >
       <CCard>
         <CCardHeader>
           Bar Chart
-          <DocsLink href="http://www.chartjs.org"/>
+          <DocsLink href="http://www.chartjs.org" />
         </CCardHeader>
         <CCardBody>
           <CChartBar

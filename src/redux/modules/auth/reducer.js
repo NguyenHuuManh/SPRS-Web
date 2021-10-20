@@ -5,7 +5,7 @@ const initialState = {
   auth: {
     data: {},
     isLogin: false,
-    error: null,
+    isLoading: false,
   },
 };
 
@@ -14,20 +14,22 @@ export const authReducer = (state = initialState, action) => {
     switch (action.type) {
       case type.REQUEST_LOGIN:
         draftState.auth.isLogin = false;
+        draftState.auth.isLoading = true;
         break;
 
       case type.REQUEST_LOGIN_SUCCESS:
         draftState.auth.data = action.payload;
         draftState.auth.isLogin = true;
+        draftState.auth.isLoading = false;
         break;
 
       case type.REQUEST_LOGIN_FAILED:
         draftState.auth.isLogin = false;
-        draftState.auth.error = action.error;
+        draftState.auth.data = action.payload;
+        draftState.auth.isLoading = false;
         break;
       case type.REQUEST_LOGOUT:
         draftState.auth.isLogin = false;
-        draftState.auth.error = null;
         draftState.auth.data = {};
         break;
       default:

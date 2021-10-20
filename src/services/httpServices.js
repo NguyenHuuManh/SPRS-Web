@@ -1,5 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-
+import axios from "axios";
 class Services {
   axios;
   interceptors;
@@ -7,15 +6,20 @@ class Services {
   constructor() {
     this.axios = axios;
     this.interceptors = null;
-    this.axios.defaults.withCredentials = true;
-    this.axios.defaults.adapter = require("axios/lib/adapters/http");
+    // this.axios.defaults.withCredentials = false;
+    // this.axios.defaults.adapter = require("axios/lib/adapters/http");
+    this.axios.defaults.headers = {
+      //      "Access-Control-Allow-Headers": "*",
+      //    "Access-Control-Allow-Methods": "*",
+      // "Access-Control-Allow-Credentials": true,
+    };
   }
 
   attachTokenToHeader(token) {
     this.interceptors = this.axios.interceptors.request.use(
       function (config) {
         // Do something before request is sent
-        config.headers.sessionId = token;
+        config.headers.Authorization = `Bearer ${token}`;
         return config;
       },
       function (error) {
@@ -23,6 +27,8 @@ class Services {
       }
     );
   }
+
+  backToDefaultHeader() { }
 
   saveLocalStorage(data) {
     // const { token, res } = data;
@@ -41,9 +47,10 @@ class Services {
     if (isSuccess) {
       return response;
     } else {
+      console.log(error.response, "err");
       if (error.response && error.response.status === 401) {
-        if ((url || "").includes("sprs/api/authenticate")) {
-          return;
+        if ((url || "").includes("/authenticate")) {
+          return error.response;
         }
         // clear token
         localStorage.removeItem("userSPRS");
