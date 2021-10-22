@@ -13,6 +13,7 @@ export const REQUEST_ORG = `${URL}/sprs/api/request-manage/request-organizationa
 export const REQUEST_ADMIN = `${URL}/sprs/api/request-manage/request-systemAdmin`;
 export const ORG_MANAGEMENT = `${URL}/sprs/api/organization-manage/origanization`;
 export const GET_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/request-systemAdmin`
-export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/request-systemAdmin`
+export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/accept`
+export const REJECT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/reject`
 
 

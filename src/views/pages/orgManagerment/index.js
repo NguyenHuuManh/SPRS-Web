@@ -1,13 +1,15 @@
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { apiAcceptRequestAdminORG, apiGetRequestAdminORG } from 'src/apiFunctions/authencation'
+import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation'
+import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction'
 import InputField from 'src/views/components/InputField'
 export default () => {
     const [itemSelected, setItemSelected] = useState({})
     const [data, setData] = useState([]);
     const [body, setbody] = useState({});
     const [pageSize, setPageSize] = useState({ page: 1, size: 10 });
+    const [items, setItems] = useState([]);
 
     const callGetReques = () => {
         apiGetRequestAdminORG().then((res) => {
@@ -22,11 +24,49 @@ export default () => {
         callGetReques()
     }, [pageSize])
 
-    const accpetRequestORG = (item) => {
-        apiAcceptRequestAdminORG(item).then((e) => {
+    const accpetRequestORG = () => {
+        const ids = items.map((e) => e.id);
+        console.log("ids", ids)
+        apiAcceptRequestAdminORG(ids).then((e) => {
             console.log("e", e);
+            if (e.satus == 200 && e.data.code == "200") {
+                appToast({
+                    toastOptions: { type: "success" },
+                    description: "Active success!",
+                });
+                setPageSize({ ...pageSize })
+            }
         })
     }
+
+    const rejectRequestORG = (item) => {
+        apiRejectRequestAdminORG([item.id]).then((e) => {
+            if (e.satus == 200 && e.data.code == "200") {
+                appToast({
+                    toastOptions: { type: "success" },
+                    description: "Reject success!",
+                });
+                setPageSize({ ...pageSize })
+            }
+        })
+    }
+
+    const handleCheckAll = () => {
+        // checkDcThaoTac();
+        if (isAllItemOnPageChecked(items, data, "id")) {
+            setItems(removeCheckAllItems(items, data, "id"));
+        } else {
+            setItems(addAllItemOfPage(items, data, "id"));
+        }
+    };
+
+    const onSelectedItem = (e, item) => {
+        setItems(addAnItems(items, item, "id"));
+        e.stopPropagation();
+    };
+
+
+    console.log("items", items);
     return (
         <CRow>
             <CCol lg={12}>
@@ -77,13 +117,24 @@ export default () => {
             <CCol lg={12}>
                 <CCard>
                     <CCardHeader>
-                        Danh sách tổ chức
+                        <CRow>
+                            <CCol md={6}>
+                                Danh sách tổ chức
+                            </CCol>
+                            <CCol md={6} className="d-flex align-items-center justify-content-end">
+                                <CButton type="submit" color="secondary" onClick={accpetRequestORG} >accept</CButton>
+                            </CCol>
+                        </CRow>
                     </CCardHeader>
                     <CCardBody>
                         <table className="table table-hover">
                             <thead className="table-active">
                                 <th>STT</th>
-                                <th><input type="checkbox" /></th>
+                                <th>
+                                    <input type="checkbox"
+                                        onChange={handleCheckAll}
+                                        checked={Boolean(isAllItemOnPageChecked(items, data, "id"))}
+                                    /></th>
                                 <th>Tên</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
@@ -98,12 +149,17 @@ export default () => {
                                                 onClick={() => { setItemSelected(item) }}
                                             >
                                                 <td>{index + 1}</td>
-                                                <td><input type="checkbox" /></td>
+                                                <td>
+                                                    <input type="checkbox"
+                                                        checked={Boolean(items.filter((elm) => elm.id === item.id).length > 0)}
+                                                        onChange={(e) => onSelectedItem(e, item)}
+                                                    />
+                                                </td>
                                                 <td>{item?.name}</td>
                                                 <td>{item?.status}</td>
                                                 <td>
-                                                    <CButton color="secondary" onClick={() => { accpetRequestORG(item) }}>
-                                                        Active
+                                                    <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
+                                                        Reject
                                                     </CButton>
                                                 </td>
                                             </tr>
