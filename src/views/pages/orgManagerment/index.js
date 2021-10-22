@@ -30,7 +30,7 @@ export default () => {
         console.log("ids", ids)
         apiAcceptRequestAdminORG(ids).then((e) => {
             console.log("e", e);
-            if (e.satus == 200 && e.data.code == "200") {
+            if (e.status == 200 && e.data.code == "200") {
                 appToast({
                     toastOptions: { type: "success" },
                     description: "Active success!",
@@ -42,7 +42,7 @@ export default () => {
 
     const rejectRequestORG = (item) => {
         apiRejectRequestAdminORG([item.id]).then((e) => {
-            if (e.satus == 200 && e.data.code == "200") {
+            if (e.status == 200 && e.data.code == "200") {
                 appToast({
                     toastOptions: { type: "success" },
                     description: "Reject success!",
