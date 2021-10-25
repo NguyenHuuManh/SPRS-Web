@@ -5,6 +5,8 @@ import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminO
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
+import CIcon from "@coreui/icons-react";
+import { FaEye } from 'react-icons/fa';
 export default () => {
     const [itemSelected, setItemSelected] = useState({})
     const [data, setData] = useState([]);
@@ -20,6 +22,10 @@ export default () => {
             }
         });
     }
+
+    useEffect(() => {
+        setItems([]);
+    }, [data])
 
     useEffect(() => {
         callGetReques()
@@ -136,9 +142,14 @@ export default () => {
                                         onChange={handleCheckAll}
                                         checked={Boolean(isAllItemOnPageChecked(items, data, "id"))}
                                     /></th>
-                                <th>Tên</th>
+                                <th>Tên đầy đủ</th>
+                                <th>Tên tài khoản</th>
+                                <th>Số điện thoại</th>
+                                <th>Tên tổ chức</th>
+                                <th>Địa chỉ tổ chức</th>
                                 <th>Trạng thái</th>
                                 <th>Thao tác</th>
+                                <th></th>
                             </thead>
                             <tbody>
                                 {
@@ -156,11 +167,22 @@ export default () => {
                                                         onChange={(e) => onSelectedItem(e, item)}
                                                     />
                                                 </td>
-                                                <td>{item?.name}</td>
+                                                <td>{item?.user.full_name}</td>
+                                                <td>{item?.user.username}</td>
+                                                <td>{item?.user.phone}</td>
+                                                <td>{item?.user.organization?.name}</td>
+                                                <td>{item?.user.organization?.address?.addressLine}</td>
                                                 <td>{item?.status}</td>
                                                 <td>
-                                                    <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
-                                                        Reject
+                                                    {item.user.isActive == false && (
+                                                        <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
+                                                            Reject
+                                                        </CButton>
+                                                    )}
+                                                </td>
+                                                <td style={{ justifyContent: "center" }}>
+                                                    <CButton onClick={() => { }} >
+                                                        <FaEye size={20} />
                                                     </CButton>
                                                 </td>
                                             </tr>
