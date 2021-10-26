@@ -1,6 +1,6 @@
 export const API_KEY = "AIzaSyDlqprU1uYvSEEQIEotGG8_mL3QFfVB7vY"
-export const URL_GOONG = "https://rsapi.goong.io/Geocode"
-export const API_KEY_GOONG = "LwBkYGIlqOTtypHy0aq9AL3vdMLYgnM0JX9BHJON&fbclid=IwAR2ee2l31zBRRkapVTg6v4Zokm_4bYs3yt9c6gsfqOFRAQDRk2ZlMyun83c"
+export const URL_GOONG = "https://rsapi.goong.io"
+export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
 export const URL = "http://ec2-3-1-50-88.ap-southeast-1.compute.amazonaws.com:8080";
 //
@@ -15,5 +15,9 @@ export const ORG_MANAGEMENT = `${URL}/sprs/api/organization-manage/origanization
 export const GET_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/request-systemAdmin`
 export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/accept`
 export const REJECT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/reject`
+//
+export const PLACE_AUTOCOMPLETE = `${URL_GOONG}/Place/AutoComplete`
+export const DETAIL_PLACE_LAT_LNG = `${URL_GOONG}/Geocode`
+export const DETAIL_PLACE_ID = `${URL_GOONG}/Place/Detail`
 
 

@@ -1,32 +1,16 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
+import { FaEye, FaChartBar } from 'react-icons/fa';
 
 const _nav = [
   {
     _tag: 'CSidebarNavItem',
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    name: 'Tổng quan',
+    to: '/',
+    icon: <FaChartBar style={{ marginRight: 10 }} />,
     badge: {
       color: 'info',
-      text: 'NEW',
     }
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Theme']
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Colors',
-    to: '/theme/colors',
-    icon: 'cil-drop',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Typography',
-    to: '/theme/typography',
-    icon: 'cil-pencil',
   },
   {
     _tag: 'CSidebarNavTitle',
@@ -34,53 +18,46 @@ const _nav = [
   },
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Base',
-    route: '/base',
-    icon: 'cil-puzzle',
+    name: 'Quản lý tài khoản',
+    icon: 'cil-user',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Breadcrumb',
-        to: '/base/breadcrumbs',
+        name: 'Quản lý người dùng',
+        to: '/quan-ly-user',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Cards',
-        to: '/base/cards',
+        name: 'Quản lý tổ chức',
+        to: '/quan-ly-org',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Carousel',
-        to: '/base/carousels',
+        name: 'Thêm tài khoản thành viên',
+        to: '/register-member',
       },
     ],
   },
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Buttons',
-    route: '/buttons',
-    icon: 'cil-cursor',
+    name: 'Quản lý Điểm',
+    icon: 'cil-map',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Buttons',
-        to: '/buttons/buttons',
+        name: 'Quản lý Store',
+        to: '/',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Brand buttons',
-        to: '/buttons/brand-buttons',
+        name: 'Quản lý điểm cứu trợ',
+        to: '/',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Buttons groups',
-        to: '/buttons/button-groups',
+        name: 'Quản lý tổ chức',
+        to: '/',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Dropdowns',
-        to: '/buttons/button-dropdowns',
-      }
     ],
   },
 ]

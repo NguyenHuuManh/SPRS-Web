@@ -7,6 +7,7 @@ import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import CIcon from "@coreui/icons-react";
 import { FaEye } from 'react-icons/fa';
+import AppSelectTinh from 'src/views/components/AppSelectTinh'
 export default () => {
     const [itemSelected, setItemSelected] = useState({})
     const [data, setData] = useState([]);
@@ -84,7 +85,7 @@ export default () => {
                     <CCardBody>
                         <Formik
                             initialValues={{
-
+                                datefrom: "",
                             }}
                             onSubmit={(values) => {
                                 setbody({ ...values })
@@ -101,14 +102,16 @@ export default () => {
                                         </CCol>
                                         <CCol md={3}>
                                             <Field
-                                                component={InputField}
-                                                title="Loại tài khoản"
+                                                component={AppSelectTinh}
+                                                title="Tỉnh/thành phố"
                                             />
                                         </CCol>
                                         <CCol md={3}>
                                             <Field
                                                 component={InputField}
                                                 title="Loại tài khoản"
+                                                type="date"
+                                                name="datefrom"
                                             />
                                         </CCol>
                                         <CCol md={3} className="d-flex justify-content-center align-items-center">

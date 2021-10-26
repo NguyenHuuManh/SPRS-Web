@@ -6,6 +6,9 @@ import { Marker } from "react-google-maps";
 import Map from "../Map";
 import { apiPlaceDetailByLongLat } from "../../../apiFunctions/mapPlace"
 import { isEmpty } from "lodash"
+import { appToast } from "../AppToastContainer";
+import AppSearchLocation from "../AppSearchLocation";
+import { Field, Formik } from "formik";
 export default memo((props) => {
     const [isOpen, setIsOpen] = useState(false);
     const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, isRequired } = props
@@ -15,7 +18,6 @@ export default memo((props) => {
     useEffect(() => {
         if (!isOpen) return;
         navigator.geolocation.getCurrentPosition((e) => {
-            console.log("getCurrentPosition", e);
             setMarker({ ...marker, lat: e?.coords?.latitude, lng: e?.coords?.longitude })
         })
     }, [isOpen])
@@ -25,25 +27,42 @@ export default memo((props) => {
     }, [adress])
 
     const getDetailPlace = () => {
-        apiPlaceDetailByLongLat(marker?.lng, marker?.lat).then((e) => {
-            if (e.status == 200) {
-                const place = e?.data?.results[0]?.address_components;
-                setAdress({
-                    ...adress,
-                    city: place[place.length - 1]?.long_name,
-                    province: place[place.length - 2]?.long_name,
-                    district: place[place.length - 2]?.long_name,
-                    subDistrict: place[place.length - 3]?.long_name,
-                    GPS_Lati: marker?.lat + "",
-                    GPS_long: marker?.lng + "",
-                })
-                console.log("place", place)
-            }
-        })
+        apiPlaceDetailByLongLat(marker?.lng, marker?.lat)
+            .then(res => {
+                if (res.status !== 200) {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "hệ thống đang bảo trì",
+                    });
+                    return;
+                }
+
+                return res.json();
+            })
+            .then((e) => {
+                if (e?.status == "OK") {
+                    const place = e?.results[0]?.address_components;
+                    setAdress({
+                        ...adress,
+                        city: place[place.length - 1]?.long_name,
+                        province: place[place.length - 2]?.long_name,
+                        district: place[place.length - 2]?.long_name,
+                        subDistrict: place[place.length - 3]?.long_name,
+                        GPS_Lati: marker?.lat + "",
+                        GPS_long: marker?.lng + "",
+                    })
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "hệ thống đang bảo trì",
+                    });
+                    return;
+                }
+            })
+
     }
 
     useEffect(() => {
-        console.log("marker", marker);
         if (isEmpty(marker)) return;
         getDetailPlace();
     }, [marker])
@@ -88,6 +107,25 @@ export default memo((props) => {
                 onClose={setIsOpen}
             >
                 <CCardHeader>Tìm kiếm địa điểm</CCardHeader>
+                {
+                    isOpen && (
+                        <Formik
+                            initialValues={{
+                                placeID: ""
+                            }}
+                        >
+                            {() => (
+                                <div style={{ paddingLeft: 50, paddingRight: 50 }}>
+                                    <Field
+                                        component={AppSearchLocation}
+                                        name="placeID"
+                                        defaultKey={adress?.subDistrict}
+                                    />
+                                </div>
+                            )}
+                        </Formik>
+                    )
+                }
                 <CCardBody>
                     <CRow>
                         <CCol md={4}>
