@@ -1,5 +1,6 @@
-import { API_KEY_GOONG, DETAIL_PLACE_ID, DETAIL_PLACE_LAT_LNG, PLACE_AUTOCOMPLETE } from "src/constrants/action";
+import { API_KEY_GOONG, CITY, DETAIL_PLACE_ID, DETAIL_PLACE_LAT_LNG, DISTRICT, PLACE_AUTOCOMPLETE, SUBDISTRICT } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
+import httpServices from "src/services/httpServices";
 
 export const apiPlaceDetailByLongLat = async (long, lat) => {
     // return await httpServices.get(
@@ -25,5 +26,17 @@ export const apiPlaceAutoComplete = async (key) => {
     // );
     return await fetch(`${PLACE_AUTOCOMPLETE}${convertToQuery(param)}`)
 };
+
+export const apiCity = async () => {
+    return await httpServices.get(`${CITY}`);
+};
+
+export const apiDistrict = async (id) => {
+    return await httpServices.get(`${DISTRICT}${id}`);
+}
+
+export const apiSubDistrict = async (id) => {
+    return await httpServices.get(`${SUBDISTRICT}${id}`);
+}
 
 

@@ -8,6 +8,9 @@ import {
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
 import { apiSigup } from 'src/apiFunctions/authencation'
+import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
+import AppSelectTinh from 'src/views/components/AppSelectTinh'
+import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import Mappicker from 'src/views/components/Mappicker'
@@ -15,6 +18,8 @@ import { register } from './validate'
 
 const Register = () => {
   const [orgAdress, setOrgAdress] = useState({});
+  const [tinh, setTinh] = useState({});
+  const [huyen, setHuyen] = useState({});
   const singup = (values) => {
     apiSigup(values).then((res) => {
       console.log("resSignup", res);
@@ -69,24 +74,48 @@ const Register = () => {
                         full_name: values.full_name,
                         dob: values.dob,
                         address: {
-                          city: values.city || "",
-                          province: values?.province || "",
-                          district: values?.district || "",
-                          subDistrict: values?.subDistrict || "",
-                          addressLine: values?.addressLine || "",
+                          city: {
+                            code: "",
+                            id: values.city,
+                            name: "Hà Nội"
+                          },
+                          district: {
+                            code: "",
+                            id: values?.district,
+                            name: "Thạch Thất"
+                          },
+                          subDistrict: {
+                            code: "",
+                            id: values?.subDistrict,
+                            name: "Tân Xã",
+                          },
+                          addressLine: values?.addressLine,
                         },
                         groups_user: [{ id: values.groupsId }],
                         organization: {
-                          name: values?.nameOrg || "",
+                          name: values?.nameOrg,
                           founded: "",
                           description: "",
                           address: {
-                            city: orgAdress.city || "",
-                            province: orgAdress?.province || "",
-                            district: orgAdress?.district || "",
-                            subDistrict: orgAdress?.subDistrict || "",
-                            addressLine: values?.adresslineORG || "",
-                          }
+                            city: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress.city
+                            },
+                            district: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress?.district,
+                            },
+                            subDistrict: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress?.subDistrict,
+                            },
+                            addressLine: values?.adresslineORG,
+                          },
+                          GPS_Lati: orgAdress?.GPS_Lati + "",
+                          GPS_long: orgAdress?.GPS_long + "",
                         }
 
                       }
@@ -124,25 +153,29 @@ const Register = () => {
                           title="Ngày sinh"
                         />
                         <Field
-                          maxTitle={170}
-                          horizontal
-                          component={InputField}
+                          component={AppSelectTinh}
+                          title="Tỉnh/thành phố"
                           name="city"
-                          title="Tỉnh/Thành phố"
-                        />
-                        <Field
+                          functionProps={setTinh}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectHuyen}
+                          title="Quận/huyện"
                           name="district"
-                          title="Quận/Huyện"
-                        />
-                        <Field
+                          idTinh={tinh?.id}
+                          functionProps={setHuyen}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectXa}
+                          title="Xã phường"
                           name="subDistrict"
-                          title="Xã/Phường"
+                          idHuyen={huyen?.id}
+                          maxTitle={170}
+                          horizontal
                         />
                         <Field
                           maxTitle={170}
@@ -190,7 +223,6 @@ const Register = () => {
                       </>
                     )}
                   </Formik>
-
                 </CForm>
               </CCardBody>
 
@@ -198,7 +230,7 @@ const Register = () => {
           </CCol>
         </CRow>
       </CContainer>
-    </div>
+    </div >
   )
 }
 

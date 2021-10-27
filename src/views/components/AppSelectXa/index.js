@@ -2,45 +2,36 @@
  * /api/danh-muc-dan-toc
  * danh mục đơn vị
  */
+import { isEmpty, isNull } from "lodash-es";
 import React, { memo, useEffect, useState } from "react";
-import { OptionTypeBase, Props as SelectProps } from "react-select";
-import { apiCity } from "src/apiFunctions/mapPlace";
-import { DiaChinh } from "src/helps/data";
+import { apiDistrict, apiSubDistrict } from "src/apiFunctions/mapPlace";
 import AppSelect from "../AppSelect";
 
-interface Props extends SelectProps<OptionTypeBase> {
-    title?: string;
-    horizontal?: boolean;
-    options?: Array<{
-        label: string,
-        value: any,
-    }>;
-    dropDownIcon?: boolean;
-    isFormik?: boolean;
-    defaultValue?: any;
-    disabled?: any;
-    functionProps?: any;
-}
 
-export default memo((props: Props) => {
+export default memo((props) => {
     const {
         title,
         defaultValue,
         isFormik,
         form,
         field,
-        donViId,
-        phongBanId,
         disabled,
-        idTinh,
+        idHuyen,
         functionProps,
         ...remainProps
     } = props;
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { errors, touched, setFieldValue } = form;
+    const { name, value } = field;
 
-    const callGetTinh = () => {
-        apiCity().then((res) => {
+    const callGetHuyen = () => {
+        if (!idHuyen || isEmpty(idHuyen + "") || isNull(idHuyen)) {
+            setData([]);
+            setFieldValue(name, "");
+            return
+        };
+        apiSubDistrict(idHuyen).then((res) => {
             if (res?.status == 200) {
                 if (res.data.code == "200") {
                     setData(res?.data?.obj);
@@ -51,8 +42,8 @@ export default memo((props: Props) => {
     }
 
     useEffect(() => {
-        callGetTinh();
-    }, []);
+        callGetHuyen();
+    }, [idHuyen]);
 
     const selectedOption =
         field && data?.find((option) => option?.id == field?.value);

@@ -33,6 +33,7 @@ export default React.memo((props) => {
         width40,
         onBlur,
         icon,
+        maxTitle,
         ...remainProps
     } = props;
 
@@ -112,37 +113,40 @@ export default React.memo((props) => {
     };
     return (
         <div
-            style={{ width: width40 ? "40%" : "" }}
+            style={{ width: width40 ? "40%" : "", marginBottom: 20 }}
         >
-            {title ? (
-                <label style={{ marginBottom: 12 }}>
-                    {title} {isRequired && <span style={{ color: "red" }}>*</span>}
-                </label>
-            ) : (
-                <div style={{ marginTop: "10px" }}></div>
+            {(!horizontal) && title && (
+                <label className="inputTitle">{title}</label>
             )}
-            <div className="cccd-custom-select">
-                <Select
-                    {...remainProps}
-                    getOptionLabel={getOptionLabel}
-                    getOptionValue={getOptionValue}
-                    ref={refs && refs}
-                    placeholder={placeholder || ""}
-                    options={options || []}
-                    isClearable={isClearable === false ? isClearable : true}
-                    noOptionsMessage={() => "Không có dữ liệu"}
-                    loadingMessage={() => "Đang tải dữ liệu"}
-                    menuPosition={positionMenu}
-                    // styles={customStyles}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    isDisabled={disabled}
-                    onInputChange={onInputChange}
-                    value={value}
-                    components={{ DropdownIndicator }}
-                />
-                {error && touched && <div className="error">{error}</div>}
+            <div className="cccd-custom-select d-flex">
+                {
+                    horizontal && (
+                        <label className="inputTitle" style={{ width: maxTitle || 150 }}>{title}</label>
+                    )
+                }
+                <div style={{ width: "100%" }}>
+                    <Select
+                        {...remainProps}
+                        getOptionLabel={getOptionLabel}
+                        getOptionValue={getOptionValue}
+                        ref={refs && refs}
+                        placeholder={placeholder || ""}
+                        options={options || []}
+                        isClearable={isClearable === false ? isClearable : true}
+                        noOptionsMessage={() => "Không có dữ liệu"}
+                        loadingMessage={() => "Đang tải dữ liệu"}
+                        menuPosition={positionMenu}
+                        // styles={customStyles}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        isDisabled={disabled}
+                        onInputChange={onInputChange}
+                        value={value}
+                        components={{ DropdownIndicator }}
+                    />
+                </div>
             </div>
+            {error && touched && <div className="error">{error}</div>}
         </div>
     );
 });
