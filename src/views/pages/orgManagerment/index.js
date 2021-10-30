@@ -1,13 +1,20 @@
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import { apiAcceptRequestAdminORG, apiGetRequestAdminORG } from 'src/apiFunctions/authencation'
-import InputField from 'src/views/components/InputField'
+import { apiGetRequestAdminORG } from 'src/apiFunctions/authencation'
+import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
+import AppSelectTinh from 'src/views/components/AppSelectTinh'
+import AppSelectXa from 'src/views/components/AppSelectXa'
+import RejectManage from './component/RejectManage'
+import RequestManage from './component/RequestManage'
 export default () => {
-    const [itemSelected, setItemSelected] = useState({})
+
     const [data, setData] = useState([]);
     const [body, setbody] = useState({});
     const [pageSize, setPageSize] = useState({ page: 1, size: 10 });
+
+    const [tinh, setTinh] = useState({});
+    const [huyen, setHuyen] = useState({});
 
     const callGetReques = () => {
         apiGetRequestAdminORG().then((res) => {
@@ -22,11 +29,13 @@ export default () => {
         callGetReques()
     }, [pageSize])
 
-    const accpetRequestORG = (item) => {
-        apiAcceptRequestAdminORG(item).then((e) => {
-            console.log("e", e);
-        })
-    }
+
+
+    useEffect(() => {
+        console.log("body", body);
+    }, [body])
+
+
     return (
         <CRow>
             <CCol lg={12}>
@@ -37,31 +46,41 @@ export default () => {
                     <CCardBody>
                         <Formik
                             initialValues={{
-
+                                datefrom: "",
+                                tinh: "",
+                                huyen: "",
+                                xa: "",
                             }}
                             onSubmit={(values) => {
                                 setbody({ ...values })
                             }}
                         >
-                            {() => (
+                            {({ values }) => (
                                 <Form>
                                     <CRow>
                                         <CCol md={3}>
                                             <Field
-                                                component={InputField}
-                                                title="Loại tài khoản"
+                                                component={AppSelectTinh}
+                                                title="Tỉnh/thành phố"
+                                                name="tinh"
+                                                functionProps={setTinh}
                                             />
                                         </CCol>
                                         <CCol md={3}>
                                             <Field
-                                                component={InputField}
-                                                title="Loại tài khoản"
+                                                component={AppSelectHuyen}
+                                                title="Quận/huyện"
+                                                name="huyen"
+                                                idTinh={tinh?.id}
+                                                functionProps={setHuyen}
                                             />
                                         </CCol>
                                         <CCol md={3}>
                                             <Field
-                                                component={InputField}
-                                                title="Loại tài khoản"
+                                                component={AppSelectXa}
+                                                title="Xã phường"
+                                                name="xa"
+                                                idHuyen={huyen?.id}
                                             />
                                         </CCol>
                                         <CCol md={3} className="d-flex justify-content-center align-items-center">
@@ -75,45 +94,10 @@ export default () => {
                 </CCard>
             </CCol>
             <CCol lg={12}>
-                <CCard>
-                    <CCardHeader>
-                        Danh sách tổ chức
-                    </CCardHeader>
-                    <CCardBody>
-                        <table className="table table-hover">
-                            <thead className="table-active">
-                                <th>STT</th>
-                                <th><input type="checkbox" /></th>
-                                <th>Tên</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </thead>
-                            <tbody>
-                                {
-                                    data.map((item, index) => {
-                                        return (
-                                            <tr
-                                                key={item.id}
-                                                className={`${item.id == itemSelected?.id && "table-active"}`}
-                                                onClick={() => { setItemSelected(item) }}
-                                            >
-                                                <td>{index + 1}</td>
-                                                <td><input type="checkbox" /></td>
-                                                <td>{item?.name}</td>
-                                                <td>{item?.status}</td>
-                                                <td>
-                                                    <CButton color="secondary" onClick={() => { accpetRequestORG(item) }}>
-                                                        Active
-                                                    </CButton>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    </CCardBody>
-                </CCard>
+                <RequestManage data={data} pageSize={pageSize} setPageSize={setPageSize} />
+            </CCol>
+            <CCol lg={12}>
+                <RejectManage />
             </CCol>
         </CRow>
     )

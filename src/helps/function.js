@@ -1,3 +1,4 @@
+const SUCCESS_STATUS = [200, 201, 202, 203, 204];
 export const callAPIPaging = (props) => {
   const { response, onSuccess, onError, size: limit } = props;
   if (SUCCESS_STATUS.includes(response?.code || response?.status)) {
@@ -25,3 +26,14 @@ export const callAPIPaging = (props) => {
   }
   onError({ data: response?.data, statusText: response?.statusText });
 };
+
+export function convertToQuery(param) {
+  return (
+    "?" +
+    Object.keys(param)
+      .map(function (key) {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(param[key]);
+      })
+      .join("&")
+  );
+}

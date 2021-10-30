@@ -8,18 +8,13 @@ import {
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
 import { apiSigup } from 'src/apiFunctions/authencation'
-import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
-import AppSelectTinh from 'src/views/components/AppSelectTinh'
-import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
-const Register = () => {
+export default () => {
   const [orgAdress, setOrgAdress] = useState({});
-  const [tinh, setTinh] = useState({});
-  const [huyen, setHuyen] = useState({});
   const singup = (values) => {
     apiSigup(values).then((res) => {
       console.log("resSignup", res);
@@ -74,48 +69,24 @@ const Register = () => {
                         full_name: values.full_name,
                         dob: values.dob,
                         address: {
-                          city: {
-                            code: "",
-                            id: values.city,
-                            name: "Hà Nội"
-                          },
-                          district: {
-                            code: "",
-                            id: values?.district,
-                            name: "Thạch Thất"
-                          },
-                          subDistrict: {
-                            code: "",
-                            id: values?.subDistrict,
-                            name: "Tân Xã",
-                          },
-                          addressLine: values?.addressLine,
+                          city: values.city || "",
+                          province: values?.province || "",
+                          district: values?.district || "",
+                          subDistrict: values?.subDistrict || "",
+                          addressLine: values?.addressLine || "",
                         },
                         groups_user: [{ id: values.groupsId }],
                         organization: {
-                          name: values?.nameOrg,
+                          name: values?.nameOrg || "",
                           founded: "",
                           description: "",
                           address: {
-                            city: {
-                              code: "",
-                              id: 0,
-                              name: orgAdress.city
-                            },
-                            district: {
-                              code: "",
-                              id: 0,
-                              name: orgAdress?.district,
-                            },
-                            subDistrict: {
-                              code: "",
-                              id: 0,
-                              name: orgAdress?.subDistrict,
-                            },
-                            addressLine: values?.adresslineORG,
-                          },
-                          GPS_Lati: orgAdress?.GPS_Lati + "",
-                          GPS_long: orgAdress?.GPS_long + "",
+                            city: orgAdress.city || "",
+                            province: orgAdress?.province || "",
+                            district: orgAdress?.district || "",
+                            subDistrict: orgAdress?.subDistrict || "",
+                            addressLine: values?.adresslineORG || "",
+                          }
                         }
 
                       }
@@ -153,29 +124,25 @@ const Register = () => {
                           title="Ngày sinh"
                         />
                         <Field
-                          component={AppSelectTinh}
-                          title="Tỉnh/thành phố"
+                          maxTitle={170}
+                          horizontal
+                          component={InputField}
                           name="city"
-                          functionProps={setTinh}
-                          maxTitle={170}
-                          horizontal
+                          title="Tỉnh/Thành phố"
                         />
                         <Field
-                          component={AppSelectHuyen}
-                          title="Quận/huyện"
+                          maxTitle={170}
+                          horizontal
+                          component={InputField}
                           name="district"
-                          idTinh={tinh?.id}
-                          functionProps={setHuyen}
-                          maxTitle={170}
-                          horizontal
+                          title="Quận/Huyện"
                         />
                         <Field
-                          component={AppSelectXa}
-                          title="Xã phường"
-                          name="subDistrict"
-                          idHuyen={huyen?.id}
                           maxTitle={170}
                           horizontal
+                          component={InputField}
+                          name="subDistrict"
+                          title="Xã/Phường"
                         />
                         <Field
                           maxTitle={170}
@@ -215,14 +182,10 @@ const Register = () => {
                             <CButton color="success" block onClick={submitForm}>Đăng ký</CButton>
                           </CCol>
                         </CRow>
-                        <CRow className="d-flex justify-content-center align-items-center">
-                          <div style={{ paddingTop: 10 }}>
-                            <a href="/">Đăng nhập</a>
-                          </div>
-                        </CRow>
                       </>
                     )}
                   </Formik>
+
                 </CForm>
               </CCardBody>
 
@@ -230,8 +193,6 @@ const Register = () => {
           </CCol>
         </CRow>
       </CContainer>
-    </div >
+    </div>
   )
 }
-
-export default Register
