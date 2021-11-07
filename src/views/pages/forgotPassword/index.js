@@ -10,8 +10,8 @@ import {
 import { Field, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { loginRequest } from "src/redux/modules/auth";
+import { useHistory } from "react-router-dom";
+import { apiOtpPassword, apiResetPass } from "src/apiFunctions/authencation";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
 
@@ -20,15 +20,38 @@ const ForgotPassword = () => {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.authReducer.auth);
     const [isOtp, setIsOtp] = useState(false);
-    const [isChangePass, setIsChangePass] = useState(false);
     const [isPhone, setIsPhone] = useState(true);
+    const [phone, setPhone] = useState();
 
-
-
-    if (auth.isLogin) {
-        return <Redirect to="/" />;
+    const getOtp = (values) => {
+        console.log("values", values);
+        apiOtpPassword(values).then((e) => {
+            console.log("e", e);
+            if (e.status == 200 && e.data.code == "200") {
+                setIsOtp(true);
+                setIsPhone(false);
+                setPhone(values.to);
+            }
+        })
     }
-
+    const checkOTP = (values) => {
+        apiResetPass(values).then((res) => {
+            if (res.status == 200) {
+                if (res.data.code == "200") {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "khôi phục mật khẩu thành công",
+                    });
+                    history.replace("/Login");
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "Chức năng đang bảo trì",
+                    });
+                }
+            }
+        })
+    }
     return (
         <div className="c-app c-default-layout flex-row align-items-center">
             <CContainer>
@@ -42,11 +65,10 @@ const ForgotPassword = () => {
                                     {isPhone && (
                                         <Formik
                                             initialValues={{
-                                                to: "0343700317",
+                                                to: "966048002",
                                             }}
                                             onSubmit={(values) => {
-                                                setIsOtp(true);
-                                                setIsPhone(false);
+                                                getOtp({ to: "+84" + values.to })
                                             }}
                                         >
                                             {({ submitForm }) => (
@@ -56,6 +78,7 @@ const ForgotPassword = () => {
                                                         name="to"
                                                         iconName="cil-phone"
                                                         title="Số điện thoại: "
+                                                        isPhone
                                                     />
                                                     <div className="d-flex justify-content-start align-items-center" >
                                                         <CButton color="success" onClick={submitForm}>Gửi</CButton>
@@ -67,11 +90,10 @@ const ForgotPassword = () => {
                                     {isOtp && (
                                         <Formik
                                             initialValues={{
-                                                to: "0343700317",
+                                                otp: "",
                                             }}
                                             onSubmit={(values) => {
-                                                setIsOtp(false);
-                                                setIsChangePass(true);
+                                                checkOTP({ otp: values.otp, to: phone })
                                             }}
                                         >
                                             {({ submitForm }) => (
@@ -81,41 +103,6 @@ const ForgotPassword = () => {
                                                         name="to"
                                                         iconName="cil-barcode"
                                                         title="Mã OTP: "
-                                                    />
-                                                    <div className="d-flex justify-content-start align-items-center" >
-                                                        <CButton color="success" onClick={submitForm}>Gửi</CButton>
-                                                    </div>
-                                                </>
-                                            )}
-                                        </Formik>
-                                    )}
-                                    {isChangePass && (
-                                        <Formik
-                                            initialValues={{
-                                                password: "",
-                                                rePassword: "",
-                                            }}
-                                            onSubmit={(values) => {
-                                                appToast({
-                                                    toastOptions: { type: "success" },
-                                                    description: "Đổi mật khẩu thành công",
-                                                });
-                                                history.replace("/Login");
-                                            }}
-                                        >
-                                            {({ submitForm }) => (
-                                                <>
-                                                    <Field
-                                                        component={InputField}
-                                                        name="password"
-                                                        iconName="cil-lock-locked"
-                                                        title="Nhập mật khẩu mới:  "
-                                                    />
-                                                    <Field
-                                                        component={InputField}
-                                                        name="rePassword"
-                                                        iconName="cil-lock-locked"
-                                                        title="Nhập lại mật khẩu mới: "
                                                     />
                                                     <div className="d-flex justify-content-start align-items-center" >
                                                         <CButton color="success" onClick={submitForm}>Gửi</CButton>

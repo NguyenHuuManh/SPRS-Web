@@ -71,7 +71,7 @@ export default memo((props: Props) => {
             },
         };
         field.onChange(changeEvent);
-        functionProps && functionProps(selectedOption);
+        functionProps && functionProps({ ...selectedOption });
     };
 
     const renderSelectType = () => {

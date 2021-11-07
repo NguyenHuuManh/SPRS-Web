@@ -11,9 +11,11 @@ import CIcon from "@coreui/icons-react";
 import { useDispatch } from "react-redux";
 import * as type from "../redux/type";
 import { Logout } from "src/redux/modules/auth";
+import { useHistory } from "react-router";
 
 const TheHeaderDropdown = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   return (
     <CDropdown inNav className="c-header-nav-items mx-2" direction="down">
       <CDropdownToggle className="c-header-nav-link" caret={false}>
@@ -29,13 +31,21 @@ const TheHeaderDropdown = () => {
         <CDropdownItem header tag="div" color="light" className="text-center">
           <strong>Account</strong>
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem
+          onClick={() => {
+            history.push("./profile");
+          }}
+        >
           <CIcon name="cil-user" className="mfe-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-settings" className="mfe-2" />
-          Settings
+        <CDropdownItem
+          onClick={() => {
+            history.push("./update-password");
+          }}
+        >
+          <CIcon name="cil-lock-locked" className="mfe-2" />
+          Đổi mật khẩu
         </CDropdownItem>
 
         <CDropdownItem divider />

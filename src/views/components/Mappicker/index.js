@@ -4,14 +4,14 @@ import React, { memo, useEffect, useMemo, useState } from "react";
 import { API_KEY } from "src/constrants/action";
 import { Marker } from "react-google-maps";
 import Map from "../Map";
-import { apiPlaceDetailByLongLat } from "../../../apiFunctions/mapPlace"
+import { apiPlaceDetailById, apiPlaceDetailByLongLat } from "../../../apiFunctions/mapPlace"
 import { isEmpty } from "lodash"
 import { appToast } from "../AppToastContainer";
 import AppSearchLocation from "../AppSearchLocation";
 import { Field, Formik } from "formik";
 export default memo((props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, isRequired } = props
+    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, isRequired, disabled } = props
     const [marker, setMarker] = useState({});
     const { errors, touched, setFieldValue } = form;
     const { name, value } = field;
@@ -62,6 +62,44 @@ export default memo((props) => {
 
     }
 
+    const getDetailPlaceById = (place_id) => {
+        apiPlaceDetailById(place_id)
+            .then(res => {
+                if (res.status !== 200) {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "hệ thống đang bảo trì",
+                    });
+                    return;
+                }
+
+                return res.json();
+            })
+            .then((e) => {
+                console.log("e", e)
+                if (e?.status == "OK") {
+                    setMarker({ ...marker, lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
+                    // const place = e?.results[0]?.address_components;
+                    // setAdress({
+                    //     ...adress,
+                    //     city: place[place.length - 1]?.long_name,
+                    //     province: place[place.length - 2]?.long_name,
+                    //     district: place[place.length - 2]?.long_name,
+                    //     subDistrict: place[place.length - 3]?.long_name,
+                    //     GPS_Lati: marker?.lat + "",
+                    //     GPS_long: marker?.lng + "",
+                    // })
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: "hệ thống đang bảo trì",
+                    });
+                    return;
+                }
+            })
+
+    }
+
     useEffect(() => {
         if (isEmpty(marker)) return;
         getDetailPlace();
@@ -83,10 +121,12 @@ export default memo((props) => {
                             style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
                             readOnly
                             style={{ backgroundColor: "#FFF" }}
-                            onClick={() => { setIsOpen(!isOpen) }}
+                            onClick={() => {
+                                if (disabled) return;
+                                setIsOpen(!isOpen)
+                            }}
                             value={value}
                         />
-
                         {errors[name] && <div className="err-text" >{errors[name]}</div>}
                     </div>
                     <div>
@@ -113,13 +153,20 @@ export default memo((props) => {
                             initialValues={{
                                 placeID: ""
                             }}
+                            onSubmit={(values) => {
+                                getDetailPlaceById(values.placeID);
+                            }}
                         >
-                            {() => (
+                            {({ submitForm }) => (
                                 <div style={{ paddingLeft: 50, paddingRight: 50 }}>
                                     <Field
                                         component={AppSearchLocation}
                                         name="placeID"
                                         defaultKey={adress?.subDistrict}
+                                        functionProps={(e) => {
+                                            console.log("e", e);
+                                            submitForm()
+                                        }}
                                     />
                                 </div>
                             )}
@@ -169,6 +216,7 @@ export default memo((props) => {
                             mapElement={<div style={{ height: `100%` }} />}
                             onClick={(res) => { setMarker({ lat: res.latLng.lat(), lng: res.latLng.lng() }) }}
                             defaultCenter={marker}
+                        // center={adress}
                         >
                             <Marker
                                 position={marker}

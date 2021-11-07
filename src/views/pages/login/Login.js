@@ -36,8 +36,8 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      username: "admin",
-                      password: "password",
+                      username: "manh",
+                      password: "u3WvyfOA",
                     }}
                     onSubmit={(values) => {
                       dispatch(loginRequest(values));

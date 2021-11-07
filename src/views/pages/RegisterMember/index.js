@@ -1,7 +1,7 @@
 import {
   CButton,
   CCard,
-  CCardBody, CCol,
+  CCardBody, CCardHeader, CCol,
   CContainer,
   CForm, CRow
 } from '@coreui/react'
@@ -13,7 +13,7 @@ import InputField from 'src/views/components/InputField'
 import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
-export default () => {
+const RegisterMember = () => {
   const [orgAdress, setOrgAdress] = useState({});
   const singup = (values) => {
     apiSigup(values).then((res) => {
@@ -37,9 +37,11 @@ export default () => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
+              <CCardHeader>
+                <h1>Register</h1>
+              </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>
-                  <h1>Register</h1>
                   <Formik
                     initialValues={{
                       username: "Duongpt35",
@@ -148,23 +150,6 @@ export default () => {
                           maxTitle={170}
                           horizontal
                           component={InputField}
-                          name="nameOrg"
-                          title="Tên tổ chức"
-                        />
-                        <Field
-                          maxTitle={170}
-                          horizontal
-                          component={Mappicker}
-                          name="adressString"
-                          title="Địa chỉ tổ chức"
-                          adress={orgAdress}
-                          setAdress={setOrgAdress}
-                          iconName={"cil-map"}
-                        />
-                        <Field
-                          maxTitle={170}
-                          horizontal
-                          component={InputField}
                           name="password"
                           title="Mật khẩu"
                           type="password"
@@ -196,3 +181,5 @@ export default () => {
     </div>
   )
 }
+
+export default RegisterMember;

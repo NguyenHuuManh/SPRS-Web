@@ -31,11 +31,6 @@ class Services {
   backToDefaultHeader() { }
 
   saveLocalStorage(data) {
-    // const { token, res } = data;
-    // const dataSave = {
-    //   token,
-    //   res,
-    // };
     window.localStorage.setItem("userSPRS", JSON.stringify(data));
   }
 
@@ -45,6 +40,11 @@ class Services {
 
   handleResponse(response, error, isSuccess, url) {
     if (isSuccess) {
+      if (response.data.code + "" == "501") {
+        localStorage.removeItem("userSPRS");
+        window.location.reload();
+        return;
+      }
       return response;
     } else {
       console.log(error.response, "err");

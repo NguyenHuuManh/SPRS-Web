@@ -74,6 +74,7 @@ export default React.memo((props) => {
             ...provided,
             margin: "0px",
             width: "auto",
+            color: "red"
         }),
         indicatorSeparator: (provided, state) => ({
             // Thanh phân cách giữa input và nút xuống
@@ -136,7 +137,6 @@ export default React.memo((props) => {
                         noOptionsMessage={() => "Không có dữ liệu"}
                         loadingMessage={() => "Đang tải dữ liệu"}
                         menuPosition={positionMenu}
-                        // styles={customStyles}
                         onChange={onChange}
                         onBlur={onBlur}
                         isDisabled={disabled}
@@ -146,7 +146,7 @@ export default React.memo((props) => {
                     />
                 </div>
             </div>
-            {error && touched && <div className="error">{error}</div>}
+            {error && touched && <div className="err-text">{error}</div>}
         </div>
     );
 });

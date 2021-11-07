@@ -7,7 +7,7 @@ import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
 import RejectManage from './component/RejectManage'
 import RequestManage from './component/RequestManage'
-export default () => {
+const OrgManagerment = () => {
 
     const [data, setData] = useState([]);
     const [body, setbody] = useState({});
@@ -102,3 +102,4 @@ export default () => {
         </CRow>
     )
 }
+export default OrgManagerment;

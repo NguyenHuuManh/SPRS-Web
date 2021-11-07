@@ -2,7 +2,7 @@
  * /api/danh-muc-dan-toc
  * danh mục đơn vị
  */
-import { isEmpty, isNull } from "lodash-es";
+import { isEmpty, isNull, isUndefined } from "lodash-es";
 import React, { memo, useEffect, useState } from "react";
 import { apiDistrict } from "src/apiFunctions/mapPlace";
 import AppSelect from "../AppSelect";
@@ -24,6 +24,7 @@ export default memo((props) => {
     const [loading, setLoading] = useState(false);
     const { errors, touched, setFieldValue } = form;
     const { name, value } = field;
+
 
     const callGetHuyen = () => {
         if (!idTinh || isEmpty(idTinh + "") || isNull(idTinh)) {
@@ -52,6 +53,7 @@ export default memo((props) => {
         (option) => option?.values == defaultValue
     );
 
+
     const patchedOnChange = (selectedOption) => {
         //
         const selectedValue = selectedOption ? selectedOption.id : selectedOption;
@@ -65,6 +67,17 @@ export default memo((props) => {
         field.onChange(changeEvent);
         functionProps && functionProps(selectedOption);
     };
+
+    useEffect(() => {
+        if (isEmpty(data)) return
+        patchedOnChange(selectedOption);
+    }, [data])
+
+    // useEffect(() => {
+    //     if (isEmpty(field?.value) || isUndefined(field?.value)) return;
+    //     // patchedOnChange(selectedOption);
+    // }, [field]);
+
 
     const renderSelectType = () => {
         if (field) {

@@ -1,7 +1,7 @@
 import {
   CButton,
   CCard,
-  CCardBody, CCol,
+  CCardBody, CCardHeader, CCol,
   CContainer,
   CForm, CRow
 } from '@coreui/react'
@@ -42,9 +42,11 @@ const Register = () => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
+              <CCardHeader>
+                <h1>Register</h1>
+              </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>
-                  <h1>Register</h1>
                   <Formik
                     initialValues={{
                       username: "Duongpt35",
