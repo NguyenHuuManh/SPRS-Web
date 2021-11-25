@@ -6,13 +6,6 @@ class Services {
   constructor() {
     this.axios = axios;
     this.interceptors = null;
-    // this.axios.defaults.withCredentials = false;
-    // this.axios.defaults.adapter = require("axios/lib/adapters/http");
-    this.axios.defaults.headers = {
-      //      "Access-Control-Allow-Headers": "*",
-      //    "Access-Control-Allow-Methods": "*",
-      // "Access-Control-Allow-Credentials": true,
-    };
   }
 
   attachTokenToHeader(token) {
@@ -28,7 +21,9 @@ class Services {
     );
   }
 
-  backToDefaultHeader() { }
+  removeHeaderAuthorization = () => {
+    delete axios.defaults.headers.common["Authorization"];
+  }
 
   saveLocalStorage(data) {
     window.localStorage.setItem("userSPRS", JSON.stringify(data));
@@ -36,6 +31,7 @@ class Services {
 
   clearLocalStorage() {
     window.localStorage.removeItem("userSPRS");
+    window.localStorage.removeItem("menu");
   }
 
   handleResponse(response, error, isSuccess, url) {

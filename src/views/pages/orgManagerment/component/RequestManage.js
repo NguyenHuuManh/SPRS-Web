@@ -4,7 +4,7 @@ import { FaEye } from 'react-icons/fa';
 import { apiAcceptRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
 import { appToast } from 'src/views/components/AppToastContainer';
-export default ({ data, pageSize, setPageSize }) => {
+const RequestManage = ({ data, pageSize, setPageSize }) => {
     const [items, setItems] = useState([]);
     const [itemSelected, setItemSelected] = useState({})
 
@@ -122,3 +122,4 @@ export default ({ data, pageSize, setPageSize }) => {
         </CCard>
     )
 }
+export default RequestManage;

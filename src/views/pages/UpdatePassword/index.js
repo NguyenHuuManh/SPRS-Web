@@ -6,12 +6,36 @@ import {
     CForm, CRow
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
+import { apiUpdatePass } from 'src/apiFunctions/authencation'
+import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import { updatePass } from './validate'
 
 const UpdatePassword = () => {
-
+    const OnchangePass = (values) => {
+        apiUpdatePass(values).then((e) => {
+            console.log("e update P", e);
+            if (e.status == 200) {
+                if (e.data.code == "200") {
+                    appToast({
+                        toastOptions: { type: "success" },
+                        description: "Cập nhật mật khẩu thành công",
+                    });
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: e.data.message,
+                    });
+                }
+            } else {
+                appToast({
+                    toastOptions: { type: "success" },
+                    description: "Chức năng đang bảo trì",
+                });
+            }
+        })
+    }
     return (
         <div className="c-app c-default-layout flex-row align-items-center">
             <CContainer>
@@ -25,7 +49,7 @@ const UpdatePassword = () => {
                                 <CForm>
                                     <Formik
                                         initialValues={{
-                                            oldPasword: "u3WvyfOA",
+                                            oldPasword: "password",
                                             newPassword: "",
                                             reNewPassword: "",
                                         }}
@@ -33,7 +57,7 @@ const UpdatePassword = () => {
                                         validateOnChange={false}
                                         validationSchema={updatePass}
                                         onSubmit={(values) => {
-
+                                            OnchangePass(values);
                                         }}
                                     >
                                         {({ submitForm }) => (
@@ -53,6 +77,7 @@ const UpdatePassword = () => {
                                                     title="Mật khẩu mới"
                                                     maxTitle={200}
                                                     type="password"
+                                                    security
                                                 />
                                                 <Field
                                                     horizontal
@@ -61,6 +86,7 @@ const UpdatePassword = () => {
                                                     maxTitle={200}
                                                     title="Nhập lại mật khẩu mới"
                                                     type="password"
+                                                    security
                                                 />
                                                 <CRow>
                                                     <CCol>

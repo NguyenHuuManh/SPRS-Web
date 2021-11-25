@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { apiGetRequestRejectedAdminORG } from 'src/apiFunctions/authencation';
 import { isAllItemOnPageChecked } from 'src/helps/checklistFunction';
-export default () => {
+const RejectManage = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [pageSize, setPageSize] = useState({ page: 1, size: 30 });
     const [data, setData] = useState([]);
@@ -73,3 +73,4 @@ export default () => {
         </CCard>
     )
 }
+export default RejectManage;

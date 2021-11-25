@@ -144,9 +144,9 @@ export default React.memo((props) => {
                         value={value}
                         components={{ DropdownIndicator }}
                     />
+                    {error && horizontal && touched && <div className="err-text" style={{ marginLeft: 0 }}>{error}</div>}
                 </div>
             </div>
-            {error && touched && <div className="err-text">{error}</div>}
         </div>
     );
 });

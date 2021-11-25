@@ -2,10 +2,11 @@ export const API_KEY = "AIzaSyDlqprU1uYvSEEQIEotGG8_mL3QFfVB7vY"
 export const URL_GOONG = "https://rsapi.goong.io"
 export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
-export const URL = "http://ec2-3-1-50-88.ap-southeast-1.compute.amazonaws.com";
+export const URL = "http://ec2-18-140-72-243.ap-southeast-1.compute.amazonaws.com";
 //
 export const SIGNIN = `${URL}/authenticate`;
 export const USER = `${URL}/user`;
+export const GET_USERS = `${URL}/sprs/api/users`;
 export const PROFILE = `${URL}/sprs/api/user`;
 export const UPDATE_PROFILE = `${URL}/sprs/api/user/update/infor`
 export const SIGNUP_ORG = `${URL}/sprs/api/users_v2/organizationlAdmin`
@@ -32,5 +33,25 @@ export const DETAIL_PLACE_ID = `${URL_GOONG}/Place/Detail`
 export const CITY = `${URL}/sprs/api/address/city`
 export const DISTRICT = `${URL}/sprs/api/address/district/`
 export const SUBDISTRICT = `${URL}/sprs/api/address/subdistrict/`
+export const GROUPS = `${URL}/sprs/api/groups-all`
+export const GROUP_REGISTER = `${URL}/sprs/api/groups-register-web`
+export const GET_PERMISSION_OWN = `${URL}/sprs/api/permissions/getOwn`
+
+
+//permission
+
+export const GRANT__USER_PERMISSION = `${URL}/sprs/api/users/grantPermission`
+export const GRANT_USER_UNPERMISSION = `${URL}/sprs/api/users/unGrantPermission`
+
+export const GRANT_GROUP_PERMISSION = `${URL}/sprs/api/users/grantGroup`
+export const GRANT_GROUP_UNPERMISSION = `${URL}/sprs/api/users/unGrantGroup`
+
+export const GET_GROUP_AUTHORIED = `${URL}/sprs/api/groups-authoried`
+export const GET_GROUP_UNAUTHORIED = `${URL}/sprs/api/groups-unauthoried`
+
+export const GET_PERMISSION = `${URL}/sprs/api/permissions-authoried`
+export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
+
+
 
 

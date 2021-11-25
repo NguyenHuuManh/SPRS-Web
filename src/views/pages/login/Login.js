@@ -8,6 +8,7 @@ import {
   CRow
 } from "@coreui/react";
 import { Field, Formik } from "formik";
+import { isEmpty } from "lodash-es";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
@@ -18,8 +19,8 @@ import InputField from "src/views/components/InputField";
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer.auth);
-
-  if (auth.isLogin) {
+  const user = localStorage.getItem("userSPRS");
+  if (auth.isLogin || !isEmpty(user)) {
     return <Redirect to="/" />;
   }
 
@@ -36,8 +37,8 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      username: "manh",
-                      password: "u3WvyfOA",
+                      username: "admin",
+                      password: "password",
                     }}
                     onSubmit={(values) => {
                       dispatch(loginRequest(values));

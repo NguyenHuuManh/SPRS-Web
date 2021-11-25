@@ -1,6 +1,7 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
-import { FaEye, FaChartBar } from 'react-icons/fa';
+import React from 'react';
+import { FaChartBar } from 'react-icons/fa';
+
+
 
 const _nav = [
   {
@@ -13,53 +14,68 @@ const _nav = [
     }
   },
   {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Components']
-  },
-  {
     _tag: 'CSidebarNavDropdown',
     name: 'Quản lý tài khoản',
     icon: 'cil-user',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Quản lý người dùng',
-        to: '/quan-ly-user',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Quản lý tổ chức',
+        name: 'Yêu cầu đăng ký',
         to: '/quan-ly-org',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Thêm tài khoản thành viên',
-        to: '/register-member',
-      },
+
     ],
   },
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Quản lý Điểm',
-    icon: 'cil-map',
+    name: 'Quản lý thông báo',
+    icon: 'cil-bell',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Quản lý Store',
-        to: '/',
+        name: 'Danh sách thông báo',
+        to: '/quan-ly-thong-bao',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Quản lý điểm cứu trợ',
-        to: '/',
+        name: 'Tạo thông báo',
+        to: '/gui-thong-bao',
+      },
+    ],
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Phân quyền',
+    to: '/phan-quyen',
+    icon: 'cil-bell',
+  },
+]
+
+
+export const _nav_ORK = [
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Tổng quan',
+    to: '/',
+    icon: <FaChartBar style={{ marginRight: 10 }} />,
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Quản lý thành viên',
+    icon: 'cil-bell',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Tạo tài khoản thành viên',
+        to: '/register-member',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Quản lý tổ chức',
-        to: '/',
+        name: 'Danh sách thành viên',
+        to: '/quan-ly-user',
       },
     ],
   },
 ]
 
-export default _nav
+export default _nav;

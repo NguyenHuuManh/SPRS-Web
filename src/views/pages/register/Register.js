@@ -8,6 +8,7 @@ import {
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
 import { apiSigup } from 'src/apiFunctions/authencation'
+import AppSelectGroupsRegister from 'src/views/components/AppSelectGroupsRegister'
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
 import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
@@ -61,7 +62,7 @@ const Register = () => {
                       district: "",
                       subDistrict: "",
                       addressLine: "",
-                      groupsId: "4",
+                      groupsId: "",
                       adresslineORG: "",
                       adressString: "",
                     }}
@@ -126,6 +127,13 @@ const Register = () => {
                   >
                     {({ submitForm }) => (
                       <>
+                        <Field
+                          horizontal
+                          component={AppSelectGroupsRegister}
+                          name="groupsId"
+                          maxTitle={170}
+                          title="Loại tài khoản"
+                        />
                         <Field
                           horizontal
                           component={InputField}

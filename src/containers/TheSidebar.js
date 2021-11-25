@@ -1,26 +1,42 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
   CCreateElement,
   CSidebar,
-  CSidebarBrand,
-  CSidebarNav,
-  CSidebarNavDivider,
-  CSidebarNavTitle,
-  CSidebarMinimizer,
-  CSidebarNavDropdown,
-  CSidebarNavItem,
+  CSidebarBrand, CSidebarMinimizer, CSidebarNav,
+  CSidebarNavDivider, CSidebarNavDropdown,
+  CSidebarNavItem, CSidebarNavTitle
 } from "@coreui/react";
-
-import CIcon from "@coreui/icons-react";
-
-// sidebar nav config
-import navigation from "./_nav";
+import { isEmpty } from "lodash-es";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { sidebarShow } from "src/redux/modules/sidebar";
+import { isNull } from 'lodash'
+
 
 const TheSidebar = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.sideBarReducer.status);
+  const menu = JSON.parse(localStorage.getItem('menu'));
+  const mapObj = (arr) =>
+    arr.map((e) => {
+      if (isEmpty(e.children)) {
+        return {
+          to: e.to,
+          icon: e.icon,
+          name: e.name,
+          _tag: 'CSidebarNavItem',
+        }
+      } else {
+        return {
+          to: e.to,
+          icon: e.icon,
+          name: e.name,
+          _children: mapObj(e.children),
+          _tag: 'CSidebarNavDropdown',
+        }
+      }
+    })
+  console.log("menu", menu)
+  const navi_menu = isNull(menu) ? [] : mapObj(menu);
 
   return (
     <CSidebar show={show} onShowChange={(val) => dispatch(sidebarShow(val))}>
@@ -39,7 +55,7 @@ const TheSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement
-          items={navigation}
+          items={navi_menu}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

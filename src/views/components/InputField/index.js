@@ -5,15 +5,17 @@ import {
   CInputGroupPrepend,
   CInputGroupText
 } from "@coreui/react";
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState } from "react";
+import { FaEye, FaRegEye, FaEyeSlash } from 'react-icons/fa';
+
 export default memo((props) => {
-  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, ...remainProps } = props;
+  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, ...remainProps } = props;
   const { name, value } = field;
   const { errors, touched, setFieldValue } = form;
   const onChange = (values) => {
     setFieldValue(name, values.target.value);
   };
-
+  const [security, setSecurity] = useState(true);
   return (
     <>
       {(!horizontal) && title && (
@@ -58,6 +60,22 @@ export default memo((props) => {
             />
             {errors[name] && <div className="err-text" >{errors[name]}</div>}
           </div>
+          {/* {
+            type == "password" && (
+              <div style={{ marginRight: -1, width: "20%" }}>
+
+                <CInputGroupPrepend style={{ width: "100%" }}>
+                  <CInputGroupText style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, width: "100%", display: "flex", justifyContent: "center", backgroundColor: "#FFF" }} >
+                    {security ?
+                      <FaEye size={20} onClick={() => { setSecurity(!security) }} />
+                      :
+                      <FaEyeSlash size={20} onClick={() => { setSecurity(!security) }} />
+                    }
+                  </CInputGroupText>
+                </CInputGroupPrepend>
+              </div>
+            )
+          } */}
         </CInputGroup>
       </div>
 
