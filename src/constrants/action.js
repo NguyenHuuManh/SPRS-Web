@@ -16,6 +16,7 @@ export const RESET_PASSWORD = `${URL}/sprs/api/forgotPassword`
 export const UPDATE_PASS = `${URL}/sprs/api/user/update/password`
 //
 export const REQUEST_ORG = `${URL}/sprs/api/request-manage/request-organizationalAdmin`;
+export const REGISTER_ORG_USER = `${URL}/sprs/api/users_v2/organizationalUser`;
 export const GET_ORG = `${URL}/sprs/api/organization-manage/origanization/get-by-user`;
 export const UPDATE_ORG = `${URL}/sprs/api/organization-manage/origanization/update`;
 export const REQUEST_ADMIN = `${URL}/sprs/api/request-manage/request-systemAdmin`;
@@ -51,6 +52,12 @@ export const GET_GROUP_UNAUTHORIED = `${URL}/sprs/api/groups-unauthoried`
 
 export const GET_PERMISSION = `${URL}/sprs/api/permissions-authoried`
 export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
+
+//report
+export const GET_REPORT = `${URL}/sprs/api/report-manage/getReport`
+
+//Notification
+export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`
 
 
 

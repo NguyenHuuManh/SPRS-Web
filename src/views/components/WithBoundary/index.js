@@ -1,10 +1,11 @@
+import { isEmpty, isNull } from "lodash";
 import React, { useEffect, useState } from "react";
 import { RouteBase } from "src/constrants/routeBaseUrl";
 import ErrorBoundary from "../ErrorBoundary";
 
 const specialLink = [
-    "//",
-    RouteBase.UserManager
+    RouteBase.UserManager,
+    RouteBase.Dashboard,
 ];
 
 const NoPermission = (props) => {
@@ -19,6 +20,22 @@ const NoPermission = (props) => {
     return <div>Tài khoản của bạn không có quyền xem chức năng này</div>;
 };
 
+
+const menu = JSON.parse(localStorage.getItem('menu'));
+
+let arrtemp = [];
+const loopMap = (array) => {
+    array.forEach(element => {
+        if (isEmpty(element.children)) {
+            arrtemp.push(element.to);
+        } else {
+            loopMap(element.children)
+        }
+    });
+    return arrtemp;
+}
+
+const navi_menu = isNull(menu) ? [] : loopMap(menu);
 const withErrorBoundary = (BaseComponent) => {
     return (props) => {
         const [state, setState] = useState({
@@ -30,15 +47,12 @@ const withErrorBoundary = (BaseComponent) => {
         useEffect(() => {
             // get permission menu
             // const menu = getLocalMenu();
-            const menu = [];
-            const stringMenu = JSON.stringify(menu);
+            const stringMenu = JSON.stringify(navi_menu);
             // get url
             const splitUrl = urlPath.split("/");
             // create url after split
             const reCreateUrl = `/${splitUrl?.[1] || ""}`;
             let sliceUrl = reCreateUrl;
-            console.log("sliceUrl", sliceUrl)
-            console.log("specialLink", specialLink)
             // check have search params
             if (urlPath.includes("?")) {
                 // remove search params

@@ -2,34 +2,57 @@ import { CButton, CCard, CCardBody, CCol, CHeader, CRow } from "@coreui/react";
 import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { CardHeader } from "reactstrap";
+import { apiSendNotification } from "src/apiFunctions/Notification";
 import AppSelectHuyen from "src/views/components/AppSelectHuyen";
 import AppSelectTinh from "src/views/components/AppSelectTinh";
 import AppSelectXa from "src/views/components/AppSelectXa";
+import { appToast } from "src/views/components/AppToastContainer";
 import TextAreaField from "src/views/components/TextAreaField";
+import InputField from "src/views/components/InputField";
 import GroupTable from "./component/GroupTable";
 const CreateNotificaton = () => {
     const [tinh, setTinh] = useState({});
     const [huyen, setHuyen] = useState({});
+    const [items, setItems] = useState([]);
+
+    const sendNotification = (body) => {
+        apiSendNotification(body).then((e) => {
+            if (e.status === 200) {
+                if (e.data.code === '200') {
+                    appToast({
+                        toastOptions: { type: "success" },
+                        description: "Gửi thông báo thành công",
+                    });
+                }
+            }
+        })
+    }
+
     return (
         <CCard>
             <CardHeader>Tạo thông báo</CardHeader>
             <CCardBody>
                 <Formik
                     initialValues={{
-                        datefrom: "",
-                        tinh: "",
-                        huyen: "",
-                        xa: "",
+                        title: "",
+                        message: "",
+                        city_id: "",
+                        district_id: "",
+                        subdistrict_id: ""
                     }}
                     onSubmit={(values) => {
-                        // setbody({ ...values })
+                        const body = {
+                            ...values,
+                            groupUsers: items.map((e) => e.id)
+                        }
+                        sendNotification(body)
                     }}
                 >
                     {({ values }) => (
                         <Form>
                             <CRow>
                                 <CCol lg={6}>
-                                    <GroupTable />
+                                    <GroupTable items={items} setItems={setItems} />
                                 </CCol>
                                 <CCol md={6}>
                                     <CRow>
@@ -37,7 +60,7 @@ const CreateNotificaton = () => {
                                             <Field
                                                 component={AppSelectTinh}
                                                 title="Tỉnh/thành phố"
-                                                name="tinh"
+                                                name="city_id"
                                                 functionProps={setTinh}
                                             />
                                         </CCol>
@@ -45,7 +68,7 @@ const CreateNotificaton = () => {
                                             <Field
                                                 component={AppSelectHuyen}
                                                 title="Quận/huyện"
-                                                name="huyen"
+                                                name="district_id"
                                                 idTinh={tinh?.id}
                                                 functionProps={setHuyen}
                                             />
@@ -54,7 +77,17 @@ const CreateNotificaton = () => {
                                             <Field
                                                 component={AppSelectXa}
                                                 title="Xã phường"
-                                                name="xa"
+                                                name="subdistrict_id"
+                                                idHuyen={huyen?.id}
+                                            />
+                                        </CCol>
+                                    </CRow>
+                                    <CRow>
+                                        <CCol lg={12}>
+                                            <Field
+                                                component={InputField}
+                                                title="Tiêu đề"
+                                                name="title"
                                                 idHuyen={huyen?.id}
                                             />
                                         </CCol>
@@ -63,7 +96,7 @@ const CreateNotificaton = () => {
                                         <Field
                                             title="Nội dung"
                                             component={TextAreaField}
-                                            name="noiDung"
+                                            name="message"
                                             type="TextArea"
                                         />
                                     </div>

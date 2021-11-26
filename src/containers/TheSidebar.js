@@ -35,7 +35,6 @@ const TheSidebar = () => {
         }
       }
     })
-  console.log("menu", menu)
   const navi_menu = isNull(menu) ? [] : mapObj(menu);
 
   return (
@@ -64,7 +63,6 @@ const TheSidebar = () => {
           }}
         />
       </CSidebarNav>
-      <CSidebarMinimizer className="c-d-md-down-none" />
     </CSidebar>
   );
 };

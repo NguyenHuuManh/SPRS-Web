@@ -8,6 +8,7 @@ import {
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
 import { apiSigup } from 'src/apiFunctions/authencation'
+import AppDatePicker from 'src/views/components/AppDatePicker'
 import AppSelectGroupsRegister from 'src/views/components/AppSelectGroupsRegister'
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
 import AppSelectTinh from 'src/views/components/AppSelectTinh'
@@ -158,7 +159,7 @@ const Register = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={AppDatePicker}
                           name="dob"
                           title="Ngày sinh"
                         />

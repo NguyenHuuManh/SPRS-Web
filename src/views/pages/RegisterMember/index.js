@@ -7,16 +7,21 @@ import {
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
-import { apiSigup } from 'src/apiFunctions/authencation'
+import { apiSigupUserORG } from 'src/apiFunctions/authencation'
+import AppDatePicker from 'src/views/components/AppDatePicker'
+import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
+import AppSelectTinh from 'src/views/components/AppSelectTinh'
+import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
-import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
 const RegisterMember = () => {
   const [orgAdress, setOrgAdress] = useState({});
+  const [tinh, setTinh] = useState({});
+  const [huyen, setHuyen] = useState({});
   const singup = (values) => {
-    apiSigup(values).then((res) => {
+    apiSigupUserORG(values).then((res) => {
       console.log("resSignup", res);
       if (res.status == 200 && res.data.code == "200") {
         appToast({
@@ -56,7 +61,7 @@ const RegisterMember = () => {
                       district: "",
                       subDistrict: "",
                       addressLine: "",
-                      groupsId: "4",
+                      groupsId: "3",
                       adresslineORG: "",
                       adressString: "",
                     }}
@@ -95,8 +100,9 @@ const RegisterMember = () => {
                       singup(user);
                     }}
                   >
-                    {({ submitForm }) => (
+                    {({ submitForm, errors }) => (
                       <>
+                        {console.log("error", errors)}
                         <Field
                           horizontal
                           component={InputField}
@@ -121,30 +127,34 @@ const RegisterMember = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={AppDatePicker}
                           name="dob"
                           title="Ngày sinh"
                         />
                         <Field
-                          maxTitle={170}
-                          horizontal
-                          component={InputField}
+                          component={AppSelectTinh}
+                          title="Tỉnh/thành phố"
                           name="city"
-                          title="Tỉnh/Thành phố"
-                        />
-                        <Field
+                          functionProps={setTinh}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectHuyen}
+                          title="Quận/huyện"
                           name="district"
-                          title="Quận/Huyện"
-                        />
-                        <Field
+                          idTinh={tinh?.id}
+                          functionProps={setHuyen}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectXa}
+                          title="Xã phường"
                           name="subDistrict"
-                          title="Xã/Phường"
+                          idHuyen={huyen?.id}
+                          maxTitle={170}
+                          horizontal
                         />
                         <Field
                           maxTitle={170}

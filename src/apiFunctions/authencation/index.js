@@ -1,4 +1,4 @@
-import { ACCEPT_REQUEST_REGISTER_ORG, GET_ORG, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE } from "src/constrants/action";
+import { ACCEPT_REQUEST_REGISTER_ORG, GET_ORG, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REGISTER_ORG_USER, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE } from "src/constrants/action";
 import httpServices from "src/services/httpServices";
 
 export const apiSignin = async (body) => {
@@ -8,6 +8,12 @@ export const apiSignin = async (body) => {
 export const apiSigup = async (body) => {
   return await httpServices.post(
     `${SIGNUP_ORG}`, body
+  );
+};
+
+export const apiSigupUserORG = async (body) => {
+  return await httpServices.post(
+    `${REGISTER_ORG_USER}`, body
   );
 };
 

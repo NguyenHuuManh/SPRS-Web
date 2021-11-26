@@ -5,17 +5,44 @@ import {
   CInputGroupPrepend,
   CInputGroupText
 } from "@coreui/react";
-import React, { memo, useMemo, useState } from "react";
-import { FaEye, FaRegEye, FaEyeSlash } from 'react-icons/fa';
+import React, { memo } from "react";
+import InputMask from 'react-input-mask';
+import { isEmpty } from 'lodash'
 
 export default memo((props) => {
   const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, ...remainProps } = props;
   const { name, value } = field;
-  const { errors, touched, setFieldValue } = form;
+  const { errors, setFieldValue } = form;
   const onChange = (values) => {
     setFieldValue(name, values.target.value);
   };
-  const [security, setSecurity] = useState(true);
+
+  const beforeMaskedValueChange = (newState, oldState, userInput) => {
+    var { value } = newState;
+    var selection = newState.selection;
+    var cursorPosition = selection ? selection.start : null;
+
+    // keep minus if entered by user
+    if (value.endsWith('-') && userInput !== '-' && !this.state.value.endsWith('-')) {
+      if (cursorPosition === value.length) {
+        cursorPosition--;
+        selection = { start: cursorPosition, end: cursorPosition };
+      }
+      value = value.slice(0, -1);
+    }
+
+    return {
+      value,
+      selection
+    };
+  }
+
+  const onBlur = () => {
+    const valueString = value + ''
+    if (isEmpty(valueString)) return;
+    if (valueString.includes('_')) return setFieldValue(name, '2021');
+  }
+
   return (
     <>
       {(!horizontal) && title && (
@@ -50,34 +77,27 @@ export default memo((props) => {
             </div>
           )}
           <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName || isPhone ? "80%" : "100%")}` }}>
-            <CInput
-              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-              {...remainProps}
-              type={type}
-              placeholder={placeholder}
-              onChange={onChange}
-              value={value}
-            />
-            {errors[name] && <div className="err-text" >{errors[name]}</div>}
+            <div style={{ width: "100%", borderStyle: "solid", borderWidth: 1, borderColor: "#d8dbe0", borderRadius: 4, padding: 5 }}>
+              <InputMask mask="9999" value={value}
+                style={{
+                  borderBlockWidth: 0,
+                  border: "none",
+                  outline: "none",
+                  width: "100%"
+                }}
+                onChange={onChange}
+                beforeMaskedValueChange={beforeMaskedValueChange}
+                onBlur={onBlur}
+              >
+              </InputMask>
+              {errors[name] && <div className="err-text" >{errors[name]}</div>}
+            </div>
           </div>
-          {/* {
-            type == "password" && (
-              <div style={{ marginRight: -1, width: "20%" }}>
 
-                <CInputGroupPrepend style={{ width: "100%" }}>
-                  <CInputGroupText style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, width: "100%", display: "flex", justifyContent: "center", backgroundColor: "#FFF" }} >
-                    {security ?
-                      <FaEye size={20} onClick={() => { setSecurity(!security) }} />
-                      :
-                      <FaEyeSlash size={20} onClick={() => { setSecurity(!security) }} />
-                    }
-                  </CInputGroupText>
-                </CInputGroupPrepend>
-              </div>
-            )
-          } */}
         </CInputGroup>
       </div>
+
+
     </>
   );
 });

@@ -2,8 +2,8 @@ import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
 import React, { useEffect, useState } from "react";
 import { apiGetGroups } from "src/apiFunctions/permission";
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
-const GroupTable = () => {
-    const [items, setItems] = useState([]);
+const GroupTable = (props) => {
+    const { items, setItems } = props
     const [itemSelected, setItemSelected] = useState({})
     const [data, setData] = useState([])
 
