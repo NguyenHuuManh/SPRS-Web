@@ -4,9 +4,10 @@ export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
 export const URL = "http://ec2-18-140-72-243.ap-southeast-1.compute.amazonaws.com";
 //
-export const SIGNIN = `${URL}/authenticate`;
+export const SIGNIN = `${URL}/authenticate-web`;
 export const USER = `${URL}/user`;
 export const GET_USERS = `${URL}/sprs/api/users`;
+export const GET_USERS_BY_NAME = `${URL}/sprs/api/users/search`;
 export const PROFILE = `${URL}/sprs/api/user`;
 export const UPDATE_PROFILE = `${URL}/sprs/api/user/update/infor`
 export const SIGNUP_ORG = `${URL}/sprs/api/users_v2/organizationlAdmin`
@@ -55,6 +56,7 @@ export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
 
 //report
 export const GET_REPORT = `${URL}/sprs/api/report-manage/getReport`
+export const GET_REPORT_OVERVIEW = `${URL}/sprs/api/report-manage/getReportOverview`
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`

@@ -37,3 +37,14 @@ export function convertToQuery(param) {
       .join("&")
   );
 }
+
+
+export const trimmedObject = (obj) => {
+  const trimed = JSON.stringify(obj, (key, value) => {
+    if (typeof value === "string") {
+      return value.trim();
+    }
+    return value;
+  });
+  return JSON.parse(trimed);
+};
