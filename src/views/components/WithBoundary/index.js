@@ -6,6 +6,7 @@ import ErrorBoundary from "../ErrorBoundary";
 const specialLink = [
     RouteBase.UserManager,
     RouteBase.Dashboard,
+    RouteBase.Profile
 ];
 
 const NoPermission = (props) => {

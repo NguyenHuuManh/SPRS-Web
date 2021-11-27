@@ -12,6 +12,7 @@ import { isEmpty } from "lodash-es";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { trimmedObject } from "src/helps/function";
 import { loginRequest } from "src/redux/modules/auth";
 import AppLoading from "src/views/components/AppLoading";
 import InputField from "src/views/components/InputField";
@@ -41,7 +42,8 @@ const Login = () => {
                       password: "password",
                     }}
                     onSubmit={(values) => {
-                      dispatch(loginRequest(values));
+                      const objTrimmed = trimmedObject(values)
+                      dispatch(loginRequest(objTrimmed));
                     }}
                   >
                     {({ submitForm }) => (

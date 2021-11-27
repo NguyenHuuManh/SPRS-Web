@@ -147,6 +147,7 @@ export default React.memo((props) => {
                     {error && horizontal && touched && <div className="err-text" style={{ marginLeft: 0 }}>{error}</div>}
                 </div>
             </div>
+            {(error && touched && !horizontal) && <div className="err-text" style={{ marginLeft: 0 }}>{error}</div>}
         </div>
     );
 });

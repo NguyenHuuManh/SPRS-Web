@@ -43,7 +43,8 @@ export default memo((props: Props) => {
     } = props;
     const [data, setData] = useState(dummy);
 
-
+    const { errors } = form
+    const { value, name } = field
     const selectedOption =
         field && data?.find((option) => option?.id == field?.value);
     const selectedDefault = data?.find(

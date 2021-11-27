@@ -4,6 +4,7 @@ import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { apiGetORG, apiUpdateORG } from "src/apiFunctions/authencation";
+import { trimmedObject } from "src/helps/function";
 import { getProfileRequest } from "src/redux/modules/profile";
 import AppDatePicker from "src/views/components/AppDatePicker";
 import { appToast } from "src/views/components/AppToastContainer";
@@ -89,10 +90,11 @@ const UserTab = () => {
                     validationSchema={updateORG}
                     enableReinitialize
                     onSubmit={(values) => {
+                        const objTrimmed = trimmedObject(values)
                         const body = {
-                            name: values.name || "",
-                            founded: values.founded || "",
-                            description: values.description || "",
+                            name: objTrimmed.name || "",
+                            founded: objTrimmed.founded || "",
+                            description: objTrimmed.description || "",
                             address: {
                                 city: {
                                     code: "",

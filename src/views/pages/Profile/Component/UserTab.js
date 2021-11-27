@@ -12,6 +12,7 @@ import CIcon from "@coreui/icons-react";
 import { appToast } from "src/views/components/AppToastContainer";
 import { getProfileRequest } from "src/redux/modules/profile";
 import { apiUpdate } from "src/apiFunctions/authencation";
+import { trimmedObject } from "src/helps/function";
 const UserTab = () => {
     const profile = useSelector((state) => state.profileReducer);
     const [tinh, setTinh] = useState(profile.data.profile?.address?.city);
@@ -60,7 +61,8 @@ const UserTab = () => {
                     }}
                     validationSchema={updateProfile}
                     onSubmit={(values) => {
-                        const { city, district, subDistrict, addressLine, groupsId, ...body } = values
+                        const objTrimmed = trimmedObject(values)
+                        const { city, district, subDistrict, addressLine, groupsId, ...body } = objTrimmed
 
                         const dataBody = {
                             ...body,

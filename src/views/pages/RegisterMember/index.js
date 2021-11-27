@@ -8,12 +8,14 @@ import {
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
 import { apiSigupUserORG } from 'src/apiFunctions/authencation'
+import { trimmedObject } from 'src/helps/function'
 import AppDatePicker from 'src/views/components/AppDatePicker'
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
 import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
+import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
 const RegisterMember = () => {
@@ -55,46 +57,43 @@ const RegisterMember = () => {
                       rePassWord: "password",
                       full_name: "Phạm Tùng Dương",
                       dob: "09/09/1999",
-                      nameOrg: "",
                       city: "",
-                      province: "",
                       district: "",
                       subDistrict: "",
                       addressLine: "",
-                      groupsId: "3",
-                      adresslineORG: "",
                       adressString: "",
                     }}
                     validateOnBlur={false}
                     validateOnChange={false}
                     validationSchema={register}
                     onSubmit={(values) => {
+                      const objTrimmed = trimmedObject(values)
                       let user = {
-                        username: values.username,
-                        phone: values.phone,
-                        password: values.password,
-                        full_name: values.full_name,
-                        dob: values.dob,
+                        username: objTrimmed.username,
+                        phone: objTrimmed.phone,
+                        password: objTrimmed.password,
+                        full_name: objTrimmed.full_name,
+                        dob: objTrimmed.dob,
                         address: {
-                          city: values.city || "",
-                          province: values?.province || "",
-                          district: values?.district || "",
-                          subDistrict: values?.subDistrict || "",
-                          addressLine: values?.addressLine || "",
+                          city: {
+                            code: "",
+                            id: objTrimmed.city,
+                            name: ""
+                          },
+                          district: {
+                            code: "",
+                            id: objTrimmed?.district,
+                            name: ""
+                          },
+                          subDistrict: {
+                            code: "",
+                            id: objTrimmed?.subDistrict,
+                            name: "",
+                          },
+                          addressLine: objTrimmed?.adresslineORG,
+                          GPS_Lati: "",
+                          GPS_long: "",
                         },
-                        groups_user: [{ id: values.groupsId }],
-                        organization: {
-                          name: values?.nameOrg || "",
-                          founded: "",
-                          description: "",
-                          address: {
-                            city: orgAdress.city || "",
-                            province: orgAdress?.province || "",
-                            district: orgAdress?.district || "",
-                            subDistrict: orgAdress?.subDistrict || "",
-                            addressLine: values?.adresslineORG || "",
-                          }
-                        }
 
                       }
                       singup(user);

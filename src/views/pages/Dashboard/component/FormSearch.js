@@ -11,6 +11,7 @@ import AppSelectTinh from "src/views/components/AppSelectTinh";
 import AppSelectTypePoint from "src/views/components/AppSelectTypePoint";
 import AppSelectTypeReport from "src/views/components/AppSelectTypeReport";
 import AppSelectXa from "src/views/components/AppSelectXa";
+import { report } from "../validate";
 import Barchart from "./Barchart";
 const FormSearch = () => {
     const [tinh, setTinh] = useState({});
@@ -103,6 +104,9 @@ const FormSearch = () => {
                     type_time: "",
                     type_point: "",
                 }}
+                validationSchema={report}
+                validateOnBlur={false}
+                validateOnChange={false}
                 onSubmit={(values) => {
                     // console.log("date_from", values.date_from)
                     // console.log("date_to", values.date_to)

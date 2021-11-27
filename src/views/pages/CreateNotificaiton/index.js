@@ -10,6 +10,7 @@ import { appToast } from "src/views/components/AppToastContainer";
 import TextAreaField from "src/views/components/TextAreaField";
 import InputField from "src/views/components/InputField";
 import GroupTable from "./component/GroupTable";
+import { trimmedObject } from "src/helps/function";
 const CreateNotificaton = () => {
     const [tinh, setTinh] = useState({});
     const [huyen, setHuyen] = useState({});
@@ -41,8 +42,9 @@ const CreateNotificaton = () => {
                         subdistrict_id: ""
                     }}
                     onSubmit={(values) => {
+                        const objTrimmed = trimmedObject(values)
                         const body = {
-                            ...values,
+                            ...objTrimmed,
                             groupUsers: items.map((e) => e.id)
                         }
                         sendNotification(body)
