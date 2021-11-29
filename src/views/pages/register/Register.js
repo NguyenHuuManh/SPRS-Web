@@ -117,9 +117,10 @@ const Register = () => {
                               name: orgAdress?.subDistrict,
                             },
                             addressLine: values?.adresslineORG,
+                            GPS_Lati: orgAdress?.GPS_Lati + "",
+                            GPS_long: orgAdress?.GPS_long + "",
                           },
-                          GPS_Lati: orgAdress?.GPS_Lati + "",
-                          GPS_long: orgAdress?.GPS_long + "",
+
                         }
 
                       }
