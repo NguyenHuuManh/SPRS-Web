@@ -112,9 +112,9 @@ const UserTab = () => {
                                     name: orgAdress?.subDistrict,
                                 },
                                 addressLine: "",
-                                GPS_Lati: orgAdress?.GPS_lati + "",
+                                GPS_lati: orgAdress?.GPS_lati + "",
                                 GPS_long: orgAdress?.GPS_long + "",
-                                gps_lati: orgAdress?.GPS_Lati + "",
+                                gps_lati: orgAdress?.GPS_lati + "",
                                 gps_long: orgAdress?.GPS_long + "",
                             },
                         }

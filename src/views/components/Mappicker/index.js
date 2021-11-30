@@ -48,7 +48,7 @@ export default memo((props) => {
                         province: place[place.length - 2]?.long_name,
                         district: place[place.length - 2]?.long_name,
                         subDistrict: place[place.length - 3]?.long_name,
-                        GPS_Lati: marker?.lat + "",
+                        GPS_lati: marker?.lat + "",
                         GPS_long: marker?.lng + "",
                     })
                 } else {
