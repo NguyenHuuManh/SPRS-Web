@@ -14,28 +14,19 @@ const AppDatePicker = (props) => {
     const onchange = (value) => {
         if (moment(value).format("DD-MM-YYYY") + "" === "Invalid date") {
             setFieldValue(name, "");
+            return;
         }
         setFieldValue(name, value);
         setStartDate(value);
     }
 
-    // return (
-    //     <>
-    //         <CInputGroup className="mb-3" style={{ display: "flex" }}>
-    //             <DatePicker
-    //                 {...remainProps}
-    //                 closeOnScroll={(e) => e.target === document}
-    //                 selected={startDate}
-    //                 onChange={(date) => onchange(date)}
-    //                 dateFormat="dd-MM-y"
-    //                 className=" form-control Date-Picker"
-    //                 placeholderText="dd/mm/yyyy"
-    //                 value={value}
-    //             />
-    //             {errors[name] && <div className="err-text" >{errors[name]}</div>}
-    //         </CInputGroup>
-    //     </>
-    // );
+    const onBlur = () => {
+        if (moment(value).format("DD-MM-YYYY") + "" === "Invalid date") {
+            setFieldValue(name, "");
+        }
+    }
+
+
     return (
         <>
             {(!horizontal) && title && (
@@ -64,13 +55,15 @@ const AppDatePicker = (props) => {
                     <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName ? "80%" : "100%")}` }}>
                         <DatePicker
                             {...remainProps}
+                            id="date_picker_id"
                             closeOnScroll={(e) => e.target === document}
                             selected={startDate}
                             onChange={(date) => onchange(date)}
-                            dateFormat="dd-MM-y"
+                            dateFormat="dd-MM-yyyy"
                             className=" form-control Date-Picker"
                             placeholderText="dd/mm/yyyy"
                             value={value}
+                            onBlur={onBlur}
                         />
                         {errors[name] && <div className="err-text" >{errors[name]}</div>}
                     </div>

@@ -1,12 +1,29 @@
-import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader } from "@coreui/react";
-import React, { useEffect, useState } from "react";
+import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput } from "@coreui/react";
+import { debounce } from "lodash-es";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaEye } from 'react-icons/fa';
-import { apiAcceptRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
+import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
 import { appToast } from 'src/views/components/AppToastContainer';
-const RequestManage = ({ data, pageSize, setPageSize }) => {
+const RequestManage = () => {
     const [items, setItems] = useState([]);
-    const [itemSelected, setItemSelected] = useState({})
+    const [itemSelected, setItemSelected] = useState({});
+    const [data, setData] = useState([]);
+    const [key, setKey] = useState("");
+    const callGetReques = (value) => {
+        apiGetRequestAdminORG({ search: value }).then((res) => {
+            console.log(res, "res");
+            if (res.status && res.data.code) {
+                setData(res.data.obj);
+            }
+        });
+    }
+
+    const debounceSearch = useCallback(debounce((nextValue) => callGetReques(nextValue), 500), []);
+
+    useEffect(() => {
+        callGetReques("");
+    }, [])
 
     useEffect(() => {
         setItems([]);
@@ -20,7 +37,7 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
                     toastOptions: { type: "success" },
                     description: "Active success!",
                 });
-                setPageSize({ ...pageSize })
+                callGetReques("");
             }
         })
     }
@@ -32,7 +49,7 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
                     toastOptions: { type: "success" },
                     description: "Reject success!",
                 });
-                setPageSize({ ...pageSize })
+                callGetReques();
             }
         })
     }
@@ -50,6 +67,11 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
         setItems(addAnItems(items, item, "id"));
         e.stopPropagation();
     };
+
+    const onChange = (values) => {
+        setKey(values.target.value);
+        debounceSearch(values.target.value);
+    }
     return (
         <CCard>
             <CCardHeader>
@@ -57,12 +79,26 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
                     <CCol md={6}>
                         Danh sách tổ chức
                     </CCol>
-                    <CCol md={6} className="d-flex align-items-center justify-content-end">
-                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} >accept</CButton>
-                    </CCol>
+
                 </CRow>
             </CCardHeader>
             <CCardBody>
+                <div style={{ width: "100%", display: "flex" }}>
+                    <div style={{ width: "30%" }}>
+                        <label className="inputTitle">Tìm kiếm</label>
+                        <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
+                            <CInput
+                                placeholder="Nhập tên tài khoản . . ."
+                                onChange={onChange}
+                                value={key}
+                            />
+                        </CInputGroup>
+                    </div>
+                    <div style={{ width: "70%", paddingTop: 34, justifyContent: "flex-end", display: "flex", alignItems: "flex-start" }}>
+                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} >Duyệt</CButton>
+                    </div>
+                </div>
+
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
@@ -77,7 +113,6 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
                         <th>Tên tổ chức</th>
                         <th>Địa chỉ tổ chức</th>
                         <th>Trạng thái</th>
-                        <th>Thao tác</th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -104,12 +139,7 @@ const RequestManage = ({ data, pageSize, setPageSize }) => {
                                         <td>{item?.status}</td>
                                         <td>
                                             <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
-                                                Reject
-                                            </CButton>
-                                        </td>
-                                        <td style={{ justifyContent: "center" }}>
-                                            <CButton onClick={() => { }} >
-                                                <FaEye size={20} />
+                                                Từ chối
                                             </CButton>
                                         </td>
                                     </tr>

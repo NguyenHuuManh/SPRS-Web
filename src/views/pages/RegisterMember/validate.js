@@ -5,11 +5,16 @@ export const register = Yup.object().shape({
         .test("test", "Tên tài khoản không chứa kí tự đặc biệt", function () {
             const { parent } = this;
             const { username } = parent;
-            const nameStrim = username.trim();
-            var format = /[\s!#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+            const nameStrim = username + ''.trim();
+            var format = /[\s!#$%^&*()+\-=\[\]{};':"\\|,.<>\/?]+/;
             return !format.test(nameStrim);
         }),
-    phone: Yup.string().required("Số điện thoại không được bỏ trống").nullable(),
+    phone: Yup.string().required("Số điện thoại không được bỏ trống").nullable().test('checkphone', "Số điện thoại không hợp lệ", function () {
+        const { parent } = this;
+        const { phone } = parent;
+        var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+        return vnf_regex.test(phone);
+    }),
     password: Yup.string().required("Mật khẩu không được bỏ trống").nullable()
         .test('checkSpace', "Mật khẩu không chứa khoảng trắng", function () {
             const { parent } = this;

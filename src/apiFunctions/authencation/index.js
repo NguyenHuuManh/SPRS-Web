@@ -1,4 +1,5 @@
-import { ACCEPT_REQUEST_REGISTER_ORG, GET_ORG, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REGISTER_ORG_USER, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE } from "src/constrants/action";
+import { ACCEPT_REQUEST_REGISTER_ORG, GET_ACC_ACCEPTED, GET_ORG, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REGISTER_ORG_USER, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE } from "src/constrants/action";
+import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
 export const apiSignin = async (body) => {
@@ -48,11 +49,15 @@ export const apiUpdateORG = async (body) => {
   return await httpServices.put(`${UPDATE_ORG}`, body);
 };
 
-export const apiGetRequestAdminORG = async () => {
-  return await httpServices.get(GET_REQUEST_REGISTER_ORG_UNCHECK);
+export const apiGetRequestAdminORG = async (params) => {
+  return await httpServices.get(`${GET_REQUEST_REGISTER_ORG_UNCHECK}${convertToQuery(params)}`);
 };
-export const apiGetRequestRejectedAdminORG = async () => {
-  return await httpServices.get(GET_REQUEST_REGISTER_ORG_REJECT);
+export const apiGetRequestRejectedAdminORG = async (params) => {
+  return await httpServices.get(`${GET_REQUEST_REGISTER_ORG_REJECT}${convertToQuery(params)}`);
+};
+
+export const apiGetAccountAccepted = async (params) => {
+  return await httpServices.get(`${GET_ACC_ACCEPTED}${convertToQuery(params)}`);
 };
 
 export const apiAcceptRequestAdminORG = async (body) => {

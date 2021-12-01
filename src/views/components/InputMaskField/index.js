@@ -10,7 +10,7 @@ import InputMask from 'react-input-mask';
 import { isEmpty } from 'lodash'
 
 export default memo((props) => {
-  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, ...remainProps } = props;
+  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, format, ...remainProps } = props;
   const { name, value } = field;
   const { errors, setFieldValue } = form;
   const onChange = (values) => {
@@ -40,7 +40,7 @@ export default memo((props) => {
   const onBlur = () => {
     const valueString = value + ''
     if (isEmpty(valueString)) return;
-    if (valueString.includes('_')) return setFieldValue(name, '2021');
+    if (valueString.includes('_')) return setFieldValue(name, '');
   }
 
   return (
@@ -78,12 +78,13 @@ export default memo((props) => {
           )}
           <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName || isPhone ? "80%" : "100%")}` }}>
             <div style={{ width: "100%", borderStyle: "solid", borderWidth: 1, borderColor: "#d8dbe0", borderRadius: 4, padding: 5 }}>
-              <InputMask mask="9999" value={value}
+              <InputMask mask="9999999999" value={value}
                 style={{
                   borderBlockWidth: 0,
                   border: "none",
                   outline: "none",
-                  width: "100%"
+                  width: "100%",
+                  color: "#768192"
                 }}
                 onChange={onChange}
                 beforeMaskedValueChange={beforeMaskedValueChange}

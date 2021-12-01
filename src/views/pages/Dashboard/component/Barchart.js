@@ -5,39 +5,49 @@ const Barchart = (props) => {
     const { data } = props;
 
     const filterData = (key) => {
-        return data.dataChart.map((element) => { return element[key] })
+        let dataDastet = [];
+        data.dataChart.forEach((element) => {
+            element.forEach((e) => {
+                if (e.key == key) dataDastet.push(e.value);
+            })
+        });
+        return dataDastet;
     }
 
+
     const filterLable = (key) => {
-        if (key === 'item1') return "Cứu Trợ"
-        if (key === 'item2') return "Cửa hàng"
-        if (key === 'item3') return "Tổ chức"
-        if (key === 'item4') return "SOS"
+        if (key === '1') return "Cứu Trợ"
+        if (key === '2') return "Cửa hàng"
+        if (key === '3') return "Tổ chức"
+        if (key === '4') return "SOS"
     }
 
     const filterColor = (key) => {
-        if (key === 'item1') return "pink"
-        if (key === 'item2') return "yellow"
-        if (key === 'item3') return "blue"
-        if (key === 'item4') return "red"
+        if (key === '1') return "pink"
+        if (key === '2') return "yellow"
+        if (key === '3') return "blue"
+        if (key === '4') return "red"
     }
-    const datasets = isEmpty(data.dataChart) ? [] : Object.entries(data.dataChart[0]).map(([key, value]) => {
+    console.log(data.dataChart, "data.dataChart")
+
+    const datasets = isEmpty(data.dataChart) ? [] : data.dataChart[0].map(({ key }) => {
         return {
             label: filterLable(key),
             backgroundColor: filterColor(key),
             data: filterData(key),
         };
     })
-    console.log("datasets", datasets)
+    console.log("datasets", datasets);
     return (
         <CChartBar
             datasets={datasets}
-            labels={data?.lableChart}
+            labels={data.lableChart}
             options={{
                 tooltips: {
                     enabled: true
                 }
             }}
+            multiple={false}
         />
     )
 }

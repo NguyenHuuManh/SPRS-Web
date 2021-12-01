@@ -1,20 +1,21 @@
 import CIcon from "@coreui/icons-react";
 import { CCardBody, CCardHeader, CCol, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CLabel, CModal, CRow } from "@coreui/react";
-import React, { memo, useEffect, useMemo, useState } from "react";
-import { API_KEY } from "src/constrants/action";
-import { Marker } from "react-google-maps";
-import Map from "../Map";
-import { apiPlaceDetailById, apiPlaceDetailByLongLat } from "../../../apiFunctions/mapPlace"
-import { isEmpty } from "lodash"
-import { appToast } from "../AppToastContainer";
-import AppSearchLocation from "../AppSearchLocation";
 import { Field, Formik } from "formik";
+import { isEmpty } from "lodash";
+import React, { memo, useEffect, useState, useRef } from "react";
+import { Marker } from "react-google-maps";
+import { API_KEY } from "src/constrants/action";
+import { apiPlaceDetailById, apiPlaceDetailByLongLat } from "../../../apiFunctions/mapPlace";
+import AppSearchLocation from "../AppSearchLocation";
+import { appToast } from "../AppToastContainer";
+import Map from "../Map";
 export default memo((props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, isRequired, disabled } = props
+    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, disabled } = props
     const [marker, setMarker] = useState({});
     const { errors, touched, setFieldValue } = form;
     const { name, value } = field;
+    const ref = useRef();
     useEffect(() => {
         if (!isOpen) return;
         navigator.geolocation.getCurrentPosition((e) => {
@@ -59,7 +60,6 @@ export default memo((props) => {
                     return;
                 }
             })
-
     }
 
     const getDetailPlaceById = (place_id) => {
@@ -79,16 +79,7 @@ export default memo((props) => {
                 console.log("e", e)
                 if (e?.status == "OK") {
                     setMarker({ ...marker, lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
-                    // const place = e?.results[0]?.address_components;
-                    // setAdress({
-                    //     ...adress,
-                    //     city: place[place.length - 1]?.long_name,
-                    //     province: place[place.length - 2]?.long_name,
-                    //     district: place[place.length - 2]?.long_name,
-                    //     subDistrict: place[place.length - 3]?.long_name,
-                    //     GPS_Lati: marker?.lat + "",
-                    //     GPS_long: marker?.lng + "",
-                    // })
+                    console.log("ref", ref.current)
                 } else {
                     appToast({
                         toastOptions: { type: "error" },
@@ -97,7 +88,6 @@ export default memo((props) => {
                     return;
                 }
             })
-
     }
 
     useEffect(() => {
@@ -210,12 +200,15 @@ export default memo((props) => {
                 <CCardBody>
                     {isOpen && (
                         <Map
+                            refMap={ref}
                             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap`}
                             loadingElement={<div style={{ height: `100%` }} />}
                             containerElement={<div style={{ height: `40vh`, margin: `auto`, border: '2px solid black' }} />}
                             mapElement={<div style={{ height: `100%` }} />}
                             onClick={(res) => { setMarker({ lat: res.latLng.lat(), lng: res.latLng.lng() }) }}
                             defaultCenter={marker}
+                            cernter={marker}
+
                         // center={adress}
                         >
                             <Marker

@@ -15,6 +15,7 @@ import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
+import InputMaskField from 'src/views/components/InputMaskField'
 import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
@@ -118,7 +119,7 @@ const RegisterMember = () => {
                         />
                         <Field
                           horizontal
-                          component={InputField}
+                          component={InputMaskField}
                           name="phone"
                           maxTitle={170}
                           title="Số điện thoại"

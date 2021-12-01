@@ -38,6 +38,9 @@ export function convertToQuery(param) {
   );
 }
 
+export function uniqueArr(arr) {
+  return Array.from(new Set(arr)) //
+}
 
 export const trimmedObject = (obj) => {
   const trimed = JSON.stringify(obj, (key, value) => {

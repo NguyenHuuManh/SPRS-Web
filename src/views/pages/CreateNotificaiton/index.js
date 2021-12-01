@@ -94,7 +94,7 @@ const CreateNotificaton = () => {
                                             />
                                         </CCol>
                                     </CRow>
-                                    <div style={{ height: 259 }}>
+                                    <div style={{ height: 156 }}>
                                         <Field
                                             title="Nội dung"
                                             component={TextAreaField}

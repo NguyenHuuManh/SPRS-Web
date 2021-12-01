@@ -5,6 +5,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { Card } from "reactstrap";
 import { apiGetReport } from "src/apiFunctions/Dashboard";
+import { uniqueArr } from "src/helps/function";
 import AppDatePicker from "src/views/components/AppDatePicker";
 import AppSelectHuyen from "src/views/components/AppSelectHuyen";
 import AppSelectTinh from "src/views/components/AppSelectTinh";
@@ -51,42 +52,44 @@ const FormSearch = () => {
         apiGetReport(values).then((e) => {
             if (e.status == 200) {
                 if (e.data.code == '200') {
-                    const arr = e?.data?.obj || []
-
-
-                    const dataChart = arr.map((element) => {
-                        if (isEmpty(values.type_point + '')) {
-                            return {
-                                item1: element.type_point + '' === '1' ? element.total : 0,
-                                item2: element.type_point + '' === '2' ? element.total : 0,
-                                item3: element.type_point + '' === '3' ? element.total : 0,
-                                item4: element.type_point + '' === '4' ? element.total : 0
+                    const arr = e?.data?.obj || [];
+                    const timeName = values.type_time + '' === '1' ? 'year' : values.type_time + '' === '2' ? 'month' : 'day';
+                    const keyTime = uniqueArr(arr.map((e) => e?.[timeName]));
+                    const maxtrixArr = [];
+                    keyTime.forEach((time) => {
+                        let tempArr = [];
+                        maxtrixArr.push(tempArr);
+                        arr.forEach((item) => {
+                            if (item[timeName] === time) {
+                                tempArr.push(item);
                             }
-                        }
-                        if (values.type_point + '' === '1')
-                            return {
-                                item1: element.total | 0
-                            };
-                        if (values.type_point + '' === '2')
-                            return {
-                                item1: element.total | 0
-                            };
-                        if (values.type_point + '' === '3')
-                            return {
-                                item1: element.total | 0
-                            };
-                        if (values.type_point + '' === '4')
-                            return {
-                                item1: element.total | 0
-                            };
-                    })
-                    const lableChart = arr.map((element, index) => {
-                        if (values.type_time === '1') return element?.year
-                        if (values.type_time === '2') return element?.month
-                        if (values.type_time === '3') return element?.day | index
+                        });
+                    });
+                    let testDataChart = []
+                    if (['1', '2', '3', '4'].includes(values.type_time)) {
+                        testDataChart = maxtrixArr.map((e) => {
+                            console.log(e, "EEEE")
+                            return e.map((element, index) => {
+                                return {
+                                    value: element.total | 0,
+                                    key: element.type_point + ''
+                                }
+                            })
+                        })
+                    } else {
+                        testDataChart = maxtrixArr.map((e) => {
+                            return ['1', '2', '3', '4'].map((element, index) => {
+                                return {
+                                    value: e?.[index]?.total | 0,
+                                    key: element
+                                }
+                            })
+                        });
+                    }
 
-                    })
-                    setData({ dataChart: divData(dataChart, values.type_point), lableChart: divData(lableChart, values.type_point) });
+
+                    console.log("testDataChart", testDataChart);
+                    setData({ dataChart: divData(testDataChart, values.type_point), lableChart: divData(keyTime, values.type_point) });
                 }
             }
 

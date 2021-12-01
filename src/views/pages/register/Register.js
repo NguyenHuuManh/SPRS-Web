@@ -7,6 +7,7 @@ import {
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import { apiSigup } from 'src/apiFunctions/authencation'
 import AppDatePicker from 'src/views/components/AppDatePicker'
 import AppSelectGroupsRegister from 'src/views/components/AppSelectGroupsRegister'
@@ -15,6 +16,7 @@ import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
+import InputMaskField from 'src/views/components/InputMaskField'
 import Mappicker from 'src/views/components/Mappicker'
 import { register } from './validate'
 
@@ -22,6 +24,7 @@ const Register = () => {
   const [orgAdress, setOrgAdress] = useState({});
   const [tinh, setTinh] = useState({});
   const [huyen, setHuyen] = useState({});
+  const history = useHistory()
   const singup = (values) => {
     apiSigup(values).then((res) => {
       console.log("resSignup", res);
@@ -30,6 +33,7 @@ const Register = () => {
           toastOptions: { type: "success" },
           description: "Đăng ký thành công",
         });
+        history.push('./');
       } else {
         appToast({
           toastOptions: { type: "error" },
@@ -152,7 +156,7 @@ const Register = () => {
                         />
                         <Field
                           horizontal
-                          component={InputField}
+                          component={InputMaskField}
                           name="phone"
                           maxTitle={170}
                           title="Số điện thoại"

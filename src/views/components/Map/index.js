@@ -8,8 +8,8 @@ const Map = (props) => {
             <GoogleMap
                 {...props}
                 defaultZoom={8}
+                ref={props.refMap}
             >
-                {/* {props.children} */}
             </GoogleMap>
         </div>
     );

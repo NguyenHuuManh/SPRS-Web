@@ -1,37 +1,39 @@
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "@coreui/react";
-import React, { useEffect, useState, useCallback } from "react";
-import { FaEye } from 'react-icons/fa';
-import { apiGetRequestRejectedAdminORG } from 'src/apiFunctions/authencation';
 import { debounce } from "lodash-es";
-const RejectManage = () => {
+import React, { useCallback, useEffect, useState } from "react";
+import { FaEye } from 'react-icons/fa';
+import { apiGetAccountAccepted } from 'src/apiFunctions/authencation';
+const AccountList = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
 
-
     const callGetRequestRejected = (key) => {
-        apiGetRequestRejectedAdminORG({ search: key }).then((res) => {
+        apiGetAccountAccepted({ search: key }).then((res) => {
             console.log(res, "res");
             if (res.status && res.data.code) {
                 setData(res.data.obj);
             }
         });
     }
+
     const debounceSearch = useCallback(debounce((key) => callGetRequestRejected(key), 500), []);
+
+    useEffect(() => {
+        callGetRequestRejected("");
+    }, [])
+
 
     const onChange = (values) => {
         setKey(values.target.value);
         debounceSearch(values.target.value);
     }
-    useEffect(() => {
-        callGetRequestRejected("")
-    }, [])
     return (
         <CCard>
             <CCardHeader>
                 <CRow>
                     <CCol md={6}>
-                        Danh sách tài khoản bị từ chối
+                        Danh sách tài khoản đã được duyệt
                     </CCol>
                 </CRow>
             </CCardHeader>
@@ -82,4 +84,5 @@ const RejectManage = () => {
         </CCard>
     )
 }
-export default RejectManage;
+export default AccountList
+    ;
