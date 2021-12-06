@@ -6,7 +6,9 @@ export const RouteBase = {
     Profile: '/profile',
     UpdatePassword: '/update-password',
     Dashboard: '/dashboard',
+    DashboardORG: '/dashboard-org',
     NotificationManager: '/quan-ly-thong-bao',
     NotificationSending: '/gui-thong-bao',
     GrantAccess: '/phan-quyen',
+    PointManagement: '/quan-ly-diem-cuu-tro',
 };

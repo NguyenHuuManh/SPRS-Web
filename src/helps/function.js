@@ -51,3 +51,15 @@ export const trimmedObject = (obj) => {
   });
   return JSON.parse(trimed);
 };
+
+export const countPage = (totalItems, size) => {
+  if (Number(totalItems) / Number(size) > Math.round(Number(totalItems) / Number(size))) {
+    return Math.round(Number(totalItems) / Number(size)) + 1;
+  } else {
+    return Math.round(Number(totalItems) / Number(size));
+  }
+
+}
+export function calcItemStart(page, size) {
+  return (page - 1) * size + 1;
+}

@@ -2,7 +2,7 @@ export const API_KEY = "AIzaSyDlqprU1uYvSEEQIEotGG8_mL3QFfVB7vY"
 export const URL_GOONG = "https://rsapi.goong.io"
 export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
-export const URL = "http://ec2-18-140-72-243.ap-southeast-1.compute.amazonaws.com";
+export const URL = "http://ec2-13-250-102-44.ap-southeast-1.compute.amazonaws.com";
 //
 export const SIGNIN = `${URL}/authenticate-web`;
 export const USER = `${URL}/user`;
@@ -27,6 +27,9 @@ export const GET_REQUEST_REGISTER_ORG_REJECT = `${URL}/sprs/api/request-manage/r
 export const GET_ACC_ACCEPTED = `${URL}/sprs/api/request-manage/request-systemAdmin/accept`;
 export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/accept`;
 export const REJECT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/reject`;
+export const GET_USER_ORG = `${URL}/sprs/api/getOwnOrg`
+export const UNACTIVE_USER_ORG = `${URL}/sprs/api/org-user-unactive`
+
 //
 export const PLACE_AUTOCOMPLETE = `${URL_GOONG}/Place/AutoComplete`
 export const DETAIL_PLACE_LAT_LNG = `${URL_GOONG}/Geocode`
@@ -58,6 +61,7 @@ export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
 //report
 export const GET_REPORT = `${URL}/sprs/api/report-manage/getReport`
 export const GET_REPORT_OVERVIEW = `${URL}/sprs/api/report-manage/getReportOverview`
+export const GET_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`

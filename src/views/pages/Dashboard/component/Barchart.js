@@ -1,4 +1,4 @@
-import { CChartBar } from "@coreui/react-chartjs";
+import { CChartBar, CChartHorizontalBar } from "@coreui/react-chartjs";
 import { isEmpty } from "lodash-es";
 import React from "react";
 const Barchart = (props) => {
@@ -37,18 +37,20 @@ const Barchart = (props) => {
             data: filterData(key),
         };
     })
-    console.log("datasets", datasets);
     return (
-        <CChartBar
-            datasets={datasets}
-            labels={data.lableChart}
-            options={{
-                tooltips: {
-                    enabled: true
-                }
-            }}
-            multiple={false}
-        />
+        <>
+            <CChartBar
+                datasets={datasets}
+                labels={data.lableChart}
+                options={{
+                    tooltips: {
+                        enabled: true
+                    }
+                }}
+                multiple={false}
+            />
+
+        </>
     )
 }
 export default Barchart;

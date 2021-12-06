@@ -1,5 +1,5 @@
 import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput } from "@coreui/react";
-import { debounce } from "lodash-es";
+import { debounce, isEmpty } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
@@ -30,6 +30,13 @@ const RequestManage = () => {
     }, [data])
 
     const accpetRequestORG = () => {
+        if (isEmpty(items)) {
+            appToast({
+                toastOptions: { type: "error" },
+                description: "Chọn ít nhất một tài khoản để duyệt",
+            });
+            return
+        }
         const ids = items.map((e) => e.id);
         apiAcceptRequestAdminORG(ids).then((e) => {
             if (e.status == 200 && e.data.code == "200") {
@@ -95,25 +102,26 @@ const RequestManage = () => {
                         </CInputGroup>
                     </div>
                     <div style={{ width: "70%", paddingTop: 34, justifyContent: "flex-end", display: "flex", alignItems: "flex-start" }}>
-                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} >Duyệt</CButton>
+                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} disabled={isEmpty(items)}>Duyệt</CButton>
                     </div>
                 </div>
 
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
-                        <th>
-                            <input type="checkbox"
-                                onChange={handleCheckAll}
-                                checked={Boolean(isAllItemOnPageChecked(items, data, "id"))}
-                            /></th>
+
                         <th>Tên đầy đủ</th>
                         <th>Tên tài khoản</th>
                         <th>Số điện thoại</th>
                         <th>Tên tổ chức</th>
                         <th>Địa chỉ tổ chức</th>
                         <th>Trạng thái</th>
-                        <th></th>
+                        <th>Từ chối</th>
+                        <th>
+                            <input type="checkbox"
+                                onChange={handleCheckAll}
+                                checked={Boolean(isAllItemOnPageChecked(items, data, "id"))}
+                            /></th>
                     </thead>
                     <tbody>
                         {
@@ -125,12 +133,7 @@ const RequestManage = () => {
                                         onClick={() => { setItemSelected(item) }}
                                     >
                                         <td>{index + 1}</td>
-                                        <td>
-                                            <input type="checkbox"
-                                                checked={Boolean(items.filter((elm) => elm.id === item.id).length > 0)}
-                                                onChange={(e) => onSelectedItem(e, item)}
-                                            />
-                                        </td>
+
                                         <td>{item?.user?.full_name}</td>
                                         <td>{item?.user?.username}</td>
                                         <td>{item?.user?.phone}</td>
@@ -141,6 +144,12 @@ const RequestManage = () => {
                                             <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
                                                 Từ chối
                                             </CButton>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox"
+                                                checked={Boolean(items.filter((elm) => elm.id === item.id).length > 0)}
+                                                onChange={(e) => onSelectedItem(e, item)}
+                                            />
                                         </td>
                                     </tr>
                                 )

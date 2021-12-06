@@ -1,20 +1,47 @@
 import { CChartPie } from "@coreui/react-chartjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { apiGetReportOverview } from "src/apiFunctions/Dashboard";
 const Piechart = () => {
+    const [data, setData] = useState([])
+    const getReport = (values) => {
+        apiGetReportOverview(values).then((e) => {
+            if (e.status == 200) {
+                if (e.data.code == '200') {
+                    console.log("e.data.", e.data.obj);
+                    const dataChart = [];
+                    const lableChart = []
+                    e?.data?.obj.forEach(element => {
+                        dataChart.push(element.total)
+                        lableChart.push(element.type_point === 1 ? "Cứu trợ" : element.type_point === 2 ? "Cửa hàng" : element.type_point === 3 ? "Tổ chức" : "SOS")
+                    });
+                    setData({
+                        dataChart: dataChart,
+                        lableChart: lableChart
+                    });
+                }
+            }
+
+        })
+    }
+
+    useEffect(() => {
+        getReport()
+    }, []);
+
     return (
         <CChartPie
             datasets={[
                 {
                     backgroundColor: [
-                        '#41B883',
-                        '#E46651',
-                        '#00D8FF',
-                        '#DD1B16'
+                        'pink',
+                        'yellow',
+                        'blue',
+                        'red'
                     ],
-                    data: [40, 20, 80, 10]
+                    data: data.dataChart
                 }
             ]}
-            labels={['VueJs', 'EmberJs', 'ReactJs', 'AngularJs']}
+            labels={data.lableChart}
 
             options={{
                 tooltips: {

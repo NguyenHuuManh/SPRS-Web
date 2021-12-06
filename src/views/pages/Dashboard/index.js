@@ -1,18 +1,28 @@
 import { CCol, CRow } from "@coreui/react";
+import { CChartHorizontalBar } from "@coreui/react-chartjs";
 import React from "react";
+import CityChart from "./component/CityChart";
 import FormSearch from "./component/FormSearch";
 import Piechart from "./component/PieChart";
+
 const Dashboard = () => {
     return (
         <>
             <CRow>
-                <CCol lg={6}>
-                    <FormSearch />
+                <CCol lg={6} style={{ paddingBottom: 25 }}>
+                    <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
+                        <CityChart />
+                    </div>
+
                 </CCol>
                 <CCol lg={6} style={{ paddingBottom: 25 }}>
                     <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
                         <Piechart />
                     </div>
+
+                </CCol>
+                <CCol lg={12}>
+                    <FormSearch />
                 </CCol>
             </CRow>
         </>

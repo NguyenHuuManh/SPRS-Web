@@ -1,7 +1,6 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "@coreui/react";
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
-import { FaEye } from 'react-icons/fa';
 import { apiGetAccountAccepted } from 'src/apiFunctions/authencation';
 const AccountList = () => {
     const [itemSelected, setItemSelected] = useState({});

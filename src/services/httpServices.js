@@ -6,6 +6,13 @@ class Services {
   constructor() {
     this.axios = axios;
     this.interceptors = null;
+    // this.axios.defaults.headers = {
+    //   "Access-Control-Allow-Headers": "*",
+    //   "Access-Control-Allow-Methods": "*",
+    //   "Content-Type": "application/json"
+    // };
+    // this.axios.defaults.withCredentials = true;
+    // this.axios.defaults.timeout = 300000;
   }
 
   attachTokenToHeader(token) {
