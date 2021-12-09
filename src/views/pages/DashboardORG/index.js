@@ -1,7 +1,6 @@
 import { CCol, CRow } from "@coreui/react";
 import React from "react";
 import FormSearch from "./component/FormSearch";
-import Piechart from "./component/PieChart";
 const Dashboard = () => {
     return (
         <>

@@ -1,55 +1,45 @@
-import { CChartBar, CChartHorizontalBar } from "@coreui/react-chartjs";
+import { CChartBar } from "@coreui/react-chartjs";
 import { isEmpty } from "lodash-es";
+import { CButton, CCol, CRow, CCardTitle } from "@coreui/react";
 import React from "react";
 const Barchart = (props) => {
     const { data } = props;
 
-    const filterData = (key) => {
-        let dataDastet = [];
-        data.dataChart.forEach((element) => {
-            element.forEach((e) => {
-                if (e.key == key) dataDastet.push(e.value);
-            })
-        });
-        return dataDastet;
-    }
-
-
     const filterLable = (key) => {
-        if (key === '1') return "Cứu Trợ"
-        if (key === '2') return "Cửa hàng"
-        if (key === '3') return "Tổ chức"
-        if (key === '4') return "SOS"
+        if (key === 'ReliefPoint') return "Cứu trợ"
+        if (key === 'StorePoint') return "Cửa hàng"
+        if (key === 'SOS') return "Cứu trợ"
+        if (key === 'Organization') return "Tổ chức"
     }
 
     const filterColor = (key) => {
-        if (key === '1') return "pink"
-        if (key === '2') return "yellow"
-        if (key === '3') return "blue"
-        if (key === '4') return "red"
+        if (key === 'ReliefPoint') return "green"
+        if (key === 'StorePoint') return "blue"
+        if (key === 'SOS') return "red"
+        if (key === 'Organization') return "orange"
     }
-    console.log(data.dataChart, "data.dataChart")
-
-    const datasets = isEmpty(data.dataChart) ? [] : data.dataChart[0].map(({ key }) => {
+    const datasets = isEmpty(data.dataChart) ? [] : Object.entries(data.dataChart).map(([key, value]) => {
         return {
             label: filterLable(key),
             backgroundColor: filterColor(key),
-            data: filterData(key),
+            data: value,
         };
     })
     return (
         <>
             <CChartBar
                 datasets={datasets}
-                labels={data.lableChart}
+                labels={data.lables}
                 options={{
                     tooltips: {
                         enabled: true
                     }
                 }}
-                multiple={false}
+            // multiple={false}
             />
-
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <CCardTitle>{data?.lables?.length == 30 ? "Biểu đồ 30 ngày gần nhất" : "Biểu đồ 12 tháng gần nhất"}</CCardTitle>
+            </div>
         </>
     )
 }

@@ -21,9 +21,8 @@ interface Props extends SelectProps<OptionTypeBase> {
     functionProps?: any;
 }
 const dummy = [
-    { id: '1', name: "Năm" },
-    { id: '2', name: "Tháng" },
-    { id: '3', name: "Ngày" },
+    { id: '1', name: "12 tháng gần nhất" },
+    { id: '2', name: "30 ngày gần nhất tháng" },
 
 ]
 export default memo((props: Props) => {

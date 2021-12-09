@@ -59,9 +59,9 @@ export const GET_PERMISSION = `${URL}/sprs/api/permissions-authoried`
 export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
 
 //report
-export const GET_REPORT = `${URL}/sprs/api/report-manage/getReport`
+export const GET_REPORT_YEAR = `${URL}/sprs/api/report-manage/getReportYear`
 export const GET_REPORT_OVERVIEW = `${URL}/sprs/api/report-manage/getReportOverview`
-export const GET_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
+export const GET_REPORT_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`

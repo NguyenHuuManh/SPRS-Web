@@ -1,5 +1,4 @@
 import { CCol, CRow } from "@coreui/react";
-import { CChartHorizontalBar } from "@coreui/react-chartjs";
 import React from "react";
 import CityChart from "./component/CityChart";
 import FormSearch from "./component/FormSearch";
@@ -21,9 +20,14 @@ const Dashboard = () => {
                     </div>
 
                 </CCol>
+            </CRow>
+            <CRow>
                 <CCol lg={12}>
                     <FormSearch />
                 </CCol>
+                {/* <CCol lg={6}>
+                    <FormSearch />
+                </CCol> */}
             </CRow>
         </>
     )

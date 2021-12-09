@@ -33,9 +33,9 @@ const Piechart = () => {
             datasets={[
                 {
                     backgroundColor: [
-                        'pink',
-                        'yellow',
+                        'green',
                         'blue',
+                        'orange',
                         'red'
                     ],
                     data: data.dataChart

@@ -4,7 +4,7 @@ import { isEmpty } from "lodash-es";
 import moment from "moment";
 import React, { useState } from "react";
 import { Card } from "reactstrap";
-import { apiGetReport } from "src/apiFunctions/Dashboard";
+// import { apiGetReport } from "src/apiFunctions/Dashboard";
 import { uniqueArr } from "src/helps/function";
 import AppDatePicker from "src/views/components/AppDatePicker";
 import AppSelectHuyen from "src/views/components/AppSelectHuyen";
@@ -49,51 +49,7 @@ const FormSearch = () => {
         return arrTem;
     }
     const getReport = (values) => {
-        apiGetReport(values).then((e) => {
-            if (e?.status == 200) {
-                if (e.data.code == '200') {
-                    const arr = e?.data?.obj || [];
-                    const timeName = values.type_time + '' === '1' ? 'year' : values.type_time + '' === '2' ? 'month' : 'day';
-                    const keyTime = uniqueArr(arr.map((e) => e?.[timeName]));
-                    const maxtrixArr = [];
-                    keyTime.forEach((time) => {
-                        let tempArr = [];
-                        maxtrixArr.push(tempArr);
-                        arr.forEach((item) => {
-                            if (item[timeName] === time) {
-                                tempArr.push(item);
-                            }
-                        });
-                    });
-                    let testDataChart = []
-                    if (['1', '2', '3', '4'].includes(values.type_time)) {
-                        testDataChart = maxtrixArr.map((e) => {
-                            console.log(e, "EEEE")
-                            return e.map((element, index) => {
-                                return {
-                                    value: element.total | 0,
-                                    key: element.type_point + ''
-                                }
-                            })
-                        })
-                    } else {
-                        testDataChart = maxtrixArr.map((e) => {
-                            return ['1', '2', '3', '4'].map((element, index) => {
-                                return {
-                                    value: e?.[index]?.total | 0,
-                                    key: element
-                                }
-                            })
-                        });
-                    }
 
-
-                    console.log("testDataChart", testDataChart);
-                    setData({ dataChart: divData(testDataChart, values.type_point), lableChart: divData(keyTime, values.type_point) });
-                }
-            }
-
-        })
     }
     return (
         <Card>
