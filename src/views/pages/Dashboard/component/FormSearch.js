@@ -50,7 +50,7 @@ const FormSearch = () => {
     }
     const getReport = (values) => {
         apiGetReport(values).then((e) => {
-            if (e.status == 200) {
+            if (e?.status == 200) {
                 if (e.data.code == '200') {
                     const arr = e?.data?.obj || [];
                     const timeName = values.type_time + '' === '1' ? 'year' : values.type_time + '' === '2' ? 'month' : 'day';

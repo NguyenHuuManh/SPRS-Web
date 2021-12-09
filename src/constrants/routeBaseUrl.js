@@ -11,4 +11,5 @@ export const RouteBase = {
     NotificationSending: '/gui-thong-bao',
     GrantAccess: '/phan-quyen',
     PointManagement: '/quan-ly-diem-cuu-tro',
+    AccountManagement: '/quan-ly-tai-khoan',
 };

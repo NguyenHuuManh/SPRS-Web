@@ -13,7 +13,7 @@ const RequestManage = () => {
     const callGetReques = (value) => {
         apiGetRequestAdminORG({ search: value }).then((res) => {
             console.log(res, "res");
-            if (res.status && res.data.code) {
+            if (res?.status && res.data.code) {
                 setData(res.data.obj);
             }
         });
@@ -39,7 +39,7 @@ const RequestManage = () => {
         }
         const ids = items.map((e) => e.id);
         apiAcceptRequestAdminORG(ids).then((e) => {
-            if (e.status == 200 && e.data.code == "200") {
+            if (e?.status == 200 && e.data.code == "200") {
                 appToast({
                     toastOptions: { type: "success" },
                     description: "Active success!",
@@ -51,7 +51,7 @@ const RequestManage = () => {
 
     const rejectRequestORG = (item) => {
         apiRejectRequestAdminORG([item.id]).then((e) => {
-            if (e.status == 200 && e.data.code == "200") {
+            if (e?.status == 200 && e.data.code == "200") {
                 appToast({
                     toastOptions: { type: "success" },
                     description: "Reject success!",

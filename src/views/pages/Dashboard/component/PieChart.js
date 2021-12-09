@@ -5,7 +5,7 @@ const Piechart = () => {
     const [data, setData] = useState([])
     const getReport = (values) => {
         apiGetReportOverview(values).then((e) => {
-            if (e.status == 200) {
+            if (e?.status == 200) {
                 if (e.data.code == '200') {
                     console.log("e.data.", e.data.obj);
                     const dataChart = [];

@@ -12,6 +12,7 @@ const CreateNotificaiton = React.lazy(() => import('./views/pages/CreateNotifica
 const GrantAccess = React.lazy(() => import('./views/pages/GrantAccess'));
 const DashboardORG = React.lazy(() => import('./views/pages/DashboardORG'));
 const PointManagement = React.lazy(() => import('./views/pages/PointManagement'));
+const AccountManagerment = React.lazy(() => import('./views/pages/AccountManagerment'));
 
 const routes = [
   { path: RouteBase.Home, exact: true, name: 'Trang chủ' },
@@ -25,7 +26,8 @@ const routes = [
   { path: RouteBase.NotificationSending, exact: true, name: 'Gửi thông báo thông báo', component: WithBoundary(CreateNotificaiton) },
   { path: RouteBase.GrantAccess, exact: true, name: 'Phân quyền chức năng', component: WithBoundary(GrantAccess) },
   { path: RouteBase.DashboardORG, exact: true, name: 'Tổng quan', component: WithBoundary(DashboardORG) },
-  { path: RouteBase.PointManagement, exact: true, name: 'Quản lý điểm', component: WithBoundary(PointManagement) }
+  { path: RouteBase.PointManagement, exact: true, name: 'Quản lý điểm', component: WithBoundary(PointManagement) },
+  { path: RouteBase.AccountManagement, exact: true, name: 'Quản lý tài khoản', component: WithBoundary(AccountManagerment) }
 ];
 
 export default routes;

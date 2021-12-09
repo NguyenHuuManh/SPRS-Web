@@ -10,7 +10,7 @@ const AccountList = () => {
     const callGetRequestRejected = (key) => {
         apiGetAccountAccepted({ search: key }).then((res) => {
             console.log(res, "res");
-            if (res.status && res.data.code) {
+            if (res?.status && res.data.code) {
                 setData(res.data.obj);
             }
         });

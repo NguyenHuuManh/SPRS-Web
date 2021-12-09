@@ -6,10 +6,10 @@ import { apiGetMembers, apiUnActiveMembers } from 'src/apiFunctions/orgManagerme
 import { calcItemStart, countPage } from 'src/helps/function';
 import { FaSortAlphaDown, FaSortAlphaUp } from 'react-icons/fa';
 import { appToast } from 'src/views/components/AppToastContainer';
-const size = 10;
+const size = 1;
 const UserManager = () => {
     const [itemSelected, setItemSelected] = useState({});
-    const [pageSize, setPageSize] = useState({ page: 0, size: size });
+    const [pageSize, setPageSize] = useState({ page: 1, size: size });
     const [sort, setSort] = useState(true);
     const [key, setKey] = useState("");
     const [data, setData] = useState({});
@@ -17,7 +17,7 @@ const UserManager = () => {
     const getUsers = (keySearch) => {
         const body = {
             pageSize: pageSize.size,
-            pageIndex: pageSize.page,
+            pageIndex: pageSize.page - 1,
             sort: sort,
             search: keySearch,
         }
@@ -47,7 +47,7 @@ const UserManager = () => {
 
     const unActive = (id) => {
         apiUnActiveMembers(id).then((e) => {
-            if (e.status == 200) {
+            if (e?.status == 200) {
                 if (e.data.code == '200') {
                     setPageSize({ ...pageSize });
                 } else {
@@ -110,7 +110,7 @@ const UserManager = () => {
                                                 className={`${item.id == itemSelected?.id && "table-active"}`}
                                                 onClick={() => { setItemSelected(item) }}
                                             >
-                                                <td>{calcItemStart(pageSize.page + 1, pageSize.size)}</td>
+                                                <td>{calcItemStart(pageSize.page, pageSize.size)}</td>
                                                 <td>{item.username}</td>
                                                 <td>{item.status}</td>
                                                 <td>

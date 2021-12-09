@@ -8,7 +8,8 @@ const specialLink = [
     RouteBase.Dashboard,
     RouteBase.Profile,
     RouteBase.DashboardORG,
-    RouteBase.PointManagement
+    RouteBase.PointManagement,
+    RouteBase.AccountManagement
 ];
 
 const NoPermission = (props) => {

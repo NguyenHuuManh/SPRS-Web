@@ -27,7 +27,7 @@ const ForgotPassword = () => {
         console.log("values", values);
         apiOtpPassword(values).then((e) => {
             console.log("e", e);
-            if (e.status == 200 && e.data.code == "200") {
+            if (e?.status == 200 && e.data.code == "200") {
                 setIsOtp(true);
                 setIsPhone(false);
                 setPhone(values.to);

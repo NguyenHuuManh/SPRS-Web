@@ -18,7 +18,7 @@ const CreateNotificaton = () => {
 
     const sendNotification = (body) => {
         apiSendNotification(body).then((e) => {
-            if (e.status === 200) {
+            if (e?.status === 200) {
                 if (e.data.code === '200') {
                     appToast({
                         toastOptions: { type: "success" },

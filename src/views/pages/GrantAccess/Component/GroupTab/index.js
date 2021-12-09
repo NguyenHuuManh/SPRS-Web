@@ -1,14 +1,13 @@
 import { CButton, CCardBody, CCol, CRow } from '@coreui/react';
-import { debounce, isEmpty } from 'lodash-es';
-import React, { useCallback, useEffect, useState } from "react";
-import { Card, CardHeader } from "reactstrap";
-import { apiGetGroupAuthoried, apiGetGroupUnAuthoried, apiGrantGroupPermission, apiGrantGroupUnPermission, apiGrantUserPermission, apiGrantUserUnPermission } from 'src/apiFunctions/permission';
+import { isEmpty } from 'lodash-es';
+import React, { useEffect, useState } from "react";
+import { Card } from "reactstrap";
+import { apiGetGroupAuthoried, apiGetGroupUnAuthoried, apiGrantGroupPermission, apiGrantGroupUnPermission } from 'src/apiFunctions/permission';
 import UserTable from './UserTable';
 const Group = () => {
     const [itemSelected, setItemSelected] = useState(1);
     const [dataPermisstion, setDataPermission] = useState([]);
     const [dataUnPermisstion, setDataUnPermission] = useState([]);
-
 
     const getPermission = (id) => {
         apiGetGroupAuthoried(id).then((e) => {

@@ -14,7 +14,7 @@ const UserTable = (props) => {
             return;
         }
         apiGetUersByName(key).then((e) => {
-            if (e.data.code === '200') {
+            if (e?.data?.code === '200') {
                 setData(e?.data?.lstObj);
             }
         })

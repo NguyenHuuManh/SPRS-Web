@@ -65,7 +65,8 @@ export const GET_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`
-
-
-
+//Ban
+export const BAN_ACC = `${URL}/sprs/api/user/ban`
+export const UNBAN_ACC = `${URL}/sprs/api/user/unbanned`
+export const GET_ACC = `${URL}/sprs/api/users/admin`
 
