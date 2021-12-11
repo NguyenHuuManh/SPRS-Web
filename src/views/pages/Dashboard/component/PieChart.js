@@ -1,3 +1,4 @@
+import { CCardTitle } from "@coreui/react";
 import { CChartPie } from "@coreui/react-chartjs";
 import React, { useEffect, useState } from "react";
 import { apiGetReportOverview } from "src/apiFunctions/Dashboard";
@@ -25,31 +26,35 @@ const Piechart = () => {
     }
 
     useEffect(() => {
-        getReport()
+        getReport();
     }, []);
 
     return (
-        <CChartPie
-            datasets={[
-                {
-                    backgroundColor: [
-                        'green',
-                        'blue',
-                        'orange',
-                        'red'
-                    ],
-                    data: data.dataChart
-                }
-            ]}
-            labels={data.lableChart}
+        <>
+            <CChartPie
+                datasets={[
+                    {
+                        backgroundColor: [
+                            'green',
+                            'blue',
+                            'orange',
+                            'red'
+                        ],
+                        data: data.dataChart
+                    }
+                ]}
+                labels={data.lableChart}
 
-            options={{
-                tooltips: {
-                    enabled: true
-                }
-            }}
-
-        />
+                options={{
+                    tooltips: {
+                        enabled: true
+                    }
+                }}
+            />
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <CCardTitle>Biểu đồ tổng các điểm của toàn hệ thống</CCardTitle>
+            </div>
+        </>
     )
 }
 export default Piechart;

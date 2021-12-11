@@ -2,11 +2,11 @@ import CIcon from '@coreui/icons-react';
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from '@coreui/react'
 import { debounce } from 'lodash-es';
 import React, { useCallback, useEffect, useState } from 'react'
-import { apiGetMembers, apiUnActiveMembers } from 'src/apiFunctions/orgManagerment'
+import { apiActiveMembers, apiGetMembers, apiUnActiveMembers } from 'src/apiFunctions/orgManagerment'
 import { calcItemStart, countPage } from 'src/helps/function';
 import { FaSortAlphaDown, FaSortAlphaUp } from 'react-icons/fa';
 import { appToast } from 'src/views/components/AppToastContainer';
-const size = 1;
+const size = 5;
 const UserManager = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [pageSize, setPageSize] = useState({ page: 1, size: size });
@@ -47,6 +47,26 @@ const UserManager = () => {
 
     const unActive = (id) => {
         apiUnActiveMembers(id).then((e) => {
+            if (e?.status == 200) {
+                if (e.data.code == '200') {
+                    setPageSize({ ...pageSize });
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: e.data.message,
+                    });
+                }
+            } else {
+                appToast({
+                    toastOptions: { type: "error" },
+                    description: 'Hệ thống đang bảo trì',
+                });
+            }
+        })
+    }
+
+    const active = (id) => {
+        apiActiveMembers(id).then((e) => {
             if (e?.status == 200) {
                 if (e.data.code == '200') {
                     setPageSize({ ...pageSize });

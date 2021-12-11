@@ -1,4 +1,4 @@
-import { GET_USER_ORG } from "src/constrants/action";
+import { ACTIVE_USER_ORG, GET_USER_ORG, UNACTIVE_USER_ORG } from "src/constrants/action";
 import httpServices from "src/services/httpServices";
 
 export const apiGetMembers = async (body) => {
@@ -6,6 +6,10 @@ export const apiGetMembers = async (body) => {
 };
 
 export const apiUnActiveMembers = async (id) => {
-  return await httpServices.put(`${GET_USER_ORG}/${id}`);
+  return await httpServices.put(`${UNACTIVE_USER_ORG}/${id}`);
+};
+
+export const apiActiveMembers = async (id) => {
+  return await httpServices.put(`${ACTIVE_USER_ORG}/${id}`);
 };
 

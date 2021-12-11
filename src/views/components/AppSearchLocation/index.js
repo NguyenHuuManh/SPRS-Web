@@ -21,6 +21,7 @@ interface Props extends SelectProps<OptionTypeBase> {
     defaultKey?: any;
     disabled?: any;
     functionProps?: any;
+    mapRef?: any;
 }
 
 export default memo((props: Props) => {
@@ -35,7 +36,9 @@ export default memo((props: Props) => {
         disabled,
         idTinh,
         functionProps,
+        mapRef,
         ...remainProps
+
     } = props;
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);

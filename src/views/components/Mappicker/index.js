@@ -79,7 +79,8 @@ export default memo((props) => {
                 console.log("e", e)
                 if (e?.status == "OK") {
                     setMarker({ ...marker, lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
-                    console.log("ref", ref.current)
+                    ref.current.panTo({ lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
+                    console.log(ref.current, 'ref.current');
                 } else {
                     appToast({
                         toastOptions: { type: "error" },
@@ -157,6 +158,7 @@ export default memo((props) => {
                                             console.log("e", e);
                                             submitForm()
                                         }}
+                                        mapRef={ref}
                                     />
                                 </div>
                             )}
@@ -208,8 +210,6 @@ export default memo((props) => {
                             onClick={(res) => { setMarker({ lat: res.latLng.lat(), lng: res.latLng.lng() }) }}
                             defaultCenter={marker}
                             cernter={marker}
-
-                        // center={adress}
                         >
                             <Marker
                                 position={marker}

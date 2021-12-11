@@ -29,6 +29,7 @@ export const ACCEPT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin
 export const REJECT_REQUEST_REGISTER_ORG = `${URL}/sprs/api/request-manage/admin/register/reject`;
 export const GET_USER_ORG = `${URL}/sprs/api/getOwnOrg`
 export const UNACTIVE_USER_ORG = `${URL}/sprs/api/org-user-unactive`
+export const ACTIVE_USER_ORG = `${URL}/sprs/api/org-user-active`
 
 //
 export const PLACE_AUTOCOMPLETE = `${URL_GOONG}/Place/AutoComplete`
@@ -62,6 +63,7 @@ export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
 export const GET_REPORT_YEAR = `${URL}/sprs/api/report-manage/getReportYear`
 export const GET_REPORT_OVERVIEW = `${URL}/sprs/api/report-manage/getReportOverview`
 export const GET_REPORT_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
+export const GET_REPORT_PROVINCE = `${URL}/sprs/api/report-manage/getReportProvince`
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`

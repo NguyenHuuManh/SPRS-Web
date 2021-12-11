@@ -1,6 +1,6 @@
 import { CButton, CCol, CRow } from "@coreui/react";
 import { Field, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "reactstrap";
 import { apiGetReportMonth, apiGetReportYear } from "src/apiFunctions/Dashboard";
 import AppSelectTypeReport from "src/views/components/AppSelectTypeReport";
@@ -8,7 +8,12 @@ import { report } from "../validate";
 import Barchart from "./Barchart";
 const FormSearch = () => {
     const [data, setData] = useState({});
+    const [body, setBody] = useState({ type_time: '1' });
 
+
+    useEffect(() => {
+        getReport(body);
+    }, [body])
 
     const getReport = (values) => {
         // let type_points = [];
@@ -43,7 +48,7 @@ const FormSearch = () => {
         <Card>
             <Formik
                 initialValues={{
-                    type_time: "",
+                    type_time: "1",
                     // store: true,
                     // relief: true,
                     // org: true,
@@ -53,8 +58,7 @@ const FormSearch = () => {
                 validateOnBlur={false}
                 validateOnChange={false}
                 onSubmit={(values) => {
-                    console.log('values', values);
-                    getReport(values);
+                    setBody({ ...values })
                 }}
             >
                 {({ submitForm }) => (
@@ -72,7 +76,7 @@ const FormSearch = () => {
                             <Field component={CheckboxField} name="sos" title="SOS" type="checkbox" />
                         </CCol> */}
                         <CCol lg={3} md={3}>
-                            <Field component={AppSelectTypeReport} name="type_time" title="Loại báo cáo" />
+                            <Field component={AppSelectTypeReport} name="type_time" title="Loại báo cáo" isClearable={false} />
                         </CCol>
                         <CCol lg={3} md={3} style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
                             <CButton

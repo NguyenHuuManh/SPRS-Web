@@ -25,9 +25,6 @@ const Dashboard = () => {
                 <CCol lg={12}>
                     <FormSearch />
                 </CCol>
-                {/* <CCol lg={6}>
-                    <FormSearch />
-                </CCol> */}
             </CRow>
         </>
     )

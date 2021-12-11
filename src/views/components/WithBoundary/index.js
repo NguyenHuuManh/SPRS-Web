@@ -4,12 +4,12 @@ import { RouteBase } from "src/constrants/routeBaseUrl";
 import ErrorBoundary from "../ErrorBoundary";
 
 const specialLink = [
-    RouteBase.UserManager,
-    RouteBase.Dashboard,
+    // RouteBase.UserManager,
+    // RouteBase.Dashboard,
     RouteBase.Profile,
-    RouteBase.DashboardORG,
-    RouteBase.PointManagement,
-    RouteBase.AccountManagement
+    // RouteBase.DashboardORG,
+    // RouteBase.PointManagement,
+    // RouteBase.AccountManagement
 ];
 
 const NoPermission = (props) => {
@@ -64,7 +64,8 @@ const withErrorBoundary = (BaseComponent) => {
             }
 
             // check permission view page
-            if (stringMenu.includes(sliceUrl) || specialLink.includes(sliceUrl)) {
+            console.log(navi_menu.includes(sliceUrl), 'stringMenu.includes(sliceUrl)')
+            if (navi_menu.includes(sliceUrl) || specialLink.includes(sliceUrl)) {
                 // have permission view page
                 setState({ loading: false, havePermission: true });
             } else {
