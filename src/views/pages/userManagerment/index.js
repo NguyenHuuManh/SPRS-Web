@@ -130,7 +130,7 @@ const UserManager = () => {
                                                 className={`${item.id == itemSelected?.id && "table-active"}`}
                                                 onClick={() => { setItemSelected(item) }}
                                             >
-                                                <td>{calcItemStart(pageSize.page, pageSize.size)}</td>
+                                                <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                                 <td>{item.username}</td>
                                                 <td>{item.status}</td>
                                                 <td>

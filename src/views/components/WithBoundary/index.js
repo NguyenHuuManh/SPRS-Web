@@ -7,6 +7,7 @@ const specialLink = [
     // RouteBase.UserManager,
     // RouteBase.Dashboard,
     RouteBase.Profile,
+    RouteBase.CreateEvent
     // RouteBase.DashboardORG,
     // RouteBase.PointManagement,
     // RouteBase.AccountManagement
@@ -64,7 +65,7 @@ const withErrorBoundary = (BaseComponent) => {
             }
 
             // check permission view page
-            console.log(navi_menu.includes(sliceUrl), 'stringMenu.includes(sliceUrl)')
+            // console.log(navi_menu.includes(sliceUrl), 'stringMenu.includes(sliceUrl)')
             if (navi_menu.includes(sliceUrl) || specialLink.includes(sliceUrl)) {
                 // have permission view page
                 setState({ loading: false, havePermission: true });

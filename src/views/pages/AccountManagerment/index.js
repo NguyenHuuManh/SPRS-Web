@@ -1,8 +1,10 @@
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from "@coreui/react";
-import { debounce } from "lodash-es";
+import { Field, Formik } from "formik";
+import { debounce, isEmpty } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiBanUser, apiGetUsers, apiUnBanUser } from "src/apiFunctions/AccountManagerment";
-import { countPage } from "src/helps/function";
+import { calcItemStart } from "src/helps/function";
+import AppSelectStautusAccount from "src/views/components/AppSelectStautusAccount";
 import { appToast } from "src/views/components/AppToastContainer";
 const size = 10;
 const AccountManagerment = () => {
@@ -10,12 +12,14 @@ const AccountManagerment = () => {
     const [data, setData] = useState({});
     const [key, setKey] = useState("");
     const [pageSize, setPageSize] = useState({ page: 1, size: size });
+    const [status, setStatus] = useState('');
 
     const searchByName = (key) => {
         const param = {
             pageSize: pageSize.size,
             pageIndex: pageSize.page,
             search: key,
+            filterStatus: isEmpty(status) ? [] : [status]
         }
         apiGetUsers(param).then((e) => {
             if (e?.status == 200) {
@@ -115,16 +119,39 @@ const AccountManagerment = () => {
                 </CRow>
             </CCardHeader>
             <CCardBody>
-                <div style={{ width: "30%" }}>
-                    <label className="inputTitle">Tìm kiếm</label>
-                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
-                        <CInput
-                            placeholder="Nhập tên tài khoản . . ."
-                            onChange={onChange}
-                            value={key}
-                        />
-                    </CInputGroup>
-                </div>
+                <Formik
+                    initialValues={{
+                        status: "",
+                    }}
+                >
+                    {() => (
+                        <>
+                            <CRow>
+                                <CCol md={3}>
+                                    <label className="inputTitle">Tìm kiếm</label>
+                                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
+                                        <CInput
+                                            placeholder="Nhập tên tài khoản . . ."
+                                            onChange={onChange}
+                                            value={key}
+                                        />
+                                    </CInputGroup>
+                                </CCol>
+                                <CCol md={3}>
+                                    <Field
+                                        component={AppSelectStautusAccount}
+                                        name='status'
+                                        title="Trạng thái"
+                                        functionProps={(item) => {
+                                            setStatus(item?.id || '');
+                                            setPageSize({ ...pageSize, page: 1, size: size })
+                                        }}
+                                    />
+                                </CCol>
+                            </CRow>
+                        </>
+                    )}
+                </Formik>
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
@@ -143,7 +170,7 @@ const AccountManagerment = () => {
                                         className={`${item.id == itemSelected?.id && "table-active"}`}
                                         onClick={() => { setItemSelected(item) }}
                                     >
-                                        <td>{index + 1}</td>
+                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                         <td>{item?.full_name}</td>
                                         <td>{item?.username}</td>
                                         <td>{item?.phone}</td>

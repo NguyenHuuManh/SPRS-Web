@@ -43,7 +43,7 @@ export const SUBDISTRICT = `${URL}/sprs/api/address/subdistrict/`
 export const GROUPS = `${URL}/sprs/api/groups-all`
 export const GROUP_REGISTER = `${URL}/sprs/api/groups-register-web`
 export const GET_PERMISSION_OWN = `${URL}/sprs/api/permissions/getOwn`
-
+export const ITEMS = `${URL}/sprs/api/item`
 
 //permission
 
@@ -71,4 +71,8 @@ export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notif
 export const BAN_ACC = `${URL}/sprs/api/user/ban`
 export const UNBAN_ACC = `${URL}/sprs/api/user/unbanned`
 export const GET_ACC = `${URL}/sprs/api/users/admin`
+
+//Manager event:
+export const CREATE_EVENT = `${URL}/sprs/api/reliefPoint-manage/create-admin`
+export const GET_EVENTS = `${URL}/sprs/api/reliefPoint-manage/get-admin`
 

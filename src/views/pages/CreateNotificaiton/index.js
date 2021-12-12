@@ -109,7 +109,7 @@ const CreateNotificaton = () => {
                             <CRow>
                                 <CCol md={12}>
                                     <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
-                                        <CButton type="submit" color="secondary" >Gửi</CButton>
+                                        <CButton type="submit" color="primary" >Gửi</CButton>
                                     </div>
                                 </CCol>
                             </CRow>

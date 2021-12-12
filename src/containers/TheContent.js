@@ -33,7 +33,6 @@ const TheContent = () => {
     return arrtemp;
   }
   const navi_menu = isNull(menu) ? [] : loopMap(menu);
-  console.log('navi_menu', navi_menu);
 
   useEffect(() => {
     if (!isEmpty(user) && !isUndefined(user) && !isNull(user)) {
@@ -42,11 +41,6 @@ const TheContent = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!isEmpty(user) && !isUndefined(user) && !isNull(user) && navi_menu.includes('/dashboard')) {
-      history.push(navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org');
-    }
-  }, [user])
   return (
     <main className="c-main">
       <CContainer fluid>
@@ -70,7 +64,9 @@ const TheContent = () => {
                 )
               );
             })}
-            <Redirect from="/" to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
+            {!isEmpty(navi_menu) && (
+              <Redirect from="/" to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
+            )}
           </Switch>
         </Suspense>
       </CContainer>

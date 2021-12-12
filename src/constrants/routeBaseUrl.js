@@ -12,4 +12,5 @@ export const RouteBase = {
     GrantAccess: '/phan-quyen',
     PointManagement: '/quan-ly-diem-cuu-tro',
     AccountManagement: '/quan-ly-tai-khoan',
+    CreateEvent: '/them-moi-diem-cuu-tro',
 };
