@@ -13,4 +13,6 @@ export const RouteBase = {
     PointManagement: '/quan-ly-diem-cuu-tro',
     AccountManagement: '/quan-ly-tai-khoan',
     CreateEvent: '/them-moi-diem-cuu-tro',
+    EventManagement: '/danh-sach-diem-cuu-tro',
+    EventAssign: '/quan-ly-thanh-vien-su-kien',
 };

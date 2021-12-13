@@ -1,5 +1,5 @@
 import CIcon from "@coreui/icons-react";
-import { CCardBody, CCardHeader, CCol, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CLabel, CModal, CRow } from "@coreui/react";
+import { CButton, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CInputGroupPrepend, CInputGroupText, CLabel, CModal, CRow } from "@coreui/react";
 import { Field, Formik } from "formik";
 import { isEmpty } from "lodash";
 import React, { memo, useEffect, useState, useRef } from "react";
@@ -11,7 +11,7 @@ import { appToast } from "../AppToastContainer";
 import Map from "../Map";
 export default memo((props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, disabled } = props
+    const { form, field, title, maxTitle, horizontal, iconName, adress, setAdress, disabled, readOnly } = props
     const [marker, setMarker] = useState({});
     const { errors, touched, setFieldValue } = form;
     const { name, value } = field;
@@ -92,7 +92,7 @@ export default memo((props) => {
     }
 
     useEffect(() => {
-        if (isEmpty(marker)) return;
+        if (isEmpty(marker) || readOnly) return;
         getDetailPlace();
     }, [marker])
     return (
@@ -136,10 +136,11 @@ export default memo((props) => {
             <CModal
                 show={isOpen}
                 onClose={setIsOpen}
+                id="MapPicker"
             >
                 <CCardHeader>Tìm kiếm địa điểm</CCardHeader>
                 {
-                    isOpen && (
+                    isOpen && !readOnly && (
                         <Formik
                             initialValues={{
                                 placeID: ""
@@ -207,7 +208,7 @@ export default memo((props) => {
                             loadingElement={<div style={{ height: `100%` }} />}
                             containerElement={<div style={{ height: `40vh`, margin: `auto`, border: '2px solid black' }} />}
                             mapElement={<div style={{ height: `100%` }} />}
-                            onClick={(res) => { setMarker({ lat: res.latLng.lat(), lng: res.latLng.lng() }) }}
+                            onClick={(res) => { !readOnly && setMarker({ lat: res.latLng.lat(), lng: res.latLng.lng() }) }}
                             defaultCenter={marker}
                             cernter={marker}
                         >
@@ -217,6 +218,7 @@ export default memo((props) => {
                         </Map>
                     )}
                 </CCardBody>
+                <CButton onClick={() => { setIsOpen(false) }}>Xong</CButton>
             </CModal>
 
         </>

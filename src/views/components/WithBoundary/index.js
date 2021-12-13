@@ -4,13 +4,10 @@ import { RouteBase } from "src/constrants/routeBaseUrl";
 import ErrorBoundary from "../ErrorBoundary";
 
 const specialLink = [
-    // RouteBase.UserManager,
-    // RouteBase.Dashboard,
     RouteBase.Profile,
-    RouteBase.CreateEvent
-    // RouteBase.DashboardORG,
-    // RouteBase.PointManagement,
-    // RouteBase.AccountManagement
+    RouteBase.CreateEvent,
+    RouteBase.EventManagement,
+    RouteBase.EventAssign
 ];
 
 const NoPermission = (props) => {

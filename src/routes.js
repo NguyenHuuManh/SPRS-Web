@@ -14,6 +14,8 @@ const DashboardORG = React.lazy(() => import('./views/pages/DashboardORG'));
 const PointManagement = React.lazy(() => import('./views/pages/PointManagement'));
 const AccountManagerment = React.lazy(() => import('./views/pages/AccountManagerment'));
 const CreateEvent = React.lazy(() => import('./views/pages/CreateEvent'));
+const EventManagerment = React.lazy(() => import('./views/pages/EventManagerment'));
+const EventAssign = React.lazy(() => import('./views/pages/EventAssign'));
 
 const routes = [
   { path: RouteBase.Home, exact: true, name: 'Trang chủ' },
@@ -29,7 +31,9 @@ const routes = [
   { path: RouteBase.DashboardORG, exact: true, name: 'Tổng quan', component: WithBoundary(DashboardORG) },
   { path: RouteBase.PointManagement, exact: true, name: 'Quản lý điểm', component: WithBoundary(PointManagement) },
   { path: RouteBase.AccountManagement, exact: true, name: 'Quản lý tài khoản', component: WithBoundary(AccountManagerment) },
-  { path: RouteBase.CreateEvent, exact: true, name: 'Thêm mới điểm cứu trợ', component: WithBoundary(CreateEvent) }
+  { path: RouteBase.CreateEvent, exact: true, name: 'Thêm mới điểm cứu trợ', component: WithBoundary(CreateEvent) },
+  { path: RouteBase.EventManagement, exact: true, name: 'Danh sách điểm cứu trợ', component: WithBoundary(EventManagerment) },
+  { path: RouteBase.EventAssign, exact: true, name: 'Quản lý thành viên sự kiện', component: WithBoundary(EventAssign) }
 ];
 
 export default routes;

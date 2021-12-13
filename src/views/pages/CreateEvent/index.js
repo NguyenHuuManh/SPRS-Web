@@ -1,19 +1,17 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
+import { CButton, CCard, CCardBody, CCol, CRow } from "@coreui/react";
 import { Field, Form, Formik } from "formik";
 import { isEmpty } from "lodash";
-import moment from "moment";
 import React, { useState } from "react";
-import { CardHeader, CardTitle } from "reactstrap";
+import { CardHeader } from "reactstrap";
 import { apiCreateEvent } from "src/apiFunctions/Event";
 import { trimmedObject } from "src/helps/function";
-import AppDatePicker from "src/views/components/AppDatePicker";
 import AppTimePicker from "src/views/components/AppTimePicker";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
 import Mappicker from "src/views/components/Mappicker";
 import TextAreaField from "src/views/components/TextAreaField";
 import GroupTable from "./component/GroupTable";
-import { addEvent, createEventValidation } from "./validate";
+import { createEventValidation } from "./validate";
 const CreateNotificaton = () => {
 
     const [items, setItems] = useState([]);
@@ -59,8 +57,6 @@ const CreateNotificaton = () => {
                         }
                         const body = {
                             ...values,
-                            // open_time: moment(objTrimmed.open_time).format('DD-MM-YYYY HH:mm'),
-                            // close_time: moment(objTrimmed.close_time).format('DD-MM-YYYY HH:mm'),
                             reliefInformations: items.map((e) => {
                                 return {
                                     id: e.id,
@@ -88,7 +84,7 @@ const CreateNotificaton = () => {
                                 },
                                 addressLine: "",
                                 addressLine2: "",
-                                GPS_lati: addressPoint?.GPS_Lati,
+                                GPS_lati: addressPoint?.GPS_lati,
                                 GPS_long: addressPoint?.GPS_long
                             },
                         }
