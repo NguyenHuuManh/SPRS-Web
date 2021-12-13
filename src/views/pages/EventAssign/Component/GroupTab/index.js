@@ -12,6 +12,7 @@ const Group = () => {
     const [key2, setKey2] = useState('');
 
     const getAssigned = (key) => {
+        console.log('itemSelect', itemSelected)
         if (!itemSelected?.id) return;
         apiGetAssigned({ rp_id: itemSelected?.id, search: key }).then((e) => {
             setDataAssigned(e.data.obj);

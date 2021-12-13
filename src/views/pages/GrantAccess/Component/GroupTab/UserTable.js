@@ -16,6 +16,7 @@ const UserTable = (props) => {
         apiGetUersByName(key).then((e) => {
             if (e?.data?.code === '200') {
                 setData(e?.data?.lstObj);
+                console.log(e.data.lstObj, 'dfsfd')
             }
         })
     }
@@ -58,7 +59,7 @@ const UserTable = (props) => {
                                     >
                                         <td>{item?.username}</td>
                                         <td>{item?.phone || "dasdasdas "}</td>
-                                        <td>{item?.address}</td>
+                                        <td>{item?.address.subDistrict?.name + ' ' + item?.address.district?.name + ' ' + item?.address.city?.name}</td>
                                     </tr>
                                 )
                             })
