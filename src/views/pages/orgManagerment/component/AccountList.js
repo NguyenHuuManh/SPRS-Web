@@ -2,7 +2,8 @@ import { CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiGetAccountAccepted } from 'src/apiFunctions/authencation';
-const AccountList = () => {
+const AccountList = (props) => {
+    const { tabActive } = props
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
@@ -19,8 +20,9 @@ const AccountList = () => {
     const debounceSearch = useCallback(debounce((key) => callGetRequestRejected(key), 500), []);
 
     useEffect(() => {
+        if (tabActive !== 'AccountList') return;
         callGetRequestRejected("");
-    }, [])
+    }, [tabActive]);
 
 
     const onChange = (values) => {

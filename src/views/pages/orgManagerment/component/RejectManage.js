@@ -3,7 +3,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { FaEye } from 'react-icons/fa';
 import { apiGetRequestRejectedAdminORG } from 'src/apiFunctions/authencation';
 import { debounce } from "lodash-es";
-const RejectManage = () => {
+const RejectManage = (props) => {
+    const { tabActive } = props
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
@@ -24,8 +25,9 @@ const RejectManage = () => {
         debounceSearch(values.target.value);
     }
     useEffect(() => {
-        callGetRequestRejected("")
-    }, [])
+        if (tabActive !== 'RejectManage') return;
+        callGetRequestRejected(key);
+    }, [tabActive])
     return (
         <CCard>
             <CCardHeader>

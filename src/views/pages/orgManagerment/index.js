@@ -1,10 +1,5 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CNav, CNavItem, CRow, CTabContent, CTabPane } from '@coreui/react'
-import { Field, Form, Formik } from 'formik'
-import React, { useEffect, useState } from 'react'
-import { apiGetRequestAdminORG } from 'src/apiFunctions/authencation'
-import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
-import AppSelectTinh from 'src/views/components/AppSelectTinh'
-import AppSelectXa from 'src/views/components/AppSelectXa'
+import { CCard, CCardBody, CCol, CNav, CNavItem, CRow, CTabContent, CTabPane } from '@coreui/react'
+import React, { useState } from 'react'
 import AccountList from './component/AccountList'
 import RejectManage from './component/RejectManage'
 import RequestManage from './component/RequestManage'
@@ -39,10 +34,10 @@ const OrgManagerment = () => {
                                 <RequestManage />
                             </CTabPane>
                             <CTabPane active={tabActive === "RejectManage"}>
-                                <RejectManage />
+                                <RejectManage tabActive={tabActive} />
                             </CTabPane>
                             <CTabPane active={tabActive === "AccountList"}>
-                                <AccountList />
+                                <AccountList tabActive={tabActive} />
                             </CTabPane>
                         </CTabContent>
                     </CCardBody>

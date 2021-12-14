@@ -1,3 +1,4 @@
+import moment from "moment";
 import * as Yup from "yup";
 
 export const register = Yup.object().shape({
@@ -35,7 +36,16 @@ export const register = Yup.object().shape({
             var format = /[\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
             return !format.test(full_name);
         }),
-    dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable(),
+    dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable()
+        .test("test", "Thời gian đóng cửa phải sau thời gian hiện tại", function () {
+            const { parent } = this;
+            const { dob } = parent;
+            console.log('dob', dob)
+            const currentDate = moment().format('DD-MM-YYYY');
+            // console.log('dob', moment(dob, 'DD-MM-YYYY'));
+            // console.log('currents', moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY')));
+            return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
+        }),
     city: Yup.string().required("Tỉnh/Thành phố không được bỏ trống").nullable(),
     district: Yup.string().required("Quận/Huyện không được bỏ trống").nullable(),
     subDistrict: Yup.string().required("Xã phường không được bỏ trống").nullable(),

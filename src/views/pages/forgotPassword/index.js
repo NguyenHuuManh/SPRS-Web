@@ -14,17 +14,15 @@ import { useHistory } from "react-router-dom";
 import { apiOtpPassword, apiResetPass } from "src/apiFunctions/authencation";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
+import { checkPhone } from "./validate";
 
 const ForgotPassword = () => {
     const history = useHistory();
-    const dispatch = useDispatch();
-    const auth = useSelector((state) => state.authReducer.auth);
     const [isOtp, setIsOtp] = useState(false);
     const [isPhone, setIsPhone] = useState(true);
     const [phone, setPhone] = useState();
 
     const getOtp = (values) => {
-        console.log("values", values);
         apiOtpPassword(values).then((e) => {
             console.log("e", e);
             if (e?.status == 200 && e.data.code == "200") {
@@ -57,15 +55,20 @@ const ForgotPassword = () => {
             <CContainer>
                 <CRow className="justify-content-center">
                     <CCol md="5">
+
                         <CCardGroup>
                             <CCard className="p-4">
+                                <CCardBody>
+                                    <a href="/login">Đăng nhập</a>
+                                </CCardBody>
                                 <CCardBody>
                                     <h1>Forgot Password</h1>
                                     <p className="text-muted">reset your account</p>
                                     {isPhone && (
                                         <Formik
+                                            validationSchema={checkPhone}
                                             initialValues={{
-                                                to: "966048002",
+                                                to: "",
                                             }}
                                             onSubmit={(values) => {
                                                 getOtp({ to: "+84" + values.to })
@@ -107,6 +110,7 @@ const ForgotPassword = () => {
                                                     <div className="d-flex justify-content-start align-items-center" >
                                                         <CButton color="success" onClick={submitForm}>Gửi</CButton>
                                                     </div>
+
                                                 </>
                                             )}
                                         </Formik>

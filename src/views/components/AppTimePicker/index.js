@@ -33,13 +33,13 @@ const locale = {
     formatLong: {},
 }
 const AppTimePicker = (props) => {
-    const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, minDate, maxDate, ...remainProps } = props;
+    const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, minDate, maxDate, formatDate, ...remainProps } = props;
     const { name, value } = field;
     const { errors, touched, setFieldValue } = form;
     const [openDatePicker, setOpenDatePicker] = useState(false);
     // const [startDate, setStartDate] = useState(new Date());
     const onchange = (value) => {
-        setFieldValue(name, moment(value).format("DD-MM-YYYY HH:mm"));
+        setFieldValue(name, moment(value).format(formatDate ? formatDate : "DD-MM-YYYY HH:mm"));
     }
 
     const onBlur = () => {
@@ -52,8 +52,8 @@ const AppTimePicker = (props) => {
 
     const onChange = (values) => {
         const value = values.target.value;
-        if (value && value.length == 16 && !value.includes("_")) {
-            const dateInput = moment(value, 'DD-MM-YYYY HH:mm');
+        if (value && value.length == (formatDate ? 10 : 16) && !value.includes("_")) {
+            const dateInput = moment(value, formatDate ? formatDate : "DD-MM-YYYY HH:mm");
             if (dateInput.isValid()) {
                 if (minDate && dateInput.isBefore(minDate)) {
                     setFieldValue(name, moment(minDate).format("DDMMYYYY"));
@@ -117,7 +117,7 @@ const AppTimePicker = (props) => {
                     <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName ? "80%" : "100%")}` }}>
 
                         <div style={{ width: "100%", borderStyle: "solid", borderWidth: 1, borderColor: "#d8dbe0", borderRadius: 4, display: 'flex', paddingLeft: 5, paddingRight: 5 }}>
-                            <InputMask mask="99-99-9999 99:99" value={value}
+                            <InputMask mask={formatDate ? "99-99-9999" : "99-99-9999 99:99"} value={value}
                                 style={{
                                     borderBlockWidth: 0,
                                     border: "none",
@@ -144,12 +144,12 @@ const AppTimePicker = (props) => {
                         <DatePicker
                             {...remainProps}
                             closeOnScroll={(e) => e.target === document}
-                            selected={moment(value, "DD-MM-YYYY HH:mm").isValid() ? moment(value, "DD-MM-YYYY HH:mm").toDate() : moment().toDate()}
+                            selected={moment(value, formatDate ? formatDate : "DD-MM-YYYY HH:mm").isValid() ? moment(value, formatDate ? formatDate : "DD-MM-YYYY HH:mm").toDate() : moment().toDate()}
                             onChange={(date) => onchange(date)}
-                            dateFormat="dd-MM-yyyy HH:mm"
+                            dateFormat={formatDate ? "dd-MM-yyyy" : "dd-MM-yyyy HH:mm"}
                             value={value}
                             customInput={<div style={{ display: 'none' }} />}
-                            showTimeInput
+                            // showTimeInput
                             open={true}
                             onClickOutside={() => setOpenDatePicker(false)}
                             autoComplete="off"

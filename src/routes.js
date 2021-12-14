@@ -1,4 +1,3 @@
-import { isEmpty, isNull } from 'lodash';
 import React from 'react';
 import { RouteBase } from './constrants/routeBaseUrl';
 import WithBoundary from './views/components/WithBoundary';
@@ -18,26 +17,11 @@ const CreateEvent = React.lazy(() => import('./views/pages/CreateEvent'));
 const EventManagerment = React.lazy(() => import('./views/pages/EventManagerment'));
 const EventAssign = React.lazy(() => import('./views/pages/EventAssign'));
 
-// const menu = JSON.parse(localStorage.getItem('menu'));
-
-// let arrtemp = [];
-// const loopMap = (array) => {
-//   array.forEach(element => {
-//     if (isEmpty(element.children)) {
-//       arrtemp.push(element.to);
-//     } else {
-//       loopMap(element.children)
-//     }
-//   });
-//   return arrtemp;
-// }
-
-// const navi_menu = isNull(menu) ? [] : loopMap(menu);
 
 const routes = [
   { path: RouteBase.Home, exact: true, name: 'Trang chủ' },
   { path: RouteBase.UserManager, exact: true, name: 'Quản Lý thành viên', component: WithBoundary(UserManagerment) },
-  { path: RouteBase.OrgManager, exact: true, name: 'Quản Lý Tổ Chức', component: WithBoundary(OrgManagerment) },
+  { path: RouteBase.OrgManager, exact: true, name: 'Quản Lý Yêu Cầu Đăng Ký', component: WithBoundary(OrgManagerment) },
   { path: RouteBase.RegisterMember, exact: true, name: 'đăng ký thành viên', component: WithBoundary(RegisterMember) },
   { path: RouteBase.Profile, exact: true, name: 'Tài khoản', component: WithBoundary(Profile) },
   { path: RouteBase.UpdatePassword, exact: true, name: 'Cập nhật mật khẩu', component: WithBoundary(UpdatePassword) },

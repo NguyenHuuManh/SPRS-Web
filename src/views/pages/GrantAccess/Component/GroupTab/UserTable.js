@@ -13,7 +13,7 @@ const UserTable = (props) => {
         //     setData([]);
         //     return;
         // }
-        apiGetUersByName(key).then((e) => {
+        apiGetUersByName({ name: key }).then((e) => {
             if (e?.data?.code === '200') {
                 setData(e?.data?.lstObj);
                 setItemSelected({});

@@ -14,6 +14,7 @@ import AppSelectGroupsRegister from 'src/views/components/AppSelectGroupsRegiste
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
 import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
+import AppTimePicker from 'src/views/components/AppTimePicker'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import InputMaskField from 'src/views/components/InputMaskField'
@@ -55,12 +56,12 @@ const Register = () => {
                 <CForm>
                   <Formik
                     initialValues={{
-                      username: "Duongpt35",
-                      phone: "0966048002",
-                      password: "password",
-                      rePassWord: "password",
-                      full_name: "Phạm Tùng Dương",
-                      dob: "09/09/1999",
+                      username: "",
+                      phone: "",
+                      password: "",
+                      rePassWord: "",
+                      full_name: "",
+                      dob: "",
                       nameOrg: "",
                       city: "",
                       province: "",
@@ -164,9 +165,10 @@ const Register = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={AppDatePicker}
+                          component={AppTimePicker}
                           name="dob"
                           title="Ngày sinh"
+                          formatDate="DD-MM-YYYY"
                         />
                         <Field
                           component={AppSelectTinh}

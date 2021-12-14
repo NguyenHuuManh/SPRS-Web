@@ -7,7 +7,7 @@ import {
   CContainer,
   CRow
 } from "@coreui/react";
-import { Field, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { isEmpty } from "lodash-es";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const Login = () => {
                     }}
                   >
                     {({ submitForm }) => (
-                      <>
+                      <Form>
                         <Field
                           component={InputField}
                           name="username"
@@ -66,6 +66,7 @@ const Login = () => {
                               onClick={() => {
                                 submitForm();
                               }}
+                              type="submit"
                             >
                               Login
                             </CButton>
@@ -79,7 +80,7 @@ const Login = () => {
                             </Link>
                           </CCol>
                         </CRow>
-                      </>
+                      </Form>
                     )}
                   </Formik>
                 </CCardBody>

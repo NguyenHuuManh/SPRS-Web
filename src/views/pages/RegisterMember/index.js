@@ -13,6 +13,7 @@ import AppDatePicker from 'src/views/components/AppDatePicker'
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
 import AppSelectTinh from 'src/views/components/AppSelectTinh'
 import AppSelectXa from 'src/views/components/AppSelectXa'
+import AppTimePicker from 'src/views/components/AppTimePicker'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import InputMaskField from 'src/views/components/InputMaskField'
@@ -46,18 +47,18 @@ const RegisterMember = () => {
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
               <CCardHeader>
-                <h1>Register</h1>
+                <h1>Đăng ký tài khoản thành viên</h1>
               </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>
                   <Formik
                     initialValues={{
-                      username: "Duongpt35",
-                      phone: "0966048002",
-                      password: "password",
-                      rePassWord: "password",
-                      full_name: "Phạm Tùng Dương",
-                      dob: "09/09/1999",
+                      username: "",
+                      phone: "",
+                      password: "",
+                      rePassWord: "",
+                      full_name: "",
+                      dob: "",
                       city: "",
                       district: "",
                       subDistrict: "",
@@ -127,9 +128,10 @@ const RegisterMember = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={AppDatePicker}
+                          component={AppTimePicker}
                           name="dob"
                           title="Ngày sinh"
+                          formatDate="DD-MM-YYYY"
                         />
                         <Field
                           component={AppSelectTinh}

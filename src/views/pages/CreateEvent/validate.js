@@ -94,9 +94,7 @@ export const createEventValidation = Yup.object().shape({
             const { parent } = this;
             const { open_time } = parent;
             const currentDate = moment().format('DD-MM-YYYY HH:mm');
-            // console.log(moment(open_time, 'DD-MM-YYYY HH:mm'), 'OpenTime');
-            // console.log(moment(currentDate, 'DD-MM-YYYY HH:mm'), 'currentDate')
-            return moment(open_time, 'DD-MM-YYYY HH:mm').isSameOrAfter(moment(currentDate, 'DD-MM-YYYY'))
+            return moment(open_time, 'DD-MM-YYYY HH:mm').isSameOrAfter(moment(currentDate, 'DD-MM-YYYY HH:mm'));
         }),
     close_time: Yup.string().required("Nhập thời gian kết thúc").nullable()
         .test("test", "Thời gian đóng cửa phải sau thời gian mở cửa", function () {
