@@ -96,7 +96,7 @@ const Register = () => {
                         username: values.username,
                         phone: values.phone,
                         password: values.password,
-                        full_name: values.full_name,
+                        full_name: values.full_name.replace(/\s\s+/g, ' '),
                         dob: values.dob,
                         address: {
                           city: {
@@ -118,7 +118,7 @@ const Register = () => {
                         },
                         groups_user: [{ id: values.groupsId }],
                         organization: {
-                          name: values?.nameOrg,
+                          name: values.nameOrg.replace(/\s\s+/g, ' '),
                           founded: "",
                           description: "",
                           address: {

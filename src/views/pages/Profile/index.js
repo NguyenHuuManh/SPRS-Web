@@ -7,7 +7,7 @@ import UserTab from './Component/UserTab';
 const Profile = () => {
     const [tabActive, setTabActive] = useState("UserTab");
     const profile = useSelector((state) => state.profileReducer);
-    const groupsId = profile.data.profile.groups_user.map((e) => { return e.id });
+    const groupsId = profile.data?.profile?.groups_user?.map((e) => { return e.id });
     return (
         <CRow>
             <CCol lg={12}>
@@ -20,7 +20,7 @@ const Profile = () => {
                             Cá nhân
                         </CNavItem>
                         {
-                            groupsId.includes(4) && (
+                            groupsId?.includes(4) && (
                                 <CNavItem
                                     style={{ cursor: "pointer", padding: 10, border: "solid", borderWidth: 0, borderBottomWidth: tabActive === "OrgTab" ? 1 : 0, borderColor: "coral" }}
                                     onClick={() => { setTabActive("OrgTab") }}>
@@ -36,7 +36,7 @@ const Profile = () => {
                                 <UserTab />
                             </CTabPane>
                             {
-                                groupsId.includes(4) && (
+                                groupsId?.includes(4) && (
                                     <CTabPane active={tabActive === "OrgTab"}>
                                         <OrgTab />
                                     </CTabPane>

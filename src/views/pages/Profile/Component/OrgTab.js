@@ -16,6 +16,7 @@ const UserTab = () => {
     const distpatch = useDispatch();
     const [org, setOrg] = useState({});
     const [orgAdress, setOrgAdress] = useState({});
+    const [temAddres, setTemAddress] = useState({});
     const upateProfile = (values) => {
         apiUpdateORG(values).then((res) => {
             if (res.status == 200) {
@@ -54,6 +55,13 @@ const UserTab = () => {
                         district: res.data.obj.address?.district.name || "",
                         subDistrict: res.data.obj.address?.subDistrict.name || "",
                     });
+                    setTemAddress({
+                        GPS_lati: res.data.obj.address?.GPS_lati || "",
+                        GPS_long: res.data.obj.address?.GPS_long || "",
+                        city: res.data.obj.address?.city.name || "",
+                        district: res.data.obj.address?.district.name || "",
+                        subDistrict: res.data.obj.address?.subDistrict.name || "",
+                    })
                     return;
                 }
                 appToast({
@@ -88,6 +96,8 @@ const UserTab = () => {
                         addressLine: org?.address?.addressLine || ""
                     }}
                     validationSchema={updateORG}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                     enableReinitialize
                     onSubmit={(values) => {
                         const objTrimmed = trimmedObject(values)
@@ -129,6 +139,7 @@ const UserTab = () => {
                                 <span onClick={() => {
                                     if (editAble) {
                                         resetForm();
+                                        setOrgAdress({ ...temAddres });
                                         setEditAble(false);
                                     } else {
                                         setEditAble(true);

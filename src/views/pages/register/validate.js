@@ -1,14 +1,15 @@
 import moment from "moment";
+import { removeAscent } from "src/helps/function";
 import * as Yup from "yup";
 
 export const register = Yup.object().shape({
     username: Yup.string().required("Tên tài khoản không được bỏ trống").nullable()
-        .test("test", "Tên tài khoản không chứa kí tự đặc biệt", function () {
+        .test("test", "Tên tài khoản tối thiểu 4, tối đa 16 kí tự chỉ gồm chữ không dấu và số", function () {
             const { parent } = this;
             const { username } = parent;
-            const nameStrim = username + ''.trim();
-            var format = /[\s!#$%^&*()+\-=\[\]{};':"\\|,.<>\/?]+/;
-            return !format.test(nameStrim);
+            var format = /^[0-9\s]{4,16}$/;
+            var format1 = /^[0-9A-Za-z\s\-]{4,16}$/;
+            return format1.test(username?.trim()) && !format.test(username?.trim());
         }),
     phone: Yup.string().required("Số điện thoại không được bỏ trống").nullable().test('checkphone', "Số điện thoại không hợp lệ", function () {
         const { parent } = this;
@@ -30,11 +31,12 @@ export const register = Yup.object().shape({
             return regex.test(password);
         }),
     full_name: Yup.string().required("Họ và tên không được bỏ trống").nullable()
-        .test("test", "Họ và tên không chứa kí tự đặc biệt", function () {
+        .test("test", "Họ và tên không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
             const { parent } = this;
             const { full_name } = parent;
-            var format = /[\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-            return !format.test(full_name);
+            const nameStrim = removeAscent(full_name);
+            let regex = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/
+            return regex.test(nameStrim?.trim());
         }),
     dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable()
         .test("test", "Thời gian đóng cửa phải sau thời gian hiện tại", function () {
@@ -44,7 +46,14 @@ export const register = Yup.object().shape({
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),
-    nameOrg: Yup.string().required("Tên tổ chức k được bỏ trống").nullable(),
+    nameOrg: Yup.string().required("Tên tổ chức k được bỏ trống").nullable()
+        .test("test", "Tên tổ chức không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+            const { parent } = this;
+            const { nameOrg } = parent;
+            const nameStrim = removeAscent(nameOrg);
+            let regex = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/
+            return regex.test(nameStrim?.trim());
+        }),
     city: Yup.string().required("Tỉnh/Thành phố không được bỏ trống").nullable(),
     district: Yup.string().required("Quận/Huyện không được bỏ trống").nullable(),
     subDistrict: Yup.string().required("Xã phường không được bỏ trống").nullable(),

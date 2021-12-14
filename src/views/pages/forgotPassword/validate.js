@@ -6,6 +6,7 @@ export const checkPhone = Yup.object().shape({
         const { to } = parent;
         if (to?.length != 9) return false;
         var vnf_regex = /((9|3|7|8|5)+([0-9]{8})\b)/g;
-        return vnf_regex.test(to);
+        var checkNumber = /^[0-9]+$/
+        return vnf_regex.test(to) && checkNumber.test(to);
     }),
 });

@@ -60,6 +60,8 @@ const UserTab = () => {
                         adressString: "",
                     }}
                     validationSchema={updateProfile}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                     onSubmit={(values) => {
                         const objTrimmed = trimmedObject(values)
                         const { city, district, subDistrict, addressLine, groupsId, ...body } = objTrimmed

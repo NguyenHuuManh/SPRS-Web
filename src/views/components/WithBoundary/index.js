@@ -37,7 +37,6 @@ const loopMap = (array) => {
     });
     return arrtemp;
 }
-
 const navi_menu = isNull(menu) ? [] : loopMap(menu);
 const withErrorBoundary = (BaseComponent) => {
     return (props) => {
