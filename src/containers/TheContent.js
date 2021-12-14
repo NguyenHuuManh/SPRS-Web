@@ -66,6 +66,7 @@ const TheContent = () => {
             })}
             {!isEmpty(navi_menu) && (
               <Redirect from="/" to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
+              // <Redirect to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
             )}
           </Switch>
         </Suspense>

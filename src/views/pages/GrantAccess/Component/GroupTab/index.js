@@ -56,7 +56,7 @@ const Group = () => {
             <CCol lg={6}>
                 <Card>
                     <CCardBody>
-                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <div className="table-wrapper-scroll-y my-custom-scrollbar">
                             <table className="table table-hover">
                                 <thead className="table-active">
                                     <th>Nhóm quyền chưa được phân</th>
@@ -87,7 +87,7 @@ const Group = () => {
             <CCol lg={6}>
                 <Card>
                     <CCardBody>
-                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <div className="table-wrapper-scroll-y my-custom-scrollbar">
                             <table className="table table-hover">
                                 <thead className="table-active">
                                     <th>Nhóm quyền được phân</th>

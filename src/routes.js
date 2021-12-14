@@ -1,3 +1,4 @@
+import { isEmpty, isNull } from 'lodash';
 import React from 'react';
 import { RouteBase } from './constrants/routeBaseUrl';
 import WithBoundary from './views/components/WithBoundary';
@@ -16,6 +17,22 @@ const AccountManagerment = React.lazy(() => import('./views/pages/AccountManager
 const CreateEvent = React.lazy(() => import('./views/pages/CreateEvent'));
 const EventManagerment = React.lazy(() => import('./views/pages/EventManagerment'));
 const EventAssign = React.lazy(() => import('./views/pages/EventAssign'));
+
+// const menu = JSON.parse(localStorage.getItem('menu'));
+
+// let arrtemp = [];
+// const loopMap = (array) => {
+//   array.forEach(element => {
+//     if (isEmpty(element.children)) {
+//       arrtemp.push(element.to);
+//     } else {
+//       loopMap(element.children)
+//     }
+//   });
+//   return arrtemp;
+// }
+
+// const navi_menu = isNull(menu) ? [] : loopMap(menu);
 
 const routes = [
   { path: RouteBase.Home, exact: true, name: 'Trang chủ' },

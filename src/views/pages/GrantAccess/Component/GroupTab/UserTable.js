@@ -1,6 +1,6 @@
 import { CCol, CInput, CInputGroup } from "@coreui/react";
 import { Field, Formik } from "formik";
-import { debounce } from "lodash";
+import { debounce, isEmpty } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiGetUersByName } from "src/apiFunctions/permission";
 import InputField from "src/views/components/InputField";
@@ -9,19 +9,20 @@ const UserTable = (props) => {
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
     const searchByName = (key) => {
-        if (!key) {
-            setData([]);
-            return;
-        }
+        // if (!key) {
+        //     setData([]);
+        //     return;
+        // }
         apiGetUersByName(key).then((e) => {
             if (e?.data?.code === '200') {
                 setData(e?.data?.lstObj);
+                setItemSelected({});
                 console.log(e.data.lstObj, 'dfsfd')
             }
         })
     }
     useEffect(() => {
-        searchByName();
+        searchByName(key);
     }, []);
 
     const debounceSearch = useCallback(debounce((key) => searchByName(key), 500), []);

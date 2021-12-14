@@ -33,7 +33,7 @@ const Register = () => {
           toastOptions: { type: "success" },
           description: "Đăng ký thành công",
         });
-        history.push('./');
+        history.push('/login');
       } else {
         appToast({
           toastOptions: { type: "error" },
@@ -233,7 +233,7 @@ const Register = () => {
                         </CRow>
                         <CRow className="d-flex justify-content-center align-items-center">
                           <div style={{ paddingTop: 10 }}>
-                            <a href="/">Đăng nhập</a>
+                            <a href="/login">Đăng nhập</a>
                           </div>
                         </CRow>
                       </>

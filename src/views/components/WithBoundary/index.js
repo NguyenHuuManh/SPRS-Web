@@ -4,6 +4,7 @@ import { RouteBase } from "src/constrants/routeBaseUrl";
 import ErrorBoundary from "../ErrorBoundary";
 
 const specialLink = [
+    RouteBase.Home,
     RouteBase.Profile,
     RouteBase.CreateEvent,
     RouteBase.EventManagement,
