@@ -7,7 +7,7 @@ import {
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
-import { apiSigupUserORG } from 'src/apiFunctions/authencation'
+import { apiGetOtpSignup, apiSigupUserORG } from 'src/apiFunctions/authencation'
 import { trimmedObject } from 'src/helps/function'
 import AppDatePicker from 'src/views/components/AppDatePicker'
 import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
@@ -18,27 +18,44 @@ import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import InputMaskField from 'src/views/components/InputMaskField'
 import Mappicker from 'src/views/components/Mappicker'
+import OtpVerify from './OtpVerify'
 import { register } from './validate'
 
 const RegisterMember = () => {
-  const [orgAdress, setOrgAdress] = useState({});
   const [tinh, setTinh] = useState({});
   const [huyen, setHuyen] = useState({});
-  const singup = (values) => {
-    apiSigupUserORG(values).then((res) => {
-      console.log("resSignup", res);
-      if (res.status == 200 && res.data.code == "200") {
+  const [body, setBody] = useState({});
+  const [timeStart, setTimeStart] = useState({});
+  const [disableOTP, setDisableOTP] = useState(true);
+  const [otpModal, setOtpModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const getOtp = (values) => {
+    const bodyOTP = {
+      to: '+84' + values.phone.substring(1),
+      username: values.username,
+    }
+    setLoading(true);
+    apiGetOtpSignup(bodyOTP).then((e) => {
+      console.log("GET_OTP", e);
+      if (e?.status == 200) {
+        if (e.data.code == "200") {
+          setOtpModal(true);
+          setTimeStart({ value: 1 });
+          setDisableOTP(false)
+          return;
+        }
         appToast({
-          toastOptions: { type: "success" },
-          description: "Đăng ký thành công",
+          toastOptions: { type: "error" },
+          description: e.data?.message,
         });
       } else {
         appToast({
           toastOptions: { type: "error" },
-          description: res?.data?.message || "Đăng ký không thành công, hệ thống đang bảo trì",
+          description: 'Hệ thống đang bảo trì',
         });
       }
-    })
+    }).finally(() => { setLoading(false) })
   }
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -98,7 +115,8 @@ const RegisterMember = () => {
                         },
 
                       }
-                      singup(user);
+                      setBody(user);
+                      getOtp(values);
                     }}
                   >
                     {({ submitForm, errors }) => (
@@ -182,7 +200,16 @@ const RegisterMember = () => {
                       </>
                     )}
                   </Formik>
-
+                  <OtpVerify
+                    isOpen={otpModal}
+                    setIsOpen={setOtpModal}
+                    body={body}
+                    getOtp={getOtp}
+                    setTimeStart={setTimeStart}
+                    timeStart={timeStart}
+                    disableOTP={disableOTP}
+                    setDisableOTP={setDisableOTP}
+                  />
                 </CForm>
               </CCardBody>
 

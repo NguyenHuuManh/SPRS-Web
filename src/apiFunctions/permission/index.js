@@ -23,8 +23,8 @@ export const apiGetUsers = async (id) => {
   return await httpServices.get(`${GET_USERS}`);
 };
 
-export const apiGetUersByName = async (params) => {
-  return await httpServices.get(`${GET_USERS_BY_NAME}${convertToQuery(params)}`);
+export const apiGetUersByName = async (body) => {
+  return await httpServices.post(`${GET_USERS_BY_NAME}`, body);
 };
 
 export const apiGetGroups = async () => {

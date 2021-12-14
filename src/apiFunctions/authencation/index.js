@@ -1,4 +1,4 @@
-import { ACCEPT_REQUEST_REGISTER_ORG, GET_ACC_ACCEPTED, GET_ORG, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REGISTER_ORG_USER, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE } from "src/constrants/action";
+import { ACCEPT_REQUEST_REGISTER_ORG, GET_ACC_ACCEPTED, GET_ORG, GET_OTP_SIGNUP, GET_REQUEST_REGISTER_ORG, GET_REQUEST_REGISTER_ORG_REJECT, GET_REQUEST_REGISTER_ORG_UNCHECK, OTP_CHECKING, OTP_PASSWORD, PROFILE, REGISTER_ORG_USER, REJECT_REQUEST_REGISTER_ORG, RESET_PASSWORD, SIGNIN, SIGNUP_ORG, UPDATE_ORG, UPDATE_PASS, UPDATE_PROFILE, VERIFY_PHONE } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
@@ -20,6 +20,14 @@ export const apiSigupUserORG = async (body) => {
 
 export const apiOtpPassword = async (body) => {
   return await httpServices.post(`${OTP_PASSWORD}`, body);
+};
+
+export const apiGetOtpSignup = async (body) => {
+  return await httpServices.post(`${GET_OTP_SIGNUP}`, body);
+};
+
+export const apiPhoneVerify = async (body) => {
+  return await httpServices.post(`${VERIFY_PHONE}`, body);
 };
 
 export const apiOtpChecking = async (body) => {

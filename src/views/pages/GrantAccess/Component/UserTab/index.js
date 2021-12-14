@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Card } from "reactstrap";
 import { apiGetGroupUnAuthoried, apiGetPermission, apiGetUnPermission, apiGrantUserPermission, apiGrantUserUnPermission } from 'src/apiFunctions/permission';
 import AppSelectGroups from 'src/views/components/AppSelectGroups';
+import { appToast } from 'src/views/components/AppToastContainer';
 const UserTab = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [dataPermisstion, setDataPermission] = useState([]);
@@ -47,6 +48,11 @@ const UserTab = () => {
             if (e?.status === 200) {
                 if (e?.data?.code === '200') {
                     getPermission(itemSelected.id);
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: e?.data?.message,
+                    });
                 }
             }
         })

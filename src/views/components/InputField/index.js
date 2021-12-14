@@ -9,7 +9,7 @@ import React, { memo, useMemo, useState } from "react";
 import { FaEye, FaRegEye, FaEyeSlash } from 'react-icons/fa';
 
 export default memo((props) => {
-  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, ...remainProps } = props;
+  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, leftView, ...remainProps } = props;
   const { name, value } = field;
   const { errors, touched, setFieldValue } = form;
   const onChange = (values) => {
@@ -31,7 +31,6 @@ export default memo((props) => {
           {
             iconName && (
               <div style={{ marginRight: -1, width: "20%" }}>
-
                 <CInputGroupPrepend style={{ width: "100%" }}>
                   <CInputGroupText style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, width: "100%", display: "flex", justifyContent: "center" }} >
                     <CIcon name={iconName} height={21} />
@@ -39,6 +38,9 @@ export default memo((props) => {
                 </CInputGroupPrepend>
               </div>
             )
+          }
+          {
+            leftView && leftView()
           }
           {isPhone && (
             <div style={{ marginRight: -1, width: "20%" }}>
@@ -49,7 +51,7 @@ export default memo((props) => {
               </CInputGroupPrepend>
             </div>
           )}
-          <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName || isPhone ? "80%" : "100%")}` }}>
+          <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName || isPhone || leftView ? "80%" : "100%")}` }}>
             <CInput
               style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
               {...remainProps}

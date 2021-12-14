@@ -1,31 +1,40 @@
-import { CCol, CInput, CInputGroup } from "@coreui/react";
+import { CCol, CInput, CInputGroup, CPagination } from "@coreui/react";
 import { Field, Formik } from "formik";
 import { debounce, isEmpty } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiGetUersByName } from "src/apiFunctions/permission";
 import InputField from "src/views/components/InputField";
+const size = 10;
 const UserTable = (props) => {
     const { itemSelected, setItemSelected } = props
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
+    const [pageSize, setPageSize] = useState({ page: 1, size: size });
     const searchByName = (key) => {
-        // if (!key) {
-        //     setData([]);
-        //     return;
-        // }
-        apiGetUersByName({ name: key }).then((e) => {
+        const body = {
+            pageSize: pageSize.size,
+            pageIndex: pageSize.page - 1,
+            search: key,
+            sort: true,
+        }
+        apiGetUersByName(body).then((e) => {
             if (e?.data?.code === '200') {
-                setData(e?.data?.lstObj);
+                setData(e?.data?.obj);
                 setItemSelected({});
-                console.log(e.data.lstObj, 'dfsfd')
+                console.log(e.data.obj, 'dfsfd')
             }
         })
     }
     useEffect(() => {
         searchByName(key);
-    }, []);
+    }, [pageSize]);
 
-    const debounceSearch = useCallback(debounce((key) => searchByName(key), 500), []);
+    const pageChange = (newPage) => {
+        setPageSize({ ...pageSize, page: newPage });
+    };
+
+    const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: 1, size: size }) }, 500), []);
+
     const onChange = (values) => {
         setKey(values.target.value);
         debounceSearch(values.target.value);
@@ -51,7 +60,7 @@ const UserTable = (props) => {
                     </thead>
                     <tbody >
                         {
-                            data && data.map((item, index) => {
+                            data && data?.users?.map((item, index) => {
                                 return (
                                     <tr
                                         key={item.id}
@@ -68,6 +77,12 @@ const UserTable = (props) => {
                     </tbody>
                 </table>
             </div>
+            <CPagination
+                activePage={pageSize.page}
+                onActivePageChange={pageChange}
+                pages={data?.totalPages || 1}
+                align="center"
+            />
         </CCol>
     )
 }

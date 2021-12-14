@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from "react";
 import { Card } from "reactstrap";
 import { apiGetGroupAuthoried, apiGetGroupUnAuthoried, apiGrantGroupPermission, apiGrantGroupUnPermission } from 'src/apiFunctions/permission';
+import { appToast } from 'src/views/components/AppToastContainer';
 import UserTable from './UserTable';
 const Group = () => {
     const [itemSelected, setItemSelected] = useState(1);
@@ -24,7 +25,7 @@ const Group = () => {
             setDataUnPermission([]);
             return;
         };
-        getPermission(itemSelected.id)
+        getPermission(itemSelected.id);
 
     }, [itemSelected])
 
@@ -35,7 +36,17 @@ const Group = () => {
             if (e?.status === 200) {
                 if (e?.data?.code === '200') {
                     getPermission(itemSelected.id);
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: e?.data?.message,
+                    });
                 }
+            } else {
+                appToast({
+                    toastOptions: { type: "error" },
+                    description: 'Hệ thống đang bảo trì',
+                });
             }
         })
     }
@@ -45,7 +56,17 @@ const Group = () => {
             if (e?.status === 200) {
                 if (e?.data?.code === '200') {
                     getPermission(itemSelected.id);
+                } else {
+                    appToast({
+                        toastOptions: { type: "error" },
+                        description: e?.data?.message,
+                    });
                 }
+            } else {
+                appToast({
+                    toastOptions: { type: "error" },
+                    description: 'Hệ thống đang bảo trì',
+                });
             }
         })
     }

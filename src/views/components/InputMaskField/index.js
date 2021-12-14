@@ -91,10 +91,9 @@ export default memo((props) => {
                 onBlur={onBlur}
               >
               </InputMask>
-              {errors[name] && <div className="err-text" >{errors[name]}</div>}
             </div>
           </div>
-
+          {errors[name] && <div className="err-text" >{errors[name]}</div>}
         </CInputGroup>
       </div>
 

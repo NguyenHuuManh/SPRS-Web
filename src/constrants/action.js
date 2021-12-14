@@ -13,6 +13,8 @@ export const UPDATE_PROFILE = `${URL}/sprs/api/user/update/infor`
 export const SIGNUP_ORG = `${URL}/sprs/api/users_v2/organizationlAdmin`
 export const OTP_PASSWORD = `${URL}/sprs/api/generateOtp`
 export const OTP_CHECKING = `${URL}/sprs/api/validateOtp`
+export const VERIFY_PHONE = `${URL}/sprs/api/validateOtp-verify`
+export const GET_OTP_SIGNUP = `${URL}/sprs/api/generateOtp-verify`
 export const RESET_PASSWORD = `${URL}/sprs/api/forgotPassword`
 export const UPDATE_PASS = `${URL}/sprs/api/user/update/password`
 //
