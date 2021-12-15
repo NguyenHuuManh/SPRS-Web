@@ -6,7 +6,7 @@ import { apiActiveMembers, apiGetMembers, apiUnActiveMembers } from 'src/apiFunc
 import { calcItemStart, countPage } from 'src/helps/function';
 import { FaSortAlphaDown, FaSortAlphaUp } from 'react-icons/fa';
 import { appToast } from 'src/views/components/AppToastContainer';
-const size = 5;
+const size = 10;
 const UserManager = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [pageSize, setPageSize] = useState({ page: 1, size: size });
@@ -34,7 +34,7 @@ const UserManager = () => {
     };
 
 
-    const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: 0, size: size }) }, 500), []);
+    const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: 1, size: size }) }, 500), []);
 
     const onChange = (values) => {
         setKey(values.target.value);
@@ -118,6 +118,8 @@ const UserManager = () => {
                                     }
                                     <span style={{ marginLeft: 10 }}>Tên tài khoản</span>
                                 </th>
+                                <th>Họ và tên</th>
+                                <th>Số điện thoại</th>
                                 <th>Trạng thái</th>
                                 <th>Khóa tài khoản</th>
                             </thead>
@@ -132,11 +134,21 @@ const UserManager = () => {
                                             >
                                                 <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                                 <td>{item.username}</td>
-                                                <td>{item.status}</td>
+                                                <td>{item.full_name}</td>
+                                                <td>{item.phone}</td>
                                                 <td>
-                                                    <CButton color="secondary" onClick={() => { unActive(item.id) }}>
-                                                        Khóa
-                                                    </CButton>
+                                                    {item?.status == 'Actived' ? "Đang hoạt động" : "Tài khoản bị khóa"}
+                                                </td>
+                                                <td>
+                                                    {item?.status == 'Actived' ? (
+                                                        <CButton color="secondary" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>
+                                                            Khóa tài khoản
+                                                        </CButton>
+                                                    ) : (
+                                                        <CButton color="success" onClick={() => { active(item.id) }} style={{ width: 200 }}>
+                                                            Mở khóa tài khoản
+                                                        </CButton>
+                                                    )}
                                                 </td>
                                             </tr>
                                         )
@@ -147,7 +159,7 @@ const UserManager = () => {
                         <CPagination
                             activePage={pageSize.page}
                             onActivePageChange={pageChange}
-                            pages={countPage(data?.totalItems | 1, size)}
+                            pages={data?.totalPages}
                             align="center"
                         />
                     </CCardBody>

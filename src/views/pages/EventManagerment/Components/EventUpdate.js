@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { apiUpdateEvent } from 'src/apiFunctions/Event';
 import AppTimePicker from 'src/views/components/AppTimePicker';
 import { appToast } from 'src/views/components/AppToastContainer';
+import ImagePicker from 'src/views/components/ImagePicker';
 import InputField from 'src/views/components/InputField';
 import Mappicker from 'src/views/components/Mappicker';
 import TextAreaField from 'src/views/components/TextAreaField';
@@ -125,6 +126,9 @@ const EventUpdate = (props) => {
                         {({ values }) => (
                             <Form>
                                 <CRow>
+
+                                </CRow>
+                                <CRow>
                                     <CCol lg={6}>
                                         <CCardBody>
                                             <CartTable items={items} setItems={setItems} />
@@ -133,6 +137,9 @@ const EventUpdate = (props) => {
 
                                     <CCol lg={6}>
                                         <CRow>
+                                            <CCol lg={12}>
+                                                <ImagePicker />
+                                            </CCol>
                                             <CCol lg={12}>
                                                 <Field
                                                     maxTitle={170}
@@ -181,14 +188,13 @@ const EventUpdate = (props) => {
                                                     />
                                                 </div>
                                             </CCol>
-
                                         </CRow>
                                     </CCol>
                                 </CRow>
                                 <CRow>
                                     <CCol md={12}>
                                         <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
-                                            <CButton type="submit" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
+                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
                                             <CButton type="submit" color="primary" >Cập nhật</CButton>
                                         </div>
                                     </CCol>
