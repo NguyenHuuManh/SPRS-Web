@@ -121,7 +121,7 @@ const RegisterMember = () => {
                   >
                     {({ submitForm, errors }) => (
                       <>
-                        {console.log("error", errors)}
+                        {/* {console.log("error", errors)} */}
                         <Field
                           horizontal
                           component={InputField}

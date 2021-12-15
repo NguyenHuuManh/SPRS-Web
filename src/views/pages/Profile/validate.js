@@ -7,8 +7,8 @@ export const updateProfile = Yup.object().shape({
         .test("test", "Tên tài khoản tối thiểu 4, tối đa 16 kí tự chỉ gồm chữ không dấu và số", function () {
             const { parent } = this;
             const { username } = parent;
-            var format = /^[0-9\s]{4,16}$/;
-            var format1 = /^[0-9A-Za-z\s\-]{4,16}$/;
+            var format = /^[0-9]{4,16}$/;
+            var format1 = /^[0-9A-Za-z]{4,16}$/;
             return format1.test(username?.trim()) && !format.test(username?.trim());
         }),
     phone: Yup.string().required("Số điện thoại không được bỏ trống").nullable().test('checkphone', "Số điện thoại không hợp lệ", function () {
@@ -23,7 +23,7 @@ export const updateProfile = Yup.object().shape({
             const { parent } = this;
             const { full_name } = parent;
             const nameStrim = removeAscent(full_name);
-            let regex = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/
+            let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
             return regex.test(nameStrim.trim());
         }),
     dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable()
