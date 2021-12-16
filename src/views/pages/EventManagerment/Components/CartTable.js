@@ -16,7 +16,7 @@ const CartTable = (props) => {
     return (
         <CCard>
             <CCardBody>
-                <div className="table-wrapper-scroll-y my-custom-scrollbar">
+                <div className="tableUpdate">
                     <table className="table table-hover">
                         <thead className="table-active">
                             <th>Tên mặt hàng</th>

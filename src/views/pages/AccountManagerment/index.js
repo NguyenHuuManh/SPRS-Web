@@ -6,6 +6,8 @@ import { apiBanUser, apiGetUsers, apiUnBanUser } from "src/apiFunctions/AccountM
 import { calcItemStart } from "src/helps/function";
 import AppSelectStautusAccount from "src/views/components/AppSelectStautusAccount";
 import { appToast } from "src/views/components/AppToastContainer";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 const size = 10;
 const AccountManagerment = () => {
     const [itemSelected, setItemSelected] = useState({});
@@ -42,56 +44,89 @@ const AccountManagerment = () => {
         const param = {
             uId: item.id
         }
-        apiBanUser(param).then((e) => {
-            console.log('eeBan', e)
-            if (e?.status == 200) {
-                if (e.data.code == '200') {
-                    appToast({
-                        toastOptions: { type: "success" },
-                        description: "Đã khóa tài khoản" + item.username,
-                    });
-                    setPageSize({ ...pageSize })
-                } else {
-                    appToast({
-                        toastOptions: { type: "error" },
-                        description: e.data.message,
-                    });
+        confirmAlert({
+            title: 'Khóa tài khoản',
+            message: 'Bạn có chắc chắn khóa tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiBanUser(param).then((e) => {
+                            console.log('eeBan', e)
+                            if (e?.status == 200) {
+                                if (e.data.code == '200') {
+                                    appToast({
+                                        toastOptions: { type: "success" },
+                                        description: "Đã khóa tài khoản" + item.username,
+                                    });
+                                    setPageSize({ ...pageSize })
+                                } else {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e.data.message,
+                                    });
+                                }
+                            } else {
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: 'chức năng đang bảo trì',
+                                });
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            } else {
-                appToast({
-                    toastOptions: { type: "error" },
-                    description: 'chức năng đang bảo trì',
-                });
-            }
-        })
+            ]
+        });
+
+
     }
 
     const apiUnBanAcc = (item) => {
         const param = {
             uId: item.id
         }
-        apiUnBanUser(param).then((e) => {
+        confirmAlert({
+            title: 'Mở tài khoản',
+            message: 'Bạn có chắc chắn mở khoá tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiUnBanUser(param).then((e) => {
 
-            if (e?.status == 200) {
-                if (e.data.code == '200') {
-                    appToast({
-                        toastOptions: { type: "success" },
-                        description: "Mở khóa tài khoản " + item.username,
-                    });
-                    setPageSize({ ...pageSize })
-                } else {
-                    appToast({
-                        toastOptions: { type: "error" },
-                        description: e.data.message,
-                    });
+                            if (e?.status == 200) {
+                                if (e.data.code == '200') {
+                                    appToast({
+                                        toastOptions: { type: "success" },
+                                        description: "Mở khóa tài khoản " + item.username,
+                                    });
+                                    setPageSize({ ...pageSize })
+                                } else {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e.data.message,
+                                    });
+                                }
+                            } else {
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: 'chức năng đang bảo trì',
+                                });
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            } else {
-                appToast({
-                    toastOptions: { type: "error" },
-                    description: 'chức năng đang bảo trì',
-                });
-            }
-        })
+            ]
+        });
+
     }
 
     const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: 1, size: size }) }, 500), []);

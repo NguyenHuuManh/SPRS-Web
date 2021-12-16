@@ -2,7 +2,8 @@ import { CButton, CCard, CCardBody, CCardHeader, CCol, CModal, CRow } from '@cor
 import { Field, Form, Formik } from 'formik';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react'
-import { apiUpdateEvent } from 'src/apiFunctions/Event';
+import { apiUpdateEvent, apiUploadImg } from 'src/apiFunctions/Event';
+import { IMAGE_URL } from 'src/constrants/action';
 import AppTimePicker from 'src/views/components/AppTimePicker';
 import { appToast } from 'src/views/components/AppToastContainer';
 import ImagePicker from 'src/views/components/ImagePicker';
@@ -12,9 +13,10 @@ import TextAreaField from 'src/views/components/TextAreaField';
 import { updateEventValidation } from '../validate';
 import CartTable from './CartTable';
 const EventUpdate = (props) => {
-    const { isOpen, setIsOpen, data, setPageSize, pageSize } = props;
+    const { isOpen, setIsOpen, data, setPageSize, pageSize, setLoading } = props;
     const [items, setItems] = useState([]);
     const [address, setAddress] = useState({});
+    const [image, setImage] = useState({});
 
     useEffect(() => {
         if (isOpen && data?.address) {
@@ -29,7 +31,46 @@ const EventUpdate = (props) => {
         }
     }, [isOpen, data]);
 
+    const updateImg = () => {
+        if (isEmpty(image)) {
+            appToast({
+                toastOptions: { type: "error" },
+                description: "Bạn chưa chọn ảnh nào",
+            });
+            return;
+        }
 
+        const bodyImage = {
+            imageName: image.file.name,
+            encodedImage: image.base64,
+            id: data.id
+        }
+        apiUploadImg(bodyImage).then((response) => {
+            setLoading(true);
+            if (response.status == 200) {
+                if (response.data.code == '200') {
+                    appToast({
+                        toastOptions: { type: "success" },
+                        description: 'Cập nhật ảnh thành công',
+                    });
+                    setPageSize({ ...pageSize });
+                    setIsOpen(false)
+                    return;
+                }
+                setLoading(false);
+                appToast({
+                    toastOptions: { type: "error" },
+                    description: response?.data?.message,
+                });
+                return;
+            }
+            setLoading(false);
+            appToast({
+                toastOptions: { type: "error" },
+                description: 'Chức năng đang bảo trì',
+            });
+        }).finally(() => { setImage({}) })
+    }
     const callUpdate = (body) => {
         apiUpdateEvent(body).then((e) => {
             if (e.status == 200) {
@@ -54,6 +95,7 @@ const EventUpdate = (props) => {
             }
         })
     }
+
     return (
         <CModal
             show={isOpen}
@@ -126,42 +168,40 @@ const EventUpdate = (props) => {
                         {({ values }) => (
                             <Form>
                                 <CRow>
-
-                                </CRow>
-                                <CRow>
-                                    <CCol lg={6}>
-                                        <CCardBody>
-                                            <CartTable items={items} setItems={setItems} />
-                                        </CCardBody>
-                                    </CCol>
-
                                     <CCol lg={6}>
                                         <CRow>
                                             <CCol lg={12}>
-                                                <ImagePicker />
+                                                <CartTable items={items} setItems={setItems} />
                                             </CCol>
+                                        </CRow>
+                                    </CCol>
+                                    <CCol lg={6}>
+                                        <CRow>
                                             <CCol lg={12}>
-                                                <Field
-                                                    maxTitle={170}
-                                                    component={InputField}
-                                                    name="name"
-                                                    title="Tên Điểm cứu trợ"
-                                                />
-                                            </CCol>
+                                                <div style={{ width: '100%', display: 'flex' }}>
+                                                    <div style={{ width: '50%', height: 235 }}>
+                                                        <ImagePicker image={image} setImage={setImage} imageUrl={`${IMAGE_URL}${data?.images?.img_url}`} />
+                                                    </div>
+                                                    <div style={{ width: '50%', paddingLeft: 20 }}>
+                                                        <Field
+                                                            maxTitle={170}
+                                                            component={InputField}
+                                                            name="name"
+                                                            title="Tên Điểm cứu trợ"
+                                                        />
+                                                        <Field
+                                                            component={AppTimePicker}
+                                                            name="open_time"
+                                                            title="thời gian mở cửa"
+                                                        />
+                                                        <Field
+                                                            component={AppTimePicker}
+                                                            name="close_time"
+                                                            title="thời gian đóng cửa"
+                                                        />
 
-                                            <CCol md={6}>
-                                                <Field
-                                                    component={AppTimePicker}
-                                                    name="open_time"
-                                                    title="thời gian mở cửa"
-                                                />
-                                            </CCol>
-                                            <CCol md={6}>
-                                                <Field
-                                                    component={AppTimePicker}
-                                                    name="close_time"
-                                                    title="thời gian đóng cửa"
-                                                />
+                                                    </div>
+                                                </div>
                                             </CCol>
                                             <CCol lg={12}>
                                                 {
@@ -195,7 +235,8 @@ const EventUpdate = (props) => {
                                     <CCol md={12}>
                                         <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
                                             <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
-                                            <CButton type="submit" color="primary" >Cập nhật</CButton>
+                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton>
+                                            <CButton type="submit" color="primary" >Cập nhật thông tin</CButton>
                                         </div>
                                     </CCol>
                                 </CRow>

@@ -3,6 +3,7 @@ export const URL_GOONG = "https://rsapi.goong.io"
 export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
 export const URL = "http://ec2-13-250-102-44.ap-southeast-1.compute.amazonaws.com";
+export const IMAGE_URL = 'https://image-bucket-sprs.s3.ap-southeast-1.amazonaws.com/'
 //
 export const SIGNIN = `${URL}/authenticate-web`;
 export const USER = `${URL}/user`;
@@ -61,11 +62,19 @@ export const GET_GROUP_UNAUTHORIED = `${URL}/sprs/api/groups-unauthoried`
 export const GET_PERMISSION = `${URL}/sprs/api/permissions-authoried`
 export const GET_UNPERMISSION = `${URL}/sprs/api/permissions-unauthoried`
 
-//report
+//reportDdmin
 export const GET_REPORT_YEAR = `${URL}/sprs/api/report-manage/getReportYear`
 export const GET_REPORT_OVERVIEW = `${URL}/sprs/api/report-manage/getReportOverview`
 export const GET_REPORT_MONTH = `${URL}/sprs/api/report-manage/getReportMonth`
 export const GET_REPORT_PROVINCE = `${URL}/sprs/api/report-manage/getReportProvince`
+
+//reportORG
+export const GET_REPORT_YEAR_ORG = `${URL}/sprs/api/report-manage/getReportYear-org`
+export const GET_REPORT_OVERVIEW_ORG = `${URL}/sprs/api/report-manage/getReportOverview`
+export const GET_REPORT_MONTH_ORG = `${URL}/sprs/api/report-manage/getReportMonth-org`
+export const GET_REPORT_PROVINCE_ORG = `${URL}/sprs/api/report-manage/getReportProvinceORG`
+
+
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`
@@ -83,4 +92,5 @@ export const ASSIGN = `${URL}/sprs/api/reliefPoint-manage/assign`
 export const UN_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/unassign`
 export const GET_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/get-assign`
 export const GET_UN_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/get-unassign`
+export const UPLOAD_IMG_RELIEF = `${URL}/sprs/api/reliefPoint-manage/uploadImg`
 

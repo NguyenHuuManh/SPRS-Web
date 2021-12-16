@@ -1,10 +1,11 @@
-import { CChartBar } from "@coreui/react-chartjs";
-import { isEmpty } from "lodash-es";
-import { CButton, CCol, CRow, CCardTitle } from "@coreui/react";
-import React from "react";
-const Barchart = (props) => {
-    const { data } = props;
+import { CCardTitle } from "@coreui/react";
+import { CChartHorizontalBar } from "@coreui/react-chartjs";
+import { isEmpty } from "lodash";
+import React, { useEffect, useState } from 'react';
+import { apiGetReportProvince, apiGetReportProvinceORG } from "src/apiFunctions/Dashboard";
+const CityChart = () => {
 
+    const [data, setData] = useState({});
     const filterLable = (key) => {
         if (key === 'ReliefPoint') return "Cứu trợ"
         if (key === 'StorePoint') return "Cửa hàng"
@@ -25,9 +26,26 @@ const Barchart = (props) => {
             data: value.map((e) => e.total),
         };
     })
+    const getReport = (values) => {
+        const body = {
+            type_point: [1]
+        }
+        apiGetReportProvinceORG(body).then((e) => {
+            if (e?.status == 200) {
+                if (e?.data.code == '200') {
+                    setData({ lables: e.data.obj.label, dataChart: e.data.obj.data });
+                }
+            }
+        })
+    }
+
+    useEffect(() => {
+        getReport();
+    }, [])
+
     return (
         <>
-            <CChartBar
+            <CChartHorizontalBar
                 datasets={datasets}
                 labels={data.lables}
                 options={{
@@ -35,12 +53,13 @@ const Barchart = (props) => {
                         enabled: true
                     }
                 }}
-            // multiple={false}
+                multiple={false}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <CCardTitle>{data?.lables?.length == 30 ? "Biểu đồ 30 ngày gần nhất" : "Biểu đồ 12 tháng gần nhất"}</CCardTitle>
+                <CCardTitle>Biểu đồ thống kê điểm tại các tỉnh thành</CCardTitle>
             </div>
         </>
     )
 }
-export default Barchart;
+
+export default CityChart;

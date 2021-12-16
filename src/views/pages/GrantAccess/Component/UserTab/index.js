@@ -1,13 +1,13 @@
-import { CButton, CCard, CCardBody, CCol, CRow } from '@coreui/react';
+import { CButton, CCardBody, CCol, CRow } from '@coreui/react';
 import { Field, Formik } from "formik";
 import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
-import { useSelector } from "react-redux";
 import { Card } from "reactstrap";
-import { apiGetGroupUnAuthoried, apiGetPermission, apiGetUnPermission, apiGrantUserPermission, apiGrantUserUnPermission } from 'src/apiFunctions/permission';
+import { apiGetPermission, apiGetUnPermission, apiGrantUserPermission, apiGrantUserUnPermission } from 'src/apiFunctions/permission';
 import AppSelectGroups from 'src/views/components/AppSelectGroups';
 import { appToast } from 'src/views/components/AppToastContainer';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 const UserTab = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [dataPermisstion, setDataPermission] = useState([]);
@@ -37,7 +37,7 @@ const UserTab = () => {
     const grantPermission = ({ source_id, target_id }) => {
         confirmAlert({
             title: 'Thêm quyền',
-            message: 'Bạn có chắc chắn thêm quyền cho tài khoản này?',
+            message: 'Bạn có chắc chắn thêm quyền cho nhóm người này?',
             buttons: [
                 {
                     label: 'Đồng',
@@ -63,7 +63,7 @@ const UserTab = () => {
     const grantUnPermission = ({ source_id, target_id }) => {
         confirmAlert({
             title: 'Gỡ quyền',
-            message: 'Bạn có chắc chắn gỡ quyền tài khoản này?',
+            message: 'Bạn có chắc chắn gỡ quyền nhóm người dùng này?',
             buttons: [
                 {
                     label: 'Đồng',

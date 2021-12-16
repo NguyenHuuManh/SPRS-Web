@@ -3,12 +3,13 @@ import {
   CButton,
   CCard
 } from "@coreui/react";
+import { isEmpty } from "lodash";
 import React, { memo, useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import { appToast } from "../AppToastContainer";
+import imageDefault from "../../../assets/images/imagesDefault.png";
 
-export default memo((props) => {
-  const [image, setImage] = useState();
+export default memo(({ imageUrl, image, setImage }) => {
   const onChange = (event) => {
     readImage(event)
   };
@@ -18,7 +19,7 @@ export default memo((props) => {
     reader.readAsDataURL(file);
     reader.onload = function () {
       let dataImage = reader.result?.toString().split(",")[1];
-      setImage(dataImage);
+      setImage({ base64: dataImage, file: file });
     };
     reader.onerror = function (error) { };
   }
@@ -41,12 +42,30 @@ export default memo((props) => {
     inputFile.current.click();
   };
   return (
-    <div style={{ width: "100%", display: "flex" }}>
-      <CCard style={{ width: "50%" }}>
-        <img
-          src={`data:image/png;base64,${image}`}
-          alt=""
-        />
+    <div style={{ width: "100%", display: "flex", height: '100%' }}>
+      <CCard style={{ width: "100%", height: '100%' }}>
+        {isEmpty(image) && !imageUrl && (
+          <img
+            src={imageDefault}
+            alt=""
+            style={{ height: '100%', width: "auto" }}
+          />
+        )}
+        {isEmpty(image) && imageUrl && (
+          <img
+            src={imageUrl}
+            alt=""
+            style={{ height: '100%', width: 'auto' }}
+          />
+        )}
+        {!isEmpty(image) && (
+          <img
+            src={`data:image/png;base64,${image.base64}`}
+            alt=""
+            style={{ height: '100%', width: 'auto' }}
+          />
+        )}
+
         <CButton onClick={chooseFile} style={{ position: "absolute", bottom: 1, right: 1 }} color="secondary">
           <FaCamera size={20} />
         </CButton>

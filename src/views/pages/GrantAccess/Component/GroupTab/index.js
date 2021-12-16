@@ -1,6 +1,8 @@
 import { CButton, CCardBody, CCol, CRow } from '@coreui/react';
 import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from "react";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Card } from "reactstrap";
 import { apiGetGroupAuthoried, apiGetGroupUnAuthoried, apiGrantGroupPermission, apiGrantGroupUnPermission } from 'src/apiFunctions/permission';
 import { appToast } from 'src/views/components/AppToastContainer';
@@ -32,43 +34,75 @@ const Group = () => {
 
 
     const grantPermission = ({ source_id, target_id }) => {
-        apiGrantGroupPermission({ source_id, target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getPermission(itemSelected.id);
-                } else {
-                    appToast({
-                        toastOptions: { type: "error" },
-                        description: e?.data?.message,
-                    });
+        confirmAlert({
+            title: 'Thêm quyền',
+            message: 'Bạn có chắc chắn thêm quyền cho tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiGrantGroupPermission({ source_id, target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getPermission(itemSelected.id);
+                                } else {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e?.data?.message,
+                                    });
+                                }
+                            } else {
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: 'Hệ thống đang bảo trì',
+                                });
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            } else {
-                appToast({
-                    toastOptions: { type: "error" },
-                    description: 'Hệ thống đang bảo trì',
-                });
-            }
-        })
+            ]
+        });
+
     }
 
     const grantUnPermission = ({ source_id, target_id }) => {
-        apiGrantGroupUnPermission({ source_id: source_id, target_id: target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getPermission(itemSelected.id);
-                } else {
-                    appToast({
-                        toastOptions: { type: "error" },
-                        description: e?.data?.message,
-                    });
+        confirmAlert({
+            title: 'Gỡ quyền',
+            message: 'Bạn có chắc chắn gỡ quyền cho tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiGrantGroupUnPermission({ source_id: source_id, target_id: target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getPermission(itemSelected.id);
+                                } else {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e?.data?.message,
+                                    });
+                                }
+                            } else {
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: 'Hệ thống đang bảo trì',
+                                });
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            } else {
-                appToast({
-                    toastOptions: { type: "error" },
-                    description: 'Hệ thống đang bảo trì',
-                });
-            }
-        })
+            ]
+        });
+
     }
 
     return (

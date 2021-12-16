@@ -1,17 +1,16 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CModal, CModalBody, CModalFooter, CModalHeader, CPagination, CRow } from "@coreui/react";
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from "@coreui/react";
 import { Field, Formik } from "formik";
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert } from "reactstrap";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { apiDeleteEvent, getEvents } from "src/apiFunctions/Event";
 import { calcItemStart } from "src/helps/function";
-import AppSelectStautusAccount from "src/views/components/AppSelectStautusAccount";
 import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
 import { appToast } from "src/views/components/AppToastContainer";
 import EventDetail from "./Components/EventDetail";
 import EventUpdate from "./Components/EventUpdate";
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import AppLoading from "src/views/components/AppLoading";
 const size = 10;
 const page = 1
 const EventManagerment = () => {
@@ -23,6 +22,7 @@ const EventManagerment = () => {
     const [sort, setSort] = useState(true);
     const [detail, setDetail] = useState(false);
     const [update, setUpdate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const searchByName = (key) => {
         const param = {
@@ -32,6 +32,7 @@ const EventManagerment = () => {
             sort: sort,
             status_store: status
         }
+        setLoading(true)
         getEvents(param).then((e) => {
             if (e?.status == 200) {
                 if (e.data.code === '200') {
@@ -46,7 +47,7 @@ const EventManagerment = () => {
                 setData({});
             }
 
-        })
+        }).finally(() => { setLoading(false) })
     }
     const deleteEvent = (item) => {
         confirmAlert({
@@ -106,6 +107,7 @@ const EventManagerment = () => {
 
     return (
         <CCard>
+            <AppLoading isOpen={loading} />
             <CCardHeader>
                 <CRow>
                     <CCol md={6}>
@@ -203,7 +205,7 @@ const EventManagerment = () => {
                         }
                     </tbody>
                     <EventDetail isOpen={detail} setIsOpen={setDetail} data={itemSelected} />
-                    <EventUpdate isOpen={update} setIsOpen={setUpdate} data={itemSelected} pageSize={pageSize} setPageSize={setPageSize} />
+                    <EventUpdate isOpen={update} setIsOpen={setUpdate} data={itemSelected} pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} />
                 </table>
                 <CPagination
                     activePage={pageSize.page}
