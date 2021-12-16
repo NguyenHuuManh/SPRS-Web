@@ -1,11 +1,12 @@
 import { CButton, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput } from '@coreui/react';
 import { isEmpty, debounce } from 'lodash-es';
 import React, { useCallback, useEffect, useState } from "react";
+import { confirmAlert } from 'react-confirm-alert';
 import { Card } from "reactstrap";
 import { apiAssign, apiGetAssigned, apiGetUnAssigned, apiUnAssign } from 'src/apiFunctions/Event';
 import UserTable from './UserTable';
 const Group = () => {
-    const [itemSelected, setItemSelected] = useState(1);
+    const [itemSelected, setItemSelected] = useState({});
     const [dataAssgined, setDataAssigned] = useState([]);
     const [dataUnAssigned, setDataUnAssigned] = useState([]);
     const [key1, setKey1] = useState('');
@@ -54,23 +55,55 @@ const Group = () => {
 
 
     const callAssign = ({ source_id, target_id }) => {
-        apiAssign({ source_id, target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getAssign();
+        confirmAlert({
+            title: 'Thêm thành viên vào sự kiện',
+            message: 'Bạn có chắc chắn thêm thành viên vào sự kiện đang chọn?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiAssign({ source_id, target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getAssign();
+                                }
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            }
-        })
+            ]
+        });
+
     }
 
     const callUnAssign = ({ source_id, target_id }) => {
-        apiUnAssign({ source_id: source_id, target_id: target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getAssign();
+        confirmAlert({
+            title: 'Xóa thành viên sự kiện',
+            message: 'Bạn có chắc chắn xóa thành viên khỏi sự kiện đang chọn?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiUnAssign({ source_id: source_id, target_id: target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getAssign();
+                                }
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            }
-        })
+            ]
+        });
+
     }
 
     return (

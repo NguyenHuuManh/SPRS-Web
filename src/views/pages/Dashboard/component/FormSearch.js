@@ -16,11 +16,6 @@ const FormSearch = () => {
     }, [body])
 
     const getReport = (values) => {
-        // let type_points = [];
-        // if (values.store) type_points.push(1);
-        // if (values.relief) type_points.push(2);
-        // if (values.org) type_points.push(3);
-        // if (values.sos) type_points.push(4);
         const body = {
             type_point: [1, 2, 3, 4]
         }
@@ -49,10 +44,6 @@ const FormSearch = () => {
             <Formik
                 initialValues={{
                     type_time: "1",
-                    // store: true,
-                    // relief: true,
-                    // org: true,
-                    // sos: true
                 }}
                 validationSchema={report}
                 validateOnBlur={false}
@@ -63,22 +54,11 @@ const FormSearch = () => {
             >
                 {({ submitForm }) => (
                     <CRow style={{ padding: 10, paddingLeft: 50 }}>
-                        {/* <CCol lg={1} md={1}>
-                            <Field component={CheckboxField} name="store" title="Cửa hàng" type="checkbox" />
-                        </CCol>
-                        <CCol lg={1} md={1}>
-                            <Field component={CheckboxField} name="relief" title="Cứu trợ" type="checkbox" />
-                        </CCol>
-                        <CCol lg={1} md={1}>
-                            <Field component={CheckboxField} name="org" title="Tổ chức" type="checkbox" />
-                        </CCol>
-                        <CCol lg={1} md={1}>
-                            <Field component={CheckboxField} name="sos" title="SOS" type="checkbox" />
-                        </CCol> */}
+
                         <CCol lg={3} md={3}>
-                            <Field component={AppSelectTypeReport} name="type_time" title="Loại báo cáo" isClearable={false} />
+                            <Field component={AppSelectTypeReport} name="type_time" title="Loại báo cáo" isClearable={false} functionProps={() => submitForm()} />
                         </CCol>
-                        <CCol lg={3} md={3} style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
+                        {/* <CCol lg={3} md={3} style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
                             <CButton
                                 type="submit"
                                 color="secondary"
@@ -87,7 +67,7 @@ const FormSearch = () => {
                             >
                                 Xem báo cáo
                             </CButton>
-                        </CCol>
+                        </CCol> */}
                     </CRow>
                 )}
             </Formik>

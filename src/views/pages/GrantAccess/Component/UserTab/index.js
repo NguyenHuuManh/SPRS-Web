@@ -2,6 +2,7 @@ import { CButton, CCard, CCardBody, CCol, CRow } from '@coreui/react';
 import { Field, Formik } from "formik";
 import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from "react";
+import { confirmAlert } from 'react-confirm-alert';
 import { useSelector } from "react-redux";
 import { Card } from "reactstrap";
 import { apiGetGroupUnAuthoried, apiGetPermission, apiGetUnPermission, apiGrantUserPermission, apiGrantUserUnPermission } from 'src/apiFunctions/permission';
@@ -34,28 +35,60 @@ const UserTab = () => {
     }, [itemSelected])
 
     const grantPermission = ({ source_id, target_id }) => {
-        apiGrantUserPermission({ source_id, target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getPermission(itemSelected.id);
+        confirmAlert({
+            title: 'Thêm quyền',
+            message: 'Bạn có chắc chắn thêm quyền cho tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiGrantUserPermission({ source_id, target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getPermission(itemSelected.id);
+                                }
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            }
-        })
+            ]
+        });
+
     }
 
     const grantUnPermission = ({ source_id, target_id }) => {
-        apiGrantUserUnPermission({ source_id: source_id, target_id: target_id }).then((e) => {
-            if (e?.status === 200) {
-                if (e?.data?.code === '200') {
-                    getPermission(itemSelected.id);
-                } else {
-                    appToast({
-                        toastOptions: { type: "error" },
-                        description: e?.data?.message,
-                    });
+        confirmAlert({
+            title: 'Gỡ quyền',
+            message: 'Bạn có chắc chắn gỡ quyền tài khoản này?',
+            buttons: [
+                {
+                    label: 'Đồng',
+                    onClick: () => {
+                        apiGrantUserUnPermission({ source_id: source_id, target_id: target_id }).then((e) => {
+                            if (e?.status === 200) {
+                                if (e?.data?.code === '200') {
+                                    getPermission(itemSelected.id);
+                                } else {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e?.data?.message,
+                                    });
+                                }
+                            }
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
                 }
-            }
-        })
+            ]
+        });
+
     }
     return (
         <CRow>

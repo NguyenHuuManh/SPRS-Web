@@ -1,4 +1,4 @@
-import { ASSIGN, CREATE_EVENT, GET_ASSIGN, GET_EVENTS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT } from "src/constrants/action";
+import { ASSIGN, CREATE_EVENT, DELETE_EVENT, GET_ASSIGN, GET_EVENTS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
@@ -14,6 +14,11 @@ export const apiCreateEvent = async (body) => {
 export const getEvents = async (body) => {
     return await httpServices.post(`${GET_EVENTS}`, body);
 };
+
+export const apiDeleteEvent = async (params) => {
+    return await httpServices.delete(`${DELETE_EVENT}${convertToQuery(params)}`);
+};
+
 
 
 export const apiAssign = async (body) => {

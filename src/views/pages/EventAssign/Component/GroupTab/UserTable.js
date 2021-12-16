@@ -27,6 +27,7 @@ const UserTable = (props) => {
             if (e?.status == 200) {
                 if (e.data.code === '200') {
                     setData(e.data.obj);
+                    setItemSelected({});
                 }
             } else {
                 appToast({

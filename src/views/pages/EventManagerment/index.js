@@ -2,19 +2,23 @@ import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CMod
 import { Field, Formik } from "formik";
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
-import { getEvents } from "src/apiFunctions/Event";
+import { Alert } from "reactstrap";
+import { apiDeleteEvent, getEvents } from "src/apiFunctions/Event";
 import { calcItemStart } from "src/helps/function";
 import AppSelectStautusAccount from "src/views/components/AppSelectStautusAccount";
 import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
 import { appToast } from "src/views/components/AppToastContainer";
 import EventDetail from "./Components/EventDetail";
 import EventUpdate from "./Components/EventUpdate";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 const size = 10;
+const page = 1
 const EventManagerment = () => {
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState({});
     const [key, setKey] = useState("");
-    const [pageSize, setPageSize] = useState({ page: 1, size: size });
+    const [pageSize, setPageSize] = useState({ page: page, size: size });
     const [status, setStatus] = useState(2);
     const [sort, setSort] = useState(true);
     const [detail, setDetail] = useState(false);
@@ -44,8 +48,48 @@ const EventManagerment = () => {
 
         })
     }
+    const deleteEvent = (item) => {
+        confirmAlert({
+            title: 'Xóa Sự kiện',
+            message: 'Bạn có chắc chắn xóa sự kiện ' + item?.name,
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        apiDeleteEvent({ id: item?.id }).then((e) => {
+                            if (e?.status == 200) {
+                                if (e?.data?.code == '200') {
+                                    appToast({
+                                        toastOptions: { type: "success" },
+                                        description: "Xóa thành công sự kiện",
+                                    });
+                                    setPageSize({ ...pageSize, page: page, size: size });
+                                    return;
+                                }
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: e?.data?.message,
+                                });
+                                return;
+                            }
+                            appToast({
+                                toastOptions: { type: "error" },
+                                description: "Chức năng đang bảo trì",
+                            });
+                        })
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+        // return;
 
-    const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: 1, size: size }) }, 500), []);
+    }
+
+    const debounceSearch = useCallback(debounce((key) => { setPageSize({ ...pageSize, page: page, size: size }) }, 500), []);
 
     useEffect(() => {
         searchByName(key);
@@ -117,6 +161,7 @@ const EventManagerment = () => {
                         <th>Địa chỉ</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </thead>
                     <tbody>
                         {
@@ -144,6 +189,13 @@ const EventManagerment = () => {
                                                 color="primary"
                                                 onClick={() => { setUpdate(true) }}
                                             >Cập nhật</CButton>
+                                        </td>
+                                        <td>
+                                            <CButton
+                                                color="primary"
+                                                onClick={() => { deleteEvent(item) }}
+                                            >Xóa
+                                            </CButton>
                                         </td>
                                     </tr>
                                 )

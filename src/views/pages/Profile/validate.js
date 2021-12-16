@@ -19,12 +19,14 @@ export const updateProfile = Yup.object().shape({
         return vnf_regex.test(phone) && checkNumber.test(phone);
     }),
     full_name: Yup.string().required("Họ và tên không được bỏ trống").nullable()
-        .test("test", "Họ và tên không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+        .test("test", "Họ và tên không chứa số, kí tự đặc biệt, 2 khoảng trắng liên tục và ít nhất 4 ký tự chữ gồm 2 từ trở lên", function () {
             const { parent } = this;
             const { full_name } = parent;
             const nameStrim = removeAscent(full_name);
+            if (nameStrim?.length < 4) return false;
+            if (nameStrim?.replace(' ', '').length < 4) return false
             let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
-            return regex.test(nameStrim.trim());
+            return regex.test(nameStrim?.trim());
         }),
     dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable()
         .test("test", "Thời gian đóng cửa phải sau thời gian hiện tại", function () {

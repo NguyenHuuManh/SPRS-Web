@@ -32,11 +32,12 @@ export const register = Yup.object().shape({
             return regex.test(password);
         }),
     full_name: Yup.string().required("Họ và tên không được bỏ trống").nullable()
-        .test("test", "Họ và tên không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+        .test("test", "Họ và tên không chứa số, kí tự đặc biệt, 2 khoảng trắng liên tục và ít nhất 4 ký tự chữ gồm 2 từ trở lên", function () {
             const { parent } = this;
             const { full_name } = parent;
             const nameStrim = removeAscent(full_name);
-            // console.log(nameStrim?.trim(), 'nameStrim');
+            if (nameStrim?.length < 4) return false;
+            if (nameStrim?.replace(' ', '').length < 4) return false
             let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
             return regex.test(nameStrim?.trim());
         }),

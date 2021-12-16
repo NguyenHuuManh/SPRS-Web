@@ -11,12 +11,15 @@ import TextAreaField from "src/views/components/TextAreaField";
 import InputField from "src/views/components/InputField";
 import GroupTable from "./component/GroupTable";
 import { trimmedObject } from "src/helps/function";
+import AppLoading from "src/views/components/AppLoading";
 const CreateNotificaton = () => {
     const [tinh, setTinh] = useState({});
     const [huyen, setHuyen] = useState({});
     const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     const sendNotification = (body) => {
+        setLoading(true)
         apiSendNotification(body).then((e) => {
             if (e?.status === 200) {
                 if (e.data.code === '200') {
@@ -26,11 +29,14 @@ const CreateNotificaton = () => {
                     });
                 }
             }
+        }).finally(() => {
+            setLoading(false);
         })
     }
 
     return (
         <CCard>
+            <AppLoading isOpen={loading} />
             <CardHeader>Tạo thông báo</CardHeader>
             <CCardBody>
                 <Formik
@@ -108,7 +114,7 @@ const CreateNotificaton = () => {
 
                             <CRow>
                                 <CCol md={12}>
-                                    <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
+                                    <div className="d-flex justify-content-end align-items-end" style={{ width: "100%", paddingTop: 28 }}>
                                         <CButton type="submit" color="primary" >Gửi</CButton>
                                     </div>
                                 </CCol>
