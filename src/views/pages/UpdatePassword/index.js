@@ -49,7 +49,7 @@ const UpdatePassword = () => {
                                 <CForm>
                                     <Formik
                                         initialValues={{
-                                            oldPasword: "password",
+                                            oldPassword: "password",
                                             newPassword: "",
                                             reNewPassword: "",
                                         }}
@@ -65,7 +65,7 @@ const UpdatePassword = () => {
                                                 <Field
                                                     horizontal
                                                     component={InputField}
-                                                    name="oldPasword"
+                                                    name="oldPassword"
                                                     maxTitle={200}
                                                     title="Mật khẩu cũ"
                                                     type="password"

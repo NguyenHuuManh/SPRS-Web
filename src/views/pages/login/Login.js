@@ -38,8 +38,8 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      username: "admin",
-                      password: "password",
+                      username: "",
+                      password: "",
                     }}
                     onSubmit={(values) => {
                       const objTrimmed = trimmedObject(values)
@@ -57,6 +57,7 @@ const Login = () => {
                           component={InputField}
                           name="password"
                           iconName="cil-lock-locked"
+                          type="password"
                         />
                         <CRow>
                           <CCol xs="6">
