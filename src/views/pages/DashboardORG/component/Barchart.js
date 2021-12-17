@@ -1,6 +1,6 @@
+import { CCardTitle } from "@coreui/react";
 import { CChartBar } from "@coreui/react-chartjs";
 import { isEmpty } from "lodash-es";
-import { CButton, CCol, CRow, CCardTitle } from "@coreui/react";
 import React from "react";
 const Barchart = (props) => {
     const { data } = props;

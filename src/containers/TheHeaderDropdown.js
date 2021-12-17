@@ -8,7 +8,7 @@ import {
   CImg,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as type from "../redux/type";
 import { Logout } from "src/redux/modules/auth";
 import { useHistory } from "react-router";
@@ -16,6 +16,8 @@ import { useHistory } from "react-router";
 const TheHeaderDropdown = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const profile = useSelector((state) => state.profileReducer);
+  const groupsId = profile.data?.profile?.groups_user?.map((e) => { return e.id });
   return (
     <CDropdown inNav className="c-header-nav-items mx-2" direction="down">
       <CDropdownToggle className="c-header-nav-link" caret={false}>
@@ -39,15 +41,18 @@ const TheHeaderDropdown = () => {
           <CIcon name="cil-user" className="mfe-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem
-          onClick={() => {
-            history.push("./update-password");
-          }}
-        >
-          <CIcon name="cil-lock-locked" className="mfe-2" />
-          Đổi mật khẩu
-        </CDropdownItem>
-
+        {
+          groupsId?.includes(4) && (
+            <CDropdownItem
+              onClick={() => {
+                history.push("./update-password");
+              }}
+            >
+              <CIcon name="cil-lock-locked" className="mfe-2" />
+              Đổi mật khẩu
+            </CDropdownItem>
+          )
+        }
         <CDropdownItem divider />
         <CDropdownItem
           onClick={() => {

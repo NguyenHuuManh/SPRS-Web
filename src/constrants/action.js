@@ -73,6 +73,8 @@ export const GET_REPORT_YEAR_ORG = `${URL}/sprs/api/report-manage/getReportYear-
 export const GET_REPORT_OVERVIEW_ORG = `${URL}/sprs/api/report-manage/getReportOverview`
 export const GET_REPORT_MONTH_ORG = `${URL}/sprs/api/report-manage/getReportMonth-org`
 export const GET_REPORT_PROVINCE_ORG = `${URL}/sprs/api/report-manage/getReportProvinceORG`
+export const GET_TOP_USER_ORG = `${URL}/sprs/api/report-manage/getReportTopUserORG`
+
 
 
 
