@@ -6,6 +6,7 @@ import { apiGetReportMonth, apiGetReportYear } from "src/apiFunctions/Dashboard"
 import AppSelectTypeReport from "src/views/components/AppSelectTypeReport";
 import { report } from "../validate";
 import Barchart from "./Barchart";
+import Linechart from "./LineChart";
 const FormSearch = () => {
     const [data, setData] = useState({});
     const [body, setBody] = useState({ type_time: '1' });
@@ -54,24 +55,17 @@ const FormSearch = () => {
             >
                 {({ submitForm }) => (
                     <CRow style={{ padding: 10, paddingLeft: 50 }}>
-
                         <CCol lg={3} md={3}>
                             <Field component={AppSelectTypeReport} name="type_time" title="Loại báo cáo" isClearable={false} functionProps={() => submitForm()} />
                         </CCol>
-                        {/* <CCol lg={3} md={3} style={{ justifyContent: "center", alignItems: "center", display: "flex" }}>
-                            <CButton
-                                type="submit"
-                                color="secondary"
-                                onClick={() => { submitForm() }}
-                                style={{ marginTop: 5 }}
-                            >
-                                Xem báo cáo
-                            </CButton>
-                        </CCol> */}
                     </CRow>
                 )}
             </Formik>
-            <Barchart data={data} />
+            {body?.type_time == '1' ? (
+                <Barchart data={data} />
+            ) : (
+                <Linechart data={data} />
+            )}
         </Card>
     )
 }

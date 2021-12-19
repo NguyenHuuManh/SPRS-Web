@@ -6,6 +6,7 @@ import { apiGetReportMonth, apiGetReportMonthORG, apiGetReportYear, apiGetReport
 import AppSelectTypeReport from "src/views/components/AppSelectTypeReport";
 import { report } from "../validate";
 import Barchart from "./Barchart";
+import LineChart from "./LineChart";
 const FormSearch = () => {
     const [data, setData] = useState({});
     const [body, setBody] = useState({ type_time: '1' });
@@ -61,7 +62,12 @@ const FormSearch = () => {
                     </CRow>
                 )}
             </Formik>
-            <Barchart data={data} />
+            {/* <Barchart data={data} /> */}
+            {body?.type_time == '1' ? (
+                <Barchart data={data} />
+            ) : (
+                <LineChart data={data} />
+            )}
         </Card>
     )
 }

@@ -153,60 +153,66 @@ const EventManagerment = () => {
                         </>
                     )}
                 </Formik>
-                <table className="table table-hover">
-                    <thead className="table-active">
-                        <th>STT</th>
-                        <th>Tên Điểm</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày mở cửa</th>
-                        <th>Ngày đóng cửa</th>
-                        <th>Địa chỉ</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.reliefs?.map((item, index) => {
-                                return (
-                                    <tr
-                                        key={item.id}
-                                        className={`${item.id == itemSelected?.id && "table-active"}`}
-                                        onClick={() => { setItemSelected(item) }}
-                                    >
-                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
-                                        <td>{item?.name}</td>
-                                        <td>{item?.create_time}</td>
-                                        <td>{item?.open_time}</td>
-                                        <td>{item?.close_time}</td>
-                                        <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
-                                        <td>
-                                            <CButton
-                                                color="info"
-                                                onClick={() => { setDetail(true) }}
-                                            >Xem chi tiết</CButton>
-                                        </td>
-                                        <td>
-                                            <CButton
-                                                color="primary"
-                                                onClick={() => { setUpdate(true) }}
-                                            >Cập nhật</CButton>
-                                        </td>
-                                        <td>
-                                            <CButton
-                                                color="primary"
-                                                onClick={() => { deleteEvent(item) }}
-                                            >Xóa
-                                            </CButton>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                    <EventDetail isOpen={detail} setIsOpen={setDetail} data={itemSelected} />
-                    <EventUpdate isOpen={update} setIsOpen={setUpdate} data={itemSelected} pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} />
-                </table>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table className="table table-hover">
+                        <thead className="table-active">
+                            <th>STT</th>
+                            <th>Tên Điểm</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày mở cửa</th>
+                            <th>Ngày đóng cửa</th>
+                            <th>Địa chỉ</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.reliefs?.map((item, index) => {
+                                    return (
+                                        <tr
+                                            key={item.id}
+                                            className={`${item.id == itemSelected?.id && "table-active"}`}
+                                            onClick={() => { setItemSelected(item) }}
+                                        >
+                                            <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
+                                            <td>{item?.name}</td>
+                                            <td>{item?.create_time}</td>
+                                            <td>{item?.open_time}</td>
+                                            <td>{item?.close_time}</td>
+                                            <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
+                                            <td>
+                                                <CButton
+                                                    color="info"
+                                                    onClick={() => { setDetail(true) }}
+                                                    style={{ minWidth: 100 }}
+                                                >Xem chi tiết</CButton>
+                                            </td>
+                                            <td>
+                                                <CButton
+                                                    color="primary"
+                                                    onClick={() => { setUpdate(true) }}
+                                                    style={{ minWidth: 100 }}
+                                                >Cập nhật</CButton>
+                                            </td>
+                                            <td>
+                                                <CButton
+                                                    color="primary"
+                                                    onClick={() => { deleteEvent(item) }}
+                                                    style={{ minWidth: 100 }}
+                                                >Xóa
+                                                </CButton>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                        <EventDetail isOpen={detail} setIsOpen={setDetail} data={itemSelected} />
+                        <EventUpdate isOpen={update} setIsOpen={setUpdate} data={itemSelected} pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} />
+                    </table>
+                </div>
+
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}

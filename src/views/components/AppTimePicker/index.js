@@ -33,7 +33,7 @@ const locale = {
     formatLong: {},
 }
 const AppTimePicker = (props) => {
-    const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, minDate, maxDate, formatDate, ...remainProps } = props;
+    const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, minDate, maxDate, formatDate, disabled, ...remainProps } = props;
     const { name, value } = field;
     const { errors, touched, setFieldValue } = form;
     const [openDatePicker, setOpenDatePicker] = useState(false);
@@ -129,10 +129,15 @@ const AppTimePicker = (props) => {
                                 onChange={onChange}
                                 beforeMaskedValueChange={beforeMaskedValueChange}
                                 onBlur={onBlur}
+                                disabled={disabled}
                             >
                             </InputMask>
                             <label>
-                                <span className="calender-icon" onClick={() => setOpenDatePicker(true)}>
+                                <span className="calender-icon" onClick={() => {
+                                    if (disabled) return;
+                                    setOpenDatePicker(true)
+                                }
+                                }>
                                     <img src={dateIcon} height="20px" width="20px" alt="" />
                                 </span>
                             </label>
@@ -153,6 +158,7 @@ const AppTimePicker = (props) => {
                             open={true}
                             onClickOutside={() => setOpenDatePicker(false)}
                             autoComplete="off"
+                            disabled={disabled}
                         />
                     )}
                 </CInputGroup>

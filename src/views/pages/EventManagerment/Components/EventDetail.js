@@ -1,7 +1,9 @@
-import { CCard, CCardBody, CCardHeader, CCol, CModal, CModalBody, CModalFooter, CModalHeader, CRow } from '@coreui/react'
+import { CCardBody, CCol, CModal, CModalBody, CModalFooter, CModalHeader, CRow } from '@coreui/react';
 import { Field, Formik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { IMAGE_URL } from 'src/constrants/action';
 import AppTimePicker from 'src/views/components/AppTimePicker';
+import ImagePicker from 'src/views/components/ImagePicker';
 import InputField from 'src/views/components/InputField';
 import Mappicker from 'src/views/components/Mappicker';
 import TextAreaField from 'src/views/components/TextAreaField';
@@ -25,7 +27,7 @@ const EventDetail = (props) => {
         <CModal
             show={isOpen}
             onClose={setIsOpen}
-            size='lg'
+            size='xl'
         >
             <CModalHeader>Thông tin sự kiện</CModalHeader>
             <CModalBody>
@@ -73,27 +75,33 @@ const EventDetail = (props) => {
                                 <CCol lg={6}>
                                     <CRow>
                                         <CCol lg={12}>
-                                            <Field
-                                                maxTitle={170}
-                                                component={InputField}
-                                                name="name"
-                                                title="Tên Điểm cứu trợ"
-                                            />
-                                        </CCol>
+                                            <div style={{ width: '100%', display: 'flex' }}>
+                                                <div style={{ width: '50%', height: 235 }}>
+                                                    <ImagePicker imageUrl={`${IMAGE_URL}${data?.images?.img_url}`} disabled />
+                                                </div>
+                                                <div style={{ width: '50%', paddingLeft: 20 }}>
+                                                    <Field
+                                                        maxTitle={170}
+                                                        component={InputField}
+                                                        name="name"
+                                                        title="Tên Điểm cứu trợ"
+                                                        disabled={true}
+                                                    />
+                                                    <Field
+                                                        component={AppTimePicker}
+                                                        name="open_time"
+                                                        title="thời gian mở cửa"
+                                                        disabled={true}
+                                                    />
+                                                    <Field
+                                                        component={AppTimePicker}
+                                                        name="close_time"
+                                                        title="thời gian đóng cửa"
+                                                        disabled={true}
+                                                    />
 
-                                        <CCol md={6}>
-                                            <Field
-                                                component={AppTimePicker}
-                                                name="open_time"
-                                                title="thời gian mở cửa"
-                                            />
-                                        </CCol>
-                                        <CCol md={6}>
-                                            <Field
-                                                component={AppTimePicker}
-                                                name="close_time"
-                                                title="thời gian đóng cửa"
-                                            />
+                                                </div>
+                                            </div>
                                         </CCol>
                                         <CCol lg={12}>
                                             {
@@ -105,8 +113,8 @@ const EventDetail = (props) => {
                                                         title="Địa chỉ"
                                                         adress={address}
                                                         setAdress={setAddress}
-                                                        readOnly
                                                         iconName={"cil-map"}
+                                                        readOnly
                                                     />
                                                 )
                                             }
@@ -118,10 +126,10 @@ const EventDetail = (props) => {
                                                     component={TextAreaField}
                                                     name="description"
                                                     type="TextArea"
+                                                    disabled={true}
                                                 />
                                             </div>
                                         </CCol>
-
                                     </CRow>
                                 </CCol>
                             </CRow>

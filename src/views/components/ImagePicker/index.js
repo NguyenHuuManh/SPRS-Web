@@ -9,7 +9,7 @@ import { FaCamera } from "react-icons/fa";
 import { appToast } from "../AppToastContainer";
 import imageDefault from "../../../assets/images/imagesDefault.png";
 
-export default memo(({ imageUrl, image, setImage }) => {
+export default memo(({ imageUrl, image, setImage, disabled }) => {
   const onChange = (event) => {
     readImage(event)
   };
@@ -65,10 +65,12 @@ export default memo(({ imageUrl, image, setImage }) => {
             style={{ height: '100%', width: 'auto' }}
           />
         )}
+        {!disabled && (
+          <CButton onClick={chooseFile} style={{ position: "absolute", bottom: 1, right: 1 }} color="secondary">
+            <FaCamera size={20} />
+          </CButton>
+        )}
 
-        <CButton onClick={chooseFile} style={{ position: "absolute", bottom: 1, right: 1 }} color="secondary">
-          <FaCamera size={20} />
-        </CButton>
       </CCard>
 
       <input type="file"

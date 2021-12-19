@@ -107,55 +107,57 @@ const UserManager = () => {
                                 />
                             </CInputGroup>
                         </div>
-                        <table className="table table-hover">
-                            <thead className="table-active">
-                                <th>STT</th>
-                                <th>
-                                    {sort ?
-                                        <FaSortAlphaDown onClick={() => { setSort(false); setPageSize({ ...pageSize }) }} />
-                                        :
-                                        <FaSortAlphaUp onClick={() => { setSort(true); setPageSize({ ...pageSize }) }} />
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                            <table className="table table-hover">
+                                <thead className="table-active">
+                                    <th>STT</th>
+                                    <th>
+                                        {sort ?
+                                            <FaSortAlphaDown onClick={() => { setSort(false); setPageSize({ ...pageSize }) }} />
+                                            :
+                                            <FaSortAlphaUp onClick={() => { setSort(true); setPageSize({ ...pageSize }) }} />
+                                        }
+                                        <span style={{ marginLeft: 10 }}>Tên tài khoản</span>
+                                    </th>
+                                    <th>Họ và tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Trạng thái</th>
+                                    <th>Khóa tài khoản</th>
+                                </thead>
+                                <tbody>
+                                    {
+                                        data?.users?.map((item, index) => {
+                                            return (
+                                                <tr
+                                                    key={item.id}
+                                                    className={`${item.id == itemSelected?.id && "table-active"}`}
+                                                    onClick={() => { setItemSelected(item) }}
+                                                >
+                                                    <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
+                                                    <td>{item.username}</td>
+                                                    <td>{item.full_name}</td>
+                                                    <td>{item.phone}</td>
+                                                    <td>
+                                                        {item?.status == 'Actived' ? "Đang hoạt động" : "Tài khoản bị khóa"}
+                                                    </td>
+                                                    <td>
+                                                        {item?.status == 'Actived' ? (
+                                                            <CButton color="secondary" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>
+                                                                Khóa tài khoản
+                                                            </CButton>
+                                                        ) : (
+                                                            <CButton color="success" onClick={() => { active(item.id) }} style={{ width: 200 }}>
+                                                                Mở khóa tài khoản
+                                                            </CButton>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
                                     }
-                                    <span style={{ marginLeft: 10 }}>Tên tài khoản</span>
-                                </th>
-                                <th>Họ và tên</th>
-                                <th>Số điện thoại</th>
-                                <th>Trạng thái</th>
-                                <th>Khóa tài khoản</th>
-                            </thead>
-                            <tbody>
-                                {
-                                    data?.users?.map((item, index) => {
-                                        return (
-                                            <tr
-                                                key={item.id}
-                                                className={`${item.id == itemSelected?.id && "table-active"}`}
-                                                onClick={() => { setItemSelected(item) }}
-                                            >
-                                                <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
-                                                <td>{item.username}</td>
-                                                <td>{item.full_name}</td>
-                                                <td>{item.phone}</td>
-                                                <td>
-                                                    {item?.status == 'Actived' ? "Đang hoạt động" : "Tài khoản bị khóa"}
-                                                </td>
-                                                <td>
-                                                    {item?.status == 'Actived' ? (
-                                                        <CButton color="secondary" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>
-                                                            Khóa tài khoản
-                                                        </CButton>
-                                                    ) : (
-                                                        <CButton color="success" onClick={() => { active(item.id) }} style={{ width: 200 }}>
-                                                            Mở khóa tài khoản
-                                                        </CButton>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <CPagination
                             activePage={pageSize.page}
                             onActivePageChange={pageChange}

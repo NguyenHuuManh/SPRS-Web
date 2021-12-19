@@ -101,36 +101,38 @@ const UserTable = (props) => {
                         </>
                     )}
                 </Formik>
-                <table className="table table-hover">
-                    <thead className="table-active">
-                        <th>STT</th>
-                        <th>Tên Điểm</th>
-                        <th>Ngày tạo</th>
-                        <th>Ngày mở cửa</th>
-                        <th>Ngày đóng cửa</th>
-                        <th>Địa chỉ</th>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.reliefs?.map((item, index) => {
-                                return (
-                                    <tr
-                                        key={item.id}
-                                        className={`${item.id == itemSelected?.id && "table-active"}`}
-                                        onClick={() => { setItemSelected(item) }}
-                                    >
-                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
-                                        <td>{item?.name}</td>
-                                        <td>{item?.create_time}</td>
-                                        <td>{item?.open_time}</td>
-                                        <td>{item?.close_time}</td>
-                                        <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table className="table table-hover">
+                        <thead className="table-active">
+                            <th>STT</th>
+                            <th>Tên Điểm</th>
+                            <th>Ngày tạo</th>
+                            <th>Ngày mở cửa</th>
+                            <th>Ngày đóng cửa</th>
+                            <th>Địa chỉ</th>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.reliefs?.map((item, index) => {
+                                    return (
+                                        <tr
+                                            key={item.id}
+                                            className={`${item.id == itemSelected?.id && "table-active"}`}
+                                            onClick={() => { setItemSelected(item) }}
+                                        >
+                                            <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
+                                            <td>{item?.name}</td>
+                                            <td>{item?.create_time}</td>
+                                            <td>{item?.open_time}</td>
+                                            <td>{item?.close_time}</td>
+                                            <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}

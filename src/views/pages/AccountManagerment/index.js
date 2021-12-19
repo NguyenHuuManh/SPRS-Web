@@ -187,46 +187,48 @@ const AccountManagerment = () => {
                         </>
                     )}
                 </Formik>
-                <table className="table table-hover">
-                    <thead className="table-active">
-                        <th>STT</th>
-                        <th>Tên đầy đủ</th>
-                        <th>Tên tài khoản</th>
-                        <th>Số điện thoại</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
-                    </thead>
-                    <tbody>
-                        {
-                            data?.object?.map((item, index) => {
-                                return (
-                                    <tr
-                                        key={item.id}
-                                        className={`${item.id == itemSelected?.id && "table-active"}`}
-                                        onClick={() => { setItemSelected(item) }}
-                                    >
-                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
-                                        <td>{item?.full_name}</td>
-                                        <td>{item?.username}</td>
-                                        <td>{item?.phone}</td>
-                                        <td>{item?.status == 'Actived' ? 'Đang hoạt động' : 'Bị khóa'}</td>
-                                        <td>
-                                            {item?.status == 'Actived' ? (
-                                                <CButton color="secondary" onClick={() => { apiBanAcc(item) }} style={{ width: 200 }}>
-                                                    Khóa tài khoản
-                                                </CButton>
-                                            ) : (
-                                                <CButton color="success" onClick={() => { apiUnBanAcc(item) }} style={{ width: 200 }}>
-                                                    Mở khóa tài khoản
-                                                </CButton>
-                                            )}
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table className="table table-hover">
+                        <thead className="table-active">
+                            <th>STT</th>
+                            <th>Tên đầy đủ</th>
+                            <th>Tên tài khoản</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </thead>
+                        <tbody>
+                            {
+                                data?.object?.map((item, index) => {
+                                    return (
+                                        <tr
+                                            key={item.id}
+                                            className={`${item.id == itemSelected?.id && "table-active"}`}
+                                            onClick={() => { setItemSelected(item) }}
+                                        >
+                                            <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
+                                            <td>{item?.full_name}</td>
+                                            <td>{item?.username}</td>
+                                            <td>{item?.phone}</td>
+                                            <td>{item?.status == 'Actived' ? 'Đang hoạt động' : 'Bị khóa'}</td>
+                                            <td>
+                                                {item?.status == 'Actived' ? (
+                                                    <CButton color="secondary" onClick={() => { apiBanAcc(item) }} style={{ width: 200 }}>
+                                                        Khóa tài khoản
+                                                    </CButton>
+                                                ) : (
+                                                    <CButton color="success" onClick={() => { apiUnBanAcc(item) }} style={{ width: 200 }}>
+                                                        Mở khóa tài khoản
+                                                    </CButton>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}
