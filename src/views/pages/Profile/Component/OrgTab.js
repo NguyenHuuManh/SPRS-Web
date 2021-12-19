@@ -7,6 +7,7 @@ import { apiGetORG, apiUpdateORG } from "src/apiFunctions/authencation";
 import { trimmedObject } from "src/helps/function";
 import { getProfileRequest } from "src/redux/modules/profile";
 import AppDatePicker from "src/views/components/AppDatePicker";
+import AppTimePicker from "src/views/components/AppTimePicker";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
 import Mappicker from "src/views/components/Mappicker";
@@ -165,9 +166,10 @@ const UserTab = () => {
                                             <CCol md={4}>Ngày thành lập</CCol>
                                             <CCol md={4}>
                                                 <Field
-                                                    component={AppDatePicker}
+                                                    component={AppTimePicker}
                                                     name="founded"
                                                     disabled={!editAble}
+                                                    formatDate="DD-MM-YYYY"
                                                 />
                                             </CCol>
                                         </CRow>
@@ -207,7 +209,7 @@ const UserTab = () => {
 
                                     </div>
                                     {editAble && (
-                                        <CButton onClick={() => { submitForm() }}>
+                                        <CButton color="primary" onClick={() => { submitForm() }}>
                                             Lưu
                                         </CButton>
                                     )}

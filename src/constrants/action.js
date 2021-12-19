@@ -1,6 +1,6 @@
 export const API_KEY = "AIzaSyDlqprU1uYvSEEQIEotGG8_mL3QFfVB7vY"
 export const URL_GOONG = "https://rsapi.goong.io"
-export const API_KEY_GOONG = "kBfz9ty7aBBlGBqhR0iFYXDRLhNrU2t5vGmIhvas"
+export const API_KEY_GOONG = "r1v2PyX6pjgNTQsYYTTJVj2V8II0QZGYhSR1CFbo"
 export const GET_TODOS_URL = "https://jsonplaceholder.typicode.com/todos";
 export const URL = "http://ec2-13-250-102-44.ap-southeast-1.compute.amazonaws.com";
 export const IMAGE_URL = 'https://image-bucket-sprs.s3.ap-southeast-1.amazonaws.com/'

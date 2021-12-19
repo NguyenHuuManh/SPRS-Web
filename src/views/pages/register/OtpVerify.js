@@ -66,7 +66,7 @@ const OtpVerify = (props) => {
                     }}
                     enableReinitialize
                     onSubmit={(values) => {
-                        console.log(values, 'valuessss')
+                        // console.log(values, 'valuessss')
                         otpVerify(values);
                     }}
                 >

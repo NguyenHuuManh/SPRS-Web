@@ -43,12 +43,22 @@ export const updateProfile = Yup.object().shape({
 
 export const updateORG = Yup.object().shape({
     name: Yup.string().required("Họ và tên không được bỏ trống").nullable()
-        .test("test", "Họ và tên không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+        .test("test", "Tên tổ chức không có kí tự đặc biệt,có ít nhất 4 ký tự chữ", function () {
             const { parent } = this;
             const { name } = parent;
             const nameStrim = removeAscent(name);
-            let regex = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/
-            return regex.test(nameStrim?.trim());
+            if (nameStrim?.length < 4) return false;
+            if (nameStrim?.replace(' ', '').length < 4) return false
+            let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
+            let regex1 = /^[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)+$/
+            let regex2 = /^[a-zA-Z0-9]+$/
+            let regex3 = /^[a-zA-Z]+$/
+            // console.log(nameStrim, 'nameStrim')
+            // console.log('regex', regex.test(nameStrim?.trim()));
+            // console.log('regex1', regex1.test(nameStrim?.trim()));
+            // console.log('regex2', regex2.test(nameStrim?.trim()));
+            // console.log('regex3', regex3.test(nameStrim?.trim()));
+            return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
         }),
     adressString: Yup.string().required("không được bỏ trống").nullable(),
 });

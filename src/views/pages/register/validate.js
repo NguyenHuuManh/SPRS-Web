@@ -49,13 +49,31 @@ export const register = Yup.object().shape({
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),
-    nameOrg: Yup.string().required("Tên tổ chức k được bỏ trống").nullable()
-        .test("test", "Tên tổ chức không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+    // nameOrg: Yup.string().required("Tên tổ chức k được bỏ trống").nullable()
+    //     .test("test", "Tên tổ chức không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
+    //         const { parent } = this;
+    //         const { nameOrg } = parent;
+    //         const nameStrim = removeAscent(nameOrg);
+    //         let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
+    //         return regex.test(nameStrim?.trim());
+    //     }),
+    nameOrg: Yup.string().required("Họ và tên không được bỏ trống").nullable()
+        .test("test", "Tên tổ chức không có kí tự đặc biệt,có ít nhất 4 ký tự chữ", function () {
             const { parent } = this;
             const { nameOrg } = parent;
             const nameStrim = removeAscent(nameOrg);
+            if (nameStrim?.length < 4) return false;
+            if (nameStrim?.replace(' ', '').length < 4) return false
             let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
-            return regex.test(nameStrim?.trim());
+            let regex1 = /^[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)+$/
+            let regex2 = /^[a-zA-Z0-9]+$/
+            let regex3 = /^[a-zA-Z]+$/
+            // console.log(nameStrim, 'nameStrim')
+            // console.log('regex', regex.test(nameStrim?.trim()));
+            // console.log('regex1', regex1.test(nameStrim?.trim()));
+            // console.log('regex2', regex2.test(nameStrim?.trim()));
+            // console.log('regex3', regex3.test(nameStrim?.trim()));
+            return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
         }),
     city: Yup.string().required("Tỉnh/Thành phố không được bỏ trống").nullable(),
     district: Yup.string().required("Quận/Huyện không được bỏ trống").nullable(),

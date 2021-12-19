@@ -87,6 +87,7 @@ const Register = () => {
                       groupsId: "",
                       adresslineORG: "",
                       adressString: "",
+                      description: "",
                     }}
                     validateOnBlur={false}
                     validateOnChange={false}
@@ -120,7 +121,7 @@ const Register = () => {
                         organization: {
                           name: values.nameOrg.replace(/\s\s+/g, ' '),
                           founded: "",
-                          description: "",
+                          description: values?.description || "",
                           address: {
                             city: {
                               code: "",
@@ -227,6 +228,13 @@ const Register = () => {
                           adress={orgAdress}
                           setAdress={setOrgAdress}
                           iconName={"cil-map"}
+                        />
+                        <Field
+                          maxTitle={170}
+                          horizontal
+                          component={InputField}
+                          name="description"
+                          title="Mô tả"
                         />
                         <Field
                           maxTitle={170}
