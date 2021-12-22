@@ -1,10 +1,9 @@
-import CIcon from '@coreui/icons-react';
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from '@coreui/react';
 import { debounce } from 'lodash-es';
-import React, { useCallback, useEffect, useState } from 'react'
-import { apiActiveMembers, apiGetMembers, apiUnActiveMembers } from 'src/apiFunctions/orgManagerment'
-import { calcItemStart, countPage } from 'src/helps/function';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaSortAlphaDown, FaSortAlphaUp } from 'react-icons/fa';
+import { apiActiveMembers, apiGetMembers, apiUnActiveMembers } from 'src/apiFunctions/orgManagerment';
+import { calcItemStart } from 'src/helps/function';
 import { appToast } from 'src/views/components/AppToastContainer';
 const size = 10;
 const UserManager = () => {
